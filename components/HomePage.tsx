@@ -149,7 +149,7 @@ const HomePage: React.FC<HomePageProps> = ({
     <div className="w-full flex flex-col items-center pt-32 pb-12">
 
       {/* ================= HERO SECTION ================= */}
-      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[calc(100vh-8rem)] mb-12">
+      <section className="w-full max-w-screen-2xl px-4 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[calc(100vh-8rem)] mb-12">
 
         {/* Left: Text Content */}
         <div className="col-span-1 lg:col-span-7 flex flex-col gap-6 text-center lg:text-left z-10">
@@ -246,7 +246,7 @@ const HomePage: React.FC<HomePageProps> = ({
 
             {/* Controls */}
             <div className="mt-6 flex flex-col gap-4">
-              <div className="flex gap-4">
+              <div className="flex flex-col md:flex-row gap-4">
                 {/* Language Selector */}
                 <div className="flex-1">
                   <label className="block text-[10px] font-black text-gray-400 uppercase mb-1 tracking-wider ml-1">Language</label>
@@ -254,7 +254,7 @@ const HomePage: React.FC<HomePageProps> = ({
                     <select
                       value={selectedLanguage}
                       onChange={(e) => onLanguageChange(e.target.value)}
-                      className="w-full h-full appearance-none bg-white border-2 border-black rounded-xl px-4 font-bold text-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:shadow-hard-sm transition-shadow"
+                      className="w-full h-full appearance-none bg-white border-2 border-black rounded-xl pl-4 pr-10 font-bold text-sm cursor-pointer hover:bg-gray-50 focus:outline-none focus:shadow-hard-sm transition-shadow"
                     >
                       {SUPPORTED_LANGUAGES.map(lang => (
                         <option key={lang.id} value={lang.id}>{lang.label}</option>
