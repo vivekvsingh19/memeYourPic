@@ -31,27 +31,27 @@ const filterCaptions = (captions: string[]): string[] => {
     const lower = caption.toLowerCase();
     // Check for banned words
     const hasBannedWord = BANNED_KEYWORDS.some(word => {
-       // Simple boundary check to avoid false positives in substrings
-       const regex = new RegExp(`\\b${word}\\b`, 'i');
-       return regex.test(lower);
+      // Simple boundary check to avoid false positives in substrings
+      const regex = new RegExp(`\\b${word}\\b`, 'i');
+      return regex.test(lower);
     });
     return !hasBannedWord;
   });
 };
 
 export const generateMemeCaptions = async (
-  imageFile: File, 
+  imageFile: File,
   roastMode: boolean = false,
   languageId: string = 'english'
 ): Promise<GeneratedCaption[]> => {
-  const apiKey = process.env.API_KEY;
-  
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
   if (!apiKey) {
     throw new Error("API Key not found");
   }
 
   const ai = new GoogleGenAI({ apiKey });
-  
+
   const base64Image = await fileToGenerativePart(imageFile);
 
   // Get specific prompt instruction for the selected language
@@ -65,14 +65,14 @@ export const generateMemeCaptions = async (
   `;
 
   // Dynamic instructions based on Roast Mode
-  const toneInstruction = roastMode 
+  const toneInstruction = roastMode
     ? `
       MODE: SAVAGE ROAST 🔥
       - Be brutally honest, sarcastic, and cutting.
       - Roast the person, the context, or the vibe in the photo.
       - Use dry, deadpan humor.
       - Make it sting a little, but keep it funny.
-      ` 
+      `
     : `
       MODE: FUN & RELATABLE 😆
       - Light-hearted, self-deprecating, and viral Gen-Z humor.
@@ -87,7 +87,7 @@ export const generateMemeCaptions = async (
   `;
 
   const prompt = `
-    Analyze the provided image specifically for meme potential. 
+    Analyze the provided image specifically for meme potential.
     1. Detect the MOOD (e.g., awkward, confident, chaotic, sad).
     2. Detect the SCENE (e.g., party, exam hall, bedroom, office).
     3. Detect the CONTEXT (e.g., trying to impress someone, failing at a task, group drama).
@@ -132,7 +132,7 @@ export const generateMemeCaptions = async (
           }
         },
         // Higher temperature for more creative roasting
-        temperature: roastMode ? 1.2 : 1.0, 
+        temperature: roastMode ? 1.2 : 1.0,
       }
     });
 
@@ -144,7 +144,7 @@ export const generateMemeCaptions = async (
     // Apply safety filter
     const initialCount = captionsRaw.length;
     captionsRaw = filterCaptions(captionsRaw);
-    
+
     if (captionsRaw.length < initialCount) {
       console.log(`Filtered ${initialCount - captionsRaw.length} unsafe captions.`);
     }
