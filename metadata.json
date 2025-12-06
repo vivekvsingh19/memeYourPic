@@ -1,0 +1,7 @@
+{
+  "name": "Meme Your Pic",
+  "description": "An AI-powered meme generator that turns your photos into viral content using the Gemini API.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

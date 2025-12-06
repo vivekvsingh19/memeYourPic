@@ -1,0 +1,94 @@
+
+import React from 'react';
+import { User } from '../types';
+import { CrownIcon } from './Icons';
+
+interface NavbarProps {
+  user?: User | null;
+  onLoginClick: () => void;
+  onSignupClick: () => void;
+  onLogoClick: () => void;
+  onPricingClick: () => void;
+  onLogoutClick?: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ 
+  user,
+  onLoginClick, 
+  onSignupClick, 
+  onLogoClick, 
+  onPricingClick,
+  onLogoutClick 
+}) => {
+  return (
+    <nav className="w-full fixed top-0 z-50 py-4 px-4 flex justify-center pointer-events-none">
+      <div className="w-full max-w-screen-xl bg-white/90 backdrop-blur-md border-2 border-black rounded-full shadow-hard px-6 py-3 flex justify-between items-center pointer-events-auto">
+        
+        {/* Left: Brand */}
+        <div className="flex items-center gap-6">
+          <div 
+            onClick={onLogoClick}
+            className="group cursor-pointer flex items-center gap-2"
+          >
+            <div className="w-8 h-8 bg-brand-500 rounded-lg border-2 border-black flex items-center justify-center text-white font-black text-lg transform group-hover:rotate-12 transition-transform shadow-sm">
+              <CrownIcon className="w-5 h-5" />
+            </div>
+            <span className="text-xl font-black tracking-tight text-black group-hover:text-brand-600 transition-colors">
+              Meme Your Pic
+            </span>
+          </div>
+          
+          <button 
+              onClick={onPricingClick}
+              className="hidden md:block text-sm font-bold text-gray-600 hover:text-black hover:underline decoration-2 underline-offset-4 decoration-pop-yellow transition-all"
+          >
+              Pricing
+          </button>
+        </div>
+
+        {/* Right: Actions */}
+        <div className="flex items-center gap-3">
+          {user ? (
+              <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full border border-gray-300">
+                    {user.photoURL ? (
+                        <img src={user.photoURL} alt="User" className="w-6 h-6 rounded-full border border-gray-300" />
+                    ) : (
+                        <div className="w-6 h-6 rounded-full bg-pop-yellow text-black border border-black flex items-center justify-center font-bold text-xs">
+                            {user.email ? user.email[0].toUpperCase() : 'U'}
+                        </div>
+                    )}
+                    <span className="hidden md:block text-sm font-bold text-gray-800">
+                        {user.displayName || 'Meme Lord'}
+                    </span>
+                  </div>
+                  <button 
+                    onClick={onLogoutClick}
+                    className="text-sm font-bold bg-white text-red-500 hover:bg-red-50 border-2 border-transparent hover:border-red-500 px-3 py-1.5 rounded-full transition-all"
+                  >
+                    Log out
+                  </button>
+              </div>
+          ) : (
+              <>
+                <button 
+                    onClick={onLoginClick}
+                    className="text-sm font-bold text-gray-600 hover:text-black transition-colors px-3"
+                >
+                    Log in
+                </button>
+                <button 
+                    onClick={onSignupClick}
+                    className="text-sm font-bold bg-brand-500 text-white border-2 border-black px-5 py-2 rounded-full shadow-hard-sm hover:translate-y-[-2px] hover:shadow-hard transition-all btn-press"
+                >
+                    Sign up
+                </button>
+              </>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

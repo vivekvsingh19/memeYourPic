@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meme Your Pic - AI Meme Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Architects+Daughter&family=Cinzel:wght@400;700&family=Comic+Neue:wght@400;700&family=Courier+Prime:wght@400;700&family=Creepster&family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;700&family=Pacifico&family=Permanent+Marker&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              meme: ['"Permanent Marker"', 'cursive', 'sans-serif'],
+              impact: ['Anton', 'sans-serif'],
+              comic: ['"Comic Neue"', 'cursive', 'sans-serif'],
+              roboto: ['Roboto', 'sans-serif'],
+              oswald: ['Oswald', 'sans-serif'],
+              hand: ['"Architects Daughter"', 'cursive'],
+              cinzel: ['Cinzel', 'serif'],
+              pacifico: ['Pacifico', 'cursive'],
+              creepster: ['Creepster', 'cursive'],
+              courier: ['"Courier Prime"', 'monospace'],
+            },
+            colors: {
+              brand: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                200: '#bfdbfe',
+                300: '#93c5fd',
+                400: '#60a5fa',
+                500: '#3b82f6', // Electric Blue
+                600: '#2563eb',
+                700: '#1d4ed8',
+                800: '#1e40af',
+                900: '#1e3a8a',
+              },
+              'acid-green': '#bef264',
+              'hot-pink': '#f472b6',
+              'pop-yellow': '#facc15',
+              'deep-black': '#0f172a',
+            },
+            boxShadow: {
+              'hard': '4px 4px 0 0 #000',
+              'hard-sm': '2px 2px 0 0 #000',
+              'hard-lg': '6px 6px 0 0 #000',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom scrollbar */
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #d1d5db; 
+        border-radius: 10px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #9ca3af; 
+      }
+
+      .meme-text-shadow {
+        text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+      }
+      
+      /* Background Pattern */
+      .bg-grid-pattern {
+        background-color: #f8fafc;
+        background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+
+      .btn-press:active {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 0 #000;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+    "firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
+    "firebase/": "https://aistudiocdn.com/firebase@^12.6.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-grid-pattern text-gray-900 antialiased selection:bg-pop-yellow selection:text-black">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
