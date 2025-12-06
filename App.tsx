@@ -14,6 +14,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { authService } from './services/authService';
 import { MemeTemplateImage } from './constants';
 import { InstagramIcon } from './components/Icons';
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
   // State
@@ -205,6 +206,7 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col font-sans">
+      <SpeedInsights />
       <Navbar
         user={user}
         onLoginClick={() => setView('LOGIN')}
