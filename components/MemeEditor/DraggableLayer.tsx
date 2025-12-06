@@ -185,16 +185,19 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
           <p
             className="text-center leading-tight px-2 py-1"
             style={{
+              // Responsive stroke width calculation
+              '--stroke-w': `calc(${layer.strokeWidth ?? 4} / 8 * 1cqw)`,
               fontFamily: getFontFamily(),
               fontWeight: layer.isBold ? 'bold' : 'normal',
               color: layer.color || 'white',
-              fontSize: `calc(${layer.fontSize || 24} / 8 * 1cqw)`,
+              // Ensure text is at least 12px on mobile for readability
+              fontSize: `max(12px, calc(${layer.fontSize || 24} / 8 * 1cqw))`,
               textShadow: layer.strokeWidth !== 0
                 ? `
-                   -${layer.strokeWidth}px -${layer.strokeWidth}px 0 ${layer.strokeColor},
-                    ${layer.strokeWidth}px -${layer.strokeWidth}px 0 ${layer.strokeColor},
-                   -${layer.strokeWidth}px  ${layer.strokeWidth}px 0 ${layer.strokeColor},
-                    ${layer.strokeWidth}px  ${layer.strokeWidth}px 0 ${layer.strokeColor}
+                   calc(var(--stroke-w) * -1) calc(var(--stroke-w) * -1) 0 ${layer.strokeColor},
+                    calc(var(--stroke-w) * 1) calc(var(--stroke-w) * -1) 0 ${layer.strokeColor},
+                   calc(var(--stroke-w) * -1) calc(var(--stroke-w) * 1) 0 ${layer.strokeColor},
+                    calc(var(--stroke-w) * 1) calc(var(--stroke-w) * 1) 0 ${layer.strokeColor}
                   `
                 : 'none',
               textTransform: layer.isUppercase ? 'uppercase' : 'none',
@@ -202,7 +205,7 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
               whiteSpace: 'pre-wrap',
               wordBreak: 'break-word',
               minWidth: '20px'
-            }}
+            } as React.CSSProperties}
           >
             {layer.content || "Double tap to edit"}
           </p>
