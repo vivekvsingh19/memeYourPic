@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({
 }) => {
   return (
     <nav className="w-full fixed top-0 z-50 py-4 px-4 flex justify-center pointer-events-none">
-      <div className="w-full max-w-screen-xl bg-white/90 backdrop-blur-md border-2 border-black rounded-full shadow-hard px-6 py-3 flex justify-between items-center pointer-events-auto">
+      <div className="w-full max-w-screen-xl bg-white/90 backdrop-blur-md border-2 border-black rounded-full shadow-hard px-4 md:px-6 py-3 flex justify-between items-center pointer-events-auto">
 
         {/* Left: Brand */}
         <div className="flex items-center gap-6">
@@ -35,7 +35,7 @@ const Navbar: React.FC<NavbarProps> = ({
               alt="Logo"
               className="w-10 h-10 rounded-lg border-2 border-black transform group-hover:rotate-12 transition-transform shadow-sm object-cover"
             />
-            <span className="text-xl font-black tracking-tight text-black group-hover:text-brand-600 transition-colors">
+            <span className="text-lg md:text-xl font-black tracking-tight text-black group-hover:text-brand-600 transition-colors">
               Meme Your Pic
             </span>
           </div>

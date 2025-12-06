@@ -146,7 +146,7 @@ const HomePage: React.FC<HomePageProps> = ({
   };
 
   return (
-    <div className="w-full flex flex-col items-center pt-24 pb-12">
+    <div className="w-full flex flex-col items-center pt-32 pb-12">
 
       {/* ================= HERO SECTION ================= */}
       <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[calc(100vh-8rem)] mb-12">
@@ -196,7 +196,7 @@ const HomePage: React.FC<HomePageProps> = ({
             {/* Drop Zone */}
             <div
               className={`
-                    w-full aspect-[4/3] rounded-2xl border-4 border-dashed flex flex-col items-center justify-center relative overflow-hidden transition-all group
+                    w-full min-h-[300px] md:aspect-[4/3] md:min-h-0 rounded-2xl border-4 border-dashed flex flex-col items-center justify-center relative overflow-hidden transition-all group p-4
                     ${imagePreview
                   ? 'border-brand-500 bg-gray-50'
                   : 'border-gray-300 bg-gray-50 hover:border-black hover:bg-brand-50 cursor-pointer'
@@ -219,20 +219,20 @@ const HomePage: React.FC<HomePageProps> = ({
               ) : (
                 <>
                   <div className="flex gap-4 mb-4">
-                    <div className="w-20 h-20 bg-white rounded-2xl border-4 border-black shadow-hard-sm flex items-center justify-center group-hover:scale-105 transition-transform text-brand-500">
-                      <UploadIcon className="w-10 h-10 text-black" />
+                    <div className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-2xl border-4 border-black shadow-hard-sm flex items-center justify-center group-hover:scale-105 transition-transform text-brand-500">
+                      <UploadIcon className="w-8 h-8 md:w-10 md:h-10 text-black" />
                     </div>
                     <button
                       onClick={(e) => { e.stopPropagation(); startCamera(); }}
-                      className="w-20 h-20 bg-white rounded-2xl border-4 border-black shadow-hard-sm flex flex-col items-center justify-center group-hover:scale-105 transition-transform text-brand-500 hover:bg-brand-50 z-20"
+                      className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-2xl border-4 border-black shadow-hard-sm flex flex-col items-center justify-center group-hover:scale-105 transition-transform text-brand-500 hover:bg-brand-50 z-20"
                       title="Take Photo"
                     >
-                      <CameraIcon className="w-8 h-8 text-black mb-1" />
-                      <span className="text-[10px] font-black uppercase text-black">Camera</span>
+                      <CameraIcon className="w-6 h-6 md:w-8 md:h-8 text-black mb-1" />
+                      <span className="text-[8px] md:text-[10px] font-black uppercase text-black">Camera</span>
                     </button>
                   </div>
-                  <p className="font-black text-xl text-black uppercase tracking-tight">Drop or Click to Upload</p>
-                  <p className="text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest bg-white px-2 py-1 rounded border border-gray-200">Supports JPG, PNG, WEBP</p>
+                  <p className="font-black text-lg md:text-xl text-black uppercase tracking-tight text-center">Drop or Click to Upload</p>
+                  <p className="text-[10px] md:text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest bg-white px-2 py-1 rounded border border-gray-200 text-center">Supports JPG, PNG, WEBP</p>
                 </>
               )}
               <input
