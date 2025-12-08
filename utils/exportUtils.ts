@@ -29,20 +29,20 @@ export const renderMemeToCanvas = async (
       // If 'original', use the image's dimensions.
       // If specific ratio, calculate dimensions that fit the image while respecting the ratio.
       // We will define a standard "base width" to ensure high quality export (e.g. 1080px).
-      
+
       const BASE_SIZE = 1200;
       let outputWidth, outputHeight;
 
       if (canvasConfig.aspectRatio === 'original') {
-          outputWidth = img.naturalWidth;
-          outputHeight = img.naturalHeight;
+        outputWidth = img.naturalWidth;
+        outputHeight = img.naturalHeight;
       } else {
-          // For fixed ratios, we standardize on a max dimension to keep quality high
-          // But we need to ensure the inner image fits.
-          // Let's set the canvas width to BASE_SIZE and calculate height based on ratio.
-          const ratio = canvasConfig.aspectRatio as number;
-          outputWidth = BASE_SIZE;
-          outputHeight = BASE_SIZE / ratio;
+        // For fixed ratios, we standardize on a max dimension to keep quality high
+        // But we need to ensure the inner image fits.
+        // Let's set the canvas width to BASE_SIZE and calculate height based on ratio.
+        const ratio = canvasConfig.aspectRatio as number;
+        outputWidth = BASE_SIZE;
+        outputHeight = BASE_SIZE / ratio;
       }
 
       canvas.width = outputWidth;
@@ -60,25 +60,25 @@ export const renderMemeToCanvas = async (
       let renderW, renderH, offsetX, offsetY;
 
       if (canvasConfig.aspectRatio === 'original') {
-          renderW = canvas.width;
-          renderH = canvas.height;
-          offsetX = 0;
-          offsetY = 0;
+        renderW = canvas.width;
+        renderH = canvas.height;
+        offsetX = 0;
+        offsetY = 0;
       } else {
-          // "Contain" logic
-          if (imgRatio > canvasRatio) {
-              // Image is wider than canvas -> fit to width
-              renderW = canvas.width;
-              renderH = canvas.width / imgRatio;
-              offsetX = 0;
-              offsetY = (canvas.height - renderH) / 2;
-          } else {
-              // Image is taller than canvas -> fit to height
-              renderH = canvas.height;
-              renderW = canvas.height * imgRatio;
-              offsetX = (canvas.width - renderW) / 2;
-              offsetY = 0;
-          }
+        // "Contain" logic
+        if (imgRatio > canvasRatio) {
+          // Image is wider than canvas -> fit to width
+          renderW = canvas.width;
+          renderH = canvas.width / imgRatio;
+          offsetX = 0;
+          offsetY = (canvas.height - renderH) / 2;
+        } else {
+          // Image is taller than canvas -> fit to height
+          renderH = canvas.height;
+          renderW = canvas.height * imgRatio;
+          offsetX = (canvas.width - renderW) / 2;
+          offsetY = 0;
+        }
       }
 
       ctx.drawImage(img, offsetX, offsetY, renderW, renderH);
@@ -86,190 +86,217 @@ export const renderMemeToCanvas = async (
       // 4. Draw Layers
       // Layers are positioned as % of the CANVAS dimensions (not just the image).
       // This matches the updated Editor UI logic where containerRef is the aspect box.
-      
+
       // We need to load all image layers first
       const imageLoadPromises = layers
         .filter(l => l.type === 'image' && l.src)
         .map(l => new Promise<void>((resolveImg) => {
-            const layerImg = new Image();
-            layerImg.crossOrigin = 'anonymous';
-            layerImg.src = l.src!;
-            layerImg.onload = () => resolveImg();
-            layerImg.onerror = () => resolveImg(); // Proceed even if fail
+          const layerImg = new Image();
+          layerImg.crossOrigin = 'anonymous';
+          layerImg.src = l.src!;
+          layerImg.onload = () => resolveImg();
+          layerImg.onerror = () => resolveImg(); // Proceed even if fail
         }));
 
       Promise.all(imageLoadPromises).then(() => {
-          layers.forEach((layer) => {
-            ctx.save();
-    
-            // Calculate Position (convert % to px relative to output Canvas)
-            const x = (layer.x / 100) * canvas.width;
-            const y = (layer.y / 100) * canvas.height;
-    
-            // Move context to layer position and rotate
-            ctx.translate(x, y);
-            ctx.rotate((layer.rotation * Math.PI) / 180);
-            ctx.scale(layer.scale, layer.scale);
-    
-            if (layer.type === 'text') {
-              // Font Configuration
-              // Calculate font size relative to a standard viewport width (e.g. 800px)
-              const referenceWidth = 800;
-              const fontSize = (layer.fontSize || 30) * (canvas.width / referenceWidth);
-              
-              const fontMap: Record<string, string> = {
-                'impact': 'Anton, Impact, sans-serif',
-                'roboto': 'Roboto, sans-serif',
-                'comic': '"Comic Neue", "Comic Sans MS", cursive',
-                'meme': '"Permanent Marker", cursive',
-                'oswald': 'Oswald, sans-serif',
-                'hand': '"Architects Daughter", cursive',
-                'cinzel': 'Cinzel, serif',
-                'pacifico': 'Pacifico, cursive',
-                'creepster': 'Creepster, cursive',
-                'courier': '"Courier Prime", monospace',
-              };
-              
-              const fontFamily = fontMap[layer.fontFamily || 'impact'] || 'sans-serif';
-              const fontWeight = layer.isBold ? 'bold' : 'normal';
-              
-              ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
-              ctx.textAlign = 'center';
-              ctx.textBaseline = 'middle';
-              
-              const text = layer.isUppercase ? layer.content.toUpperCase() : layer.content;
-              
-              // Styles
-              ctx.fillStyle = layer.color || 'white';
-              ctx.strokeStyle = layer.strokeColor || 'black';
-              
-              // Scale stroke width proportionally with font size
-              const strokeWidth = (layer.strokeWidth ?? 4) * (canvas.width / referenceWidth);
-              ctx.lineWidth = strokeWidth;
-              ctx.lineJoin = 'round';
-              ctx.miterLimit = 2;
-    
-              // Wrap Text logic
-              const maxWidth = layer.width 
-                 ? (canvas.width * (layer.width / 100)) 
-                 : (canvas.width * 0.9);
-    
-              const words = text.split(' ');
-              const lines = [];
-    
-              // Handle manual line breaks first if present
-              const paragraphs = text.split('\n');
-              
-              paragraphs.forEach(paragraph => {
-                  const pWords = paragraph.split(' ');
-                  let pLine = '';
-                  
-                  for (let n = 0; n < pWords.length; n++) {
-                    const testLine = pLine + pWords[n] + ' ';
-                    const metrics = ctx.measureText(testLine);
-                    const testWidth = metrics.width;
-                    if (testWidth > maxWidth && n > 0) {
-                      lines.push(pLine);
-                      pLine = pWords[n] + ' ';
-                    } else {
-                      pLine = testLine;
-                    }
-                  }
+        layers.forEach((layer) => {
+          ctx.save();
+
+          // Calculate Position (convert % to px relative to output Canvas)
+          const x = (layer.x / 100) * canvas.width;
+          const y = (layer.y / 100) * canvas.height;
+
+          // Move context to layer position and rotate
+          ctx.translate(x, y);
+          ctx.rotate((layer.rotation * Math.PI) / 180);
+          ctx.scale(layer.scale, layer.scale);
+
+          if (layer.type === 'text') {
+            // Font Configuration
+            // Calculate font size relative to a standard viewport width (e.g. 800px)
+            const referenceWidth = 800;
+            const fontSize = (layer.fontSize || 30) * (canvas.width / referenceWidth);
+
+            const fontMap: Record<string, string> = {
+              'impact': 'Anton, Impact, sans-serif',
+              'roboto': 'Roboto, sans-serif',
+              'comic': '"Comic Neue", "Comic Sans MS", cursive',
+              'meme': '"Permanent Marker", cursive',
+              'oswald': 'Oswald, sans-serif',
+              'hand': '"Architects Daughter", cursive',
+              'cinzel': 'Cinzel, serif',
+              'pacifico': 'Pacifico, cursive',
+              'creepster': 'Creepster, cursive',
+              'courier': '"Courier Prime", monospace',
+            };
+
+            const fontFamily = fontMap[layer.fontFamily || 'impact'] || 'sans-serif';
+            const fontWeight = layer.isBold ? 'bold' : 'normal';
+
+            ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            const text = layer.isUppercase ? layer.content.toUpperCase() : layer.content;
+
+            // Styles
+            ctx.fillStyle = layer.color || 'white';
+            ctx.strokeStyle = layer.strokeColor || 'black';
+
+            // Scale stroke width proportionally with font size
+            const strokeWidth = (layer.strokeWidth ?? 4) * (canvas.width / referenceWidth);
+            ctx.lineWidth = strokeWidth;
+            ctx.lineJoin = 'round';
+            ctx.miterLimit = 2;
+
+            // Wrap Text logic
+            const maxWidth = layer.width
+              ? (canvas.width * (layer.width / 100))
+              : (canvas.width * 0.9);
+
+            const words = text.split(' ');
+            const lines = [];
+
+            // Handle manual line breaks first if present
+            const paragraphs = text.split('\n');
+
+            paragraphs.forEach(paragraph => {
+              const pWords = paragraph.split(' ');
+              let pLine = '';
+
+              for (let n = 0; n < pWords.length; n++) {
+                const testLine = pLine + pWords[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
                   lines.push(pLine);
-              });
-    
-    
-              // Draw Lines
-              const lineHeight = fontSize * 1.2;
-              const totalHeight = lines.length * lineHeight;
-              let startY = -(totalHeight / 2) + (lineHeight / 2);
-    
-              lines.forEach((lineText) => {
-                const safeText = lineText.trim(); 
-                
-                if (layer.strokeWidth !== 0) {
-                    ctx.strokeText(safeText, 0, startY);
+                  pLine = pWords[n] + ' ';
+                } else {
+                  pLine = testLine;
                 }
-                ctx.fillText(safeText, 0, startY);
-    
-                // Strikethrough Logic
-                if (layer.isStrikethrough) {
-                    const metrics = ctx.measureText(safeText);
-                    const lineWidth = metrics.width;
-                    
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.strokeStyle = layer.color || 'white';
-                    ctx.lineWidth = fontSize * 0.08; 
-                    ctx.moveTo(-lineWidth / 2, startY);
-                    ctx.lineTo(lineWidth / 2, startY);
-                    
-                    if (layer.strokeWidth && layer.strokeWidth > 0) {
-                        ctx.save();
-                        ctx.strokeStyle = layer.strokeColor || 'black';
-                        ctx.lineWidth = (fontSize * 0.08) + strokeWidth;
-                        ctx.stroke();
-                        ctx.restore();
-                    }
-                    
-                    ctx.stroke();
-                    ctx.restore();
-                }
-    
-                startY += lineHeight;
-              });
-    
-            } else if (layer.type === 'sticker') {
-              // Draw Emoji/Sticker
-              // Scale sticker size relative to canvas
-              ctx.font = `${canvas.width * 0.15}px serif`; 
-              ctx.textAlign = 'center';
-              ctx.textBaseline = 'middle';
-              ctx.fillText(layer.content, 0, 0);
-            } else if (layer.type === 'image' && layer.src) {
-                // Draw Image Layer
-                // Create temp image
-                const lImg = new Image();
-                lImg.src = layer.src;
-                // We assume it's loaded because of Promise.all above
-                
-                // Draw image centered at 0,0 (context is already translated)
-                // Default width ~ 160px relative to typical screen, scale appropriately
-                // 40 in w-40 is 10rem = 160px.
-                // We'll scale it relative to canvas width similar to text
-                const baseWidth = canvas.width * 0.3; // 30% of canvas width
-                const aspect = lImg.width / lImg.height;
-                const drawWidth = baseWidth;
-                const drawHeight = baseWidth / aspect;
+              }
+              lines.push(pLine);
+            });
 
-                ctx.drawImage(lImg, -drawWidth/2, -drawHeight/2, drawWidth, drawHeight);
+
+            // Draw Lines
+            const lineHeight = fontSize * 1.2;
+            const totalHeight = lines.length * lineHeight;
+            let startY = -(totalHeight / 2) + (lineHeight / 2);
+
+            // Draw Background Rect if exists
+            if (layer.backgroundColor && layer.backgroundColor !== 'transparent') {
+              ctx.save();
+              ctx.fillStyle = layer.backgroundColor;
+
+              let bgWidth;
+              const paddingY = fontSize * 0.25; // Approximate py-1
+
+              if (layer.width) {
+                bgWidth = (canvas.width * (layer.width / 100));
+              } else {
+                let maxLineWidth = 0;
+                lines.forEach(line => {
+                  const m = ctx.measureText(line.trim());
+                  if (m.width > maxLineWidth) maxLineWidth = m.width;
+                });
+                const paddingX = fontSize * 0.5;
+                bgWidth = maxLineWidth + (paddingX * 2);
+              }
+
+              const bgHeight = totalHeight + (paddingY * 2);
+
+              // Draw rect centered
+              ctx.fillRect(-bgWidth / 2, -totalHeight / 2 - paddingY, bgWidth, bgHeight);
+              ctx.restore();
             }
-    
-            ctx.restore();
-          });
 
-          // 5. Draw Watermark (if enabled)
-          if (includeWatermark) {
-            ctx.save();
-            const fontSize = Math.max(16, canvas.width * 0.025); // Responsive font size
-            ctx.font = `900 ${fontSize}px "Inter", sans-serif`;
-            ctx.textAlign = 'right';
-            ctx.textBaseline = 'bottom';
-            const padding = canvas.width * 0.02;
-            
-            // Text Shadow / Stroke for readability
-            ctx.shadowColor = "rgba(0,0,0,0.8)";
-            ctx.shadowBlur = 4;
-            ctx.shadowOffsetX = 2;
-            ctx.shadowOffsetY = 2;
-            
-            ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-            ctx.fillText("memeyourpic.com", canvas.width - padding, canvas.height - padding);
-            
-            ctx.restore();
+            lines.forEach((lineText) => {
+              const safeText = lineText.trim();
+
+              if (layer.strokeWidth !== 0) {
+                ctx.strokeText(safeText, 0, startY);
+              }
+              ctx.fillText(safeText, 0, startY);
+
+              // Strikethrough Logic
+              if (layer.isStrikethrough) {
+                const metrics = ctx.measureText(safeText);
+                const lineWidth = metrics.width;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.strokeStyle = layer.color || 'white';
+                ctx.lineWidth = fontSize * 0.08;
+                ctx.moveTo(-lineWidth / 2, startY);
+                ctx.lineTo(lineWidth / 2, startY);
+
+                if (layer.strokeWidth && layer.strokeWidth > 0) {
+                  ctx.save();
+                  ctx.strokeStyle = layer.strokeColor || 'black';
+                  ctx.lineWidth = (fontSize * 0.08) + strokeWidth;
+                  ctx.stroke();
+                  ctx.restore();
+                }
+
+                ctx.stroke();
+                ctx.restore();
+              }
+
+              startY += lineHeight;
+            });
+
+          } else if (layer.type === 'sticker') {
+            // Draw Emoji/Sticker
+            // Scale sticker size relative to canvas
+            ctx.font = `${canvas.width * 0.15}px serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(layer.content, 0, 0);
+          } else if (layer.type === 'image' && layer.src) {
+            // Draw Image Layer
+            // Create temp image
+            const lImg = new Image();
+            lImg.src = layer.src;
+            // We assume it's loaded because of Promise.all above
+
+            // Draw image centered at 0,0 (context is already translated)
+            // Default width ~ 160px relative to typical screen, scale appropriately
+            // 40 in w-40 is 10rem = 160px.
+            // We'll scale it relative to canvas width similar to text
+            const baseWidth = canvas.width * 0.3; // 30% of canvas width
+            const aspect = lImg.width / lImg.height;
+            const drawWidth = baseWidth;
+            const drawHeight = baseWidth / aspect;
+
+            ctx.drawImage(lImg, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
           }
-    
-          resolve(canvas.toDataURL('image/png'));
+
+          ctx.restore();
+        });
+
+        // 5. Draw Watermark (if enabled)
+        if (includeWatermark) {
+          ctx.save();
+          const fontSize = Math.max(16, canvas.width * 0.025); // Responsive font size
+          ctx.font = `900 ${fontSize}px "Inter", sans-serif`;
+          ctx.textAlign = 'right';
+          ctx.textBaseline = 'bottom';
+          const padding = canvas.width * 0.02;
+
+          // Text Shadow / Stroke for readability
+          ctx.shadowColor = "rgba(0,0,0,0.8)";
+          ctx.shadowBlur = 4;
+          ctx.shadowOffsetX = 2;
+          ctx.shadowOffsetY = 2;
+
+          ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+          ctx.fillText("memeyourpic.com", canvas.width - padding, canvas.height - padding);
+
+          ctx.restore();
+        }
+
+        resolve(canvas.toDataURL('image/png'));
       });
     };
 

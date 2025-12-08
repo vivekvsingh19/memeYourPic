@@ -42,10 +42,11 @@ export interface Layer {
   rotation: number; // degrees
   scale: number; // 1.0 is base
   width?: number; // percentage relative to container width (for text wrapping)
-  
+
   // Text Properties
   fontFamily?: string;
   color?: string;
+  backgroundColor?: string;
   strokeColor?: string;
   strokeWidth?: number;
   fontSize?: number; // relative base size

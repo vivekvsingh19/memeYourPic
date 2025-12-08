@@ -190,6 +190,7 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
               fontFamily: getFontFamily(),
               fontWeight: layer.isBold ? 'bold' : 'normal',
               color: layer.color || 'white',
+              backgroundColor: layer.backgroundColor || 'transparent',
               // Ensure text is at least 12px on mobile for readability
               fontSize: `max(12px, calc(${layer.fontSize || 24} / 8 * 1cqw))`,
               textShadow: layer.strokeWidth !== 0

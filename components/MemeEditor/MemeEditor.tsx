@@ -340,6 +340,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
         scale: 1,
         fontFamily: preset.fontFamily || 'impact',
         color: '#FFFFFF',
+        backgroundColor: preset.backgroundColor || 'transparent',
         strokeColor: '#000000',
         strokeWidth: 4,
         fontSize: preset.fontSize || 24,
