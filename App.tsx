@@ -27,10 +27,28 @@ function App() {
   const [language, setLanguage] = useState<string>('english');
 
   // Credit System
-  const [credits, setCredits] = useState<number>(() => {
-    const saved = localStorage.getItem('meme_credits');
-    return saved !== null ? parseInt(saved, 10) : 2;
-  });
+  const [credits, setCredits] = useState<number>(0);
+
+  // Load credits when user changes
+  useEffect(() => {
+    const storageKey = user ? `meme_credits_${user.uid}` : 'meme_credits_guest';
+    const saved = localStorage.getItem(storageKey);
+
+    if (saved !== null) {
+      setCredits(parseInt(saved, 10));
+    } else {
+      // New user or guest without history gets 2 free credits
+      const initialCredits = 2;
+      localStorage.setItem(storageKey, initialCredits.toString());
+      setCredits(initialCredits);
+    }
+  }, [user]);
+
+  // Update storage whenever credits change
+  useEffect(() => {
+    const storageKey = user ? `meme_credits_${user.uid}` : 'meme_credits_guest';
+    localStorage.setItem(storageKey, credits.toString());
+  }, [credits, user]);
 
   // Watermark State
   const [isWatermarked, setIsWatermarked] = useState<boolean>(false);
@@ -132,7 +150,6 @@ function App() {
       // Deduct credit only on success
       const newCredits = credits - 1;
       setCredits(newCredits);
-      localStorage.setItem('meme_credits', newCredits.toString());
 
       setCaptions(generatedCaptions);
       setIsWatermarked(true); // Add watermark for AI generation (Free user assumption)
