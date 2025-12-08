@@ -224,7 +224,7 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
       >
         {layer.type === 'text' ? (
           <p
-            className="text-center leading-tight px-2 py-1"
+            className="text-center leading-tight"
             style={{
               // Responsive stroke width calculation
               '--stroke-w': `calc(${layer.strokeWidth ?? 4} / 8 * 1cqw)`,
@@ -232,8 +232,9 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
               fontWeight: layer.isBold ? 'bold' : 'normal',
               color: layer.color || 'white',
               backgroundColor: layer.backgroundColor || 'transparent',
-              // Ensure text is at least 12px on mobile for readability
-              fontSize: `max(12px, calc(${layer.fontSize || 24} / 8 * 1cqw))`,
+              // Remove clamping to ensure WYSIWYG between mobile editor and high-res export
+              fontSize: `calc(${layer.fontSize || 24} / 8 * 1cqw)`,
+              padding: '0.5cqw 1cqw', // Responsive padding (matches approx px-2 py-1 logic but scales)
               textShadow: layer.strokeWidth !== 0
                 ? `
                    calc(var(--stroke-w) * -1) calc(var(--stroke-w) * -1) 0 ${layer.strokeColor},

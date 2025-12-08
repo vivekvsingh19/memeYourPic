@@ -374,6 +374,9 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
     }
   };
 
+  // Mobile UI State
+  const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
+
   // --- Calculate Container Style ---
   const effectiveRatio = (canvasConfig.aspectRatio === 'original' && imgDimensions.w && imgDimensions.h)
     ? imgDimensions.w / imgDimensions.h
@@ -387,12 +390,21 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
     position: 'relative'
   };
 
+  // Adjust container size logic to be more robust
   if (workspaceDim.w > 0 && workspaceDim.h > 0) {
-    if (effectiveRatio > workspaceRatio) {
+    // We want to fit the container within the workspace with some padding
+    const padding = 32; // 16px padding on each side
+    const availableW = workspaceDim.w - padding;
+    const availableH = workspaceDim.h - padding;
+    const availableRatio = availableW / availableH;
+
+    if (effectiveRatio > availableRatio) {
+      // Limited by width
       containerStyle.width = '100%';
       containerStyle.height = 'auto';
       containerStyle.maxWidth = '100%';
     } else {
+      // Limited by height
       containerStyle.height = '100%';
       containerStyle.width = 'auto';
       containerStyle.maxHeight = '100%';
@@ -455,7 +467,10 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
         {/* Canvas Area */}
         <div
           ref={workspaceRef}
-          className="flex-1 bg-deep-black flex items-center justify-center p-4 md:p-8 overflow-hidden touch-none relative"
+          className={`
+            flex-1 bg-deep-black flex items-center justify-center p-4 md:p-8 overflow-hidden touch-none relative transition-all duration-300
+            ${isPanelCollapsed ? 'h-full' : 'h-1/2 md:h-full'}
+          `}
           onClick={() => setSelectedId(null)}
         >
           {/* Subtle pattern background for the editor workspace */}
@@ -489,10 +504,27 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
               ))}
             </div>
           </div>
+
+          {/* Mobile Toggle Button (Floating) */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setIsPanelCollapsed(!isPanelCollapsed); }}
+            className="md:hidden absolute bottom-4 right-4 z-50 bg-black text-white p-3 rounded-full shadow-lg border-2 border-white"
+          >
+            {isPanelCollapsed ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6" /></svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+            )}
+          </button>
         </div>
 
         {/* Editing Panel (Sidebar / Bottom Sheet) */}
-        <div className="flex-none w-full md:w-80 lg:w-96 bg-white z-10 h-1/2 md:h-auto border-t-4 md:border-t-0 md:border-l-4 border-black">
+        <div
+          className={`
+            flex-none w-full md:w-80 lg:w-96 bg-white z-10 border-t-4 md:border-t-0 md:border-l-4 border-black transition-all duration-300
+            ${isPanelCollapsed ? 'h-0 overflow-hidden' : 'h-1/2 md:h-auto overflow-visible'}
+          `}
+        >
           <ControlPanel
             selectedLayerId={selectedId}
             layers={layers}

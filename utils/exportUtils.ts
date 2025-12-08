@@ -150,9 +150,14 @@ export const renderMemeToCanvas = async (
             ctx.miterLimit = 2;
 
             // Wrap Text logic
+            // We used padding: '0.5cqw 1cqw' in DraggableLayer.
+            // 1cqw = 1% of container width.
+            // So horizontal padding is 1% left + 1% right = 2% total.
+            const paddingPercent = 0.02;
+
             const maxWidth = layer.width
-              ? (canvas.width * (layer.width / 100))
-              : (canvas.width * 0.9);
+              ? (canvas.width * (layer.width / 100)) - (canvas.width * paddingPercent)
+              : (canvas.width * 0.9) - (canvas.width * paddingPercent);
 
             const words = text.split(' ');
             const lines = [];
@@ -190,7 +195,8 @@ export const renderMemeToCanvas = async (
               ctx.fillStyle = layer.backgroundColor;
 
               let bgWidth;
-              const paddingY = fontSize * 0.25; // Approximate py-1
+              // Padding Y was 0.5cqw = 0.5% of width
+              const paddingY = canvas.width * 0.005;
 
               if (layer.width) {
                 bgWidth = (canvas.width * (layer.width / 100));
@@ -200,7 +206,8 @@ export const renderMemeToCanvas = async (
                   const m = ctx.measureText(line.trim());
                   if (m.width > maxLineWidth) maxLineWidth = m.width;
                 });
-                const paddingX = fontSize * 0.5;
+                // Padding X was 1cqw = 1% of width
+                const paddingX = canvas.width * 0.01;
                 bgWidth = maxLineWidth + (paddingX * 2);
               }
 
