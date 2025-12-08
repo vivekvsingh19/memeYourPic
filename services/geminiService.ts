@@ -160,8 +160,14 @@ export const generateMemeCaptions = async (
       text: text
     }));
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("Gemini API Error:", error);
+
+    // Handle specific API errors
+    if (error.message?.includes('leaked') || error.message?.includes('403')) {
+      throw new Error("API Key blocked by Google (Leaked). Please generate a new key.");
+    }
+
     // Fallback if API fails to parse or network error
     throw new Error("Failed to generate memes. Please try again.");
   }
