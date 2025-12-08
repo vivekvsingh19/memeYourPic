@@ -293,7 +293,7 @@ const HomePage: React.FC<HomePageProps> = ({
               <div>
                 <div className="flex justify-center mb-1">
                   <span className={`text-[10px] font-black uppercase tracking-wider ${credits > 0 ? 'text-brand-600' : 'text-red-500'}`}>
-                    {credits > 0 ? `${credits} Free AI Generations Left` : '0 Free Generations Left'}
+                    {credits > 0 ? `${credits} Credits Left` : '0 Credits Left'}
                   </span>
                 </div>
                 <button
@@ -526,113 +526,111 @@ const HomePage: React.FC<HomePageProps> = ({
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-5xl font-black text-black mb-4 uppercase tracking-tighter">
-            Choose Your Power Level
+            Unlock Infinite Memes
           </h2>
-          <p className="text-xl text-gray-600 font-bold">
-            Stop living life in 480p. Upgrade your meme game.
+          <p className="text-xl text-gray-600 font-bold max-w-2xl mx-auto">
+            One payment. Unlimited access. Forever.
+            <br />
+            <span className="text-brand-600">Stop counting credits. Start dominating the internet.</span>
           </p>
         </div>
 
         {/* Pricing Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch max-w-screen-xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-4xl mx-auto">
 
-          {/* Plan 1: Normie */}
-          <div className="bg-white border-4 border-black rounded-3xl p-8 flex flex-col shadow-hard hover:-translate-y-1 transition-transform relative">
-            <h3 className="text-3xl font-black uppercase text-gray-400 mb-2">Normie</h3>
-            <div className="flex items-baseline gap-1 mb-8">
-              <span className="text-6xl font-black text-black tracking-tighter">$0</span>
+          {/* Free Tier */}
+          <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 flex flex-col hover:border-black hover:shadow-hard transition-all duration-300 relative">
+            <h3 className="text-3xl font-black uppercase text-gray-400 mb-2">Starter</h3>
+            <div className="flex items-baseline gap-1 mb-6">
+              <span className="text-5xl font-black text-black tracking-tighter">Free</span>
             </div>
 
             <ul className="space-y-4 mb-8 flex-1">
               <li className="flex items-center gap-3 font-bold text-gray-700">
                 <CheckIcon className="w-5 h-5 text-black" />
-                2 Free AI Generations
+                2 Free Generations / Day
               </li>
               <li className="flex items-center gap-3 font-bold text-gray-700">
                 <CheckIcon className="w-5 h-5 text-black" />
-                Unlimited Template Editing
+                Access to Standard Templates
               </li>
-              <li className="flex items-center gap-3 font-bold text-gray-300 line-through">
+              <li className="flex items-center gap-3 font-bold text-gray-400 line-through">
                 <span className="w-5 h-5 flex items-center justify-center">✕</span>
-                No Watermark
+                Remove Watermark
+              </li>
+              <li className="flex items-center gap-3 font-bold text-gray-400 line-through">
+                <span className="w-5 h-5 flex items-center justify-center">✕</span>
+                Commercial License
               </li>
             </ul>
 
             <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="w-full py-4 rounded-xl border-2 border-black font-black text-black uppercase tracking-wider hover:bg-gray-50 transition-all"
+              disabled
+              className="w-full py-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-gray-400 font-black uppercase tracking-wider cursor-default"
             >
-              Stay Basic
+              Current Plan
             </button>
           </div>
 
-          {/* Plan 2: God Mode (Featured) */}
-          <div className="bg-brand-500 border-4 border-black rounded-3xl p-8 flex flex-col shadow-hard-lg transform md:-translate-y-4 relative overflow-hidden">
+          {/* Lifetime Deal */}
+          <div className="bg-black text-white border-4 border-black rounded-3xl p-8 flex flex-col shadow-2xl transform md:scale-110 relative overflow-hidden z-10">
             {/* Decorative Badge */}
-            <div className="absolute top-6 right-0 bg-pop-yellow border-l-4 border-y-4 border-black px-4 py-1 font-black text-xs uppercase tracking-widest shadow-sm">
-              Most Popular
+            <div className="absolute top-6 right-0 bg-brand-500 text-black border-l-2 border-y-2 border-black px-4 py-1 font-black text-xs uppercase tracking-widest shadow-sm">
+              One-Time Payment
             </div>
 
-            <h3 className="text-4xl font-meme text-white mb-2 transform -rotate-2 origin-left drop-shadow-[2px_2px_0_#000]">GOD MODE</h3>
-            <div className="flex items-baseline gap-1 mb-8 text-white">
-              <span className="text-7xl font-black tracking-tighter drop-shadow-[4px_4px_0_#000]">$9</span>
-              <span className="font-bold text-xl opacity-80">/mo</span>
+            <div className="mb-2">
+              <h3 className="text-4xl font-meme text-white transform -rotate-2 origin-left drop-shadow-[2px_2px_0_#000]">LIFETIME PRO</h3>
             </div>
+
+            <div className="flex items-baseline gap-2 mb-6">
+              <span className="text-6xl font-black text-white tracking-tighter">$19.99</span>
+              <span className="text-xl text-gray-400 line-through font-bold">$49.99</span>
+            </div>
+
+            <p className="text-gray-300 font-medium mb-6 border-b border-gray-800 pb-6">
+              Pay once. Meme forever. No monthly fees, no credit counting. Just infinite power.
+            </p>
 
             <ul className="space-y-4 mb-8 flex-1">
-              {[
-                "Unlimited AI Generations",
-                "Unlimited Templates",
-                "4K Ultra HD Export",
-                "No Watermarks",
-                "Custom Fonts & Styles"
-              ].map((feature, i) => (
-                <li key={i} className="flex items-center gap-3 font-bold text-white text-lg">
-                  <div className="bg-black text-white p-0.5 rounded-full">
-                    <CheckIcon className="w-4 h-4" />
-                  </div>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-
-            <button
-              onClick={onSignupClick}
-              className="w-full py-5 rounded-xl bg-black text-white font-black text-xl uppercase tracking-widest border-2 border-transparent hover:bg-gray-900 hover:scale-[1.02] shadow-[4px_4px_0_0_#fff] transition-all"
-            >
-              Ascend Now 🚀
-            </button>
-          </div>
-
-          {/* Plan 3: Legend */}
-          <div className="bg-black border-4 border-black rounded-3xl p-8 flex flex-col shadow-hard hover:-translate-y-1 transition-transform relative text-white">
-            <h3 className="text-3xl font-black uppercase text-gray-500 mb-2">Legend</h3>
-            <div className="flex items-baseline gap-1 mb-8">
-              <span className="text-6xl font-black text-white tracking-tighter">$29</span>
-            </div>
-
-            <ul className="space-y-4 mb-8 flex-1">
-              <li className="flex items-center gap-3 font-bold text-gray-300">
-                <CheckIcon className="w-5 h-5 text-white" />
-                Everything in God Mode
+              <li className="flex items-center gap-3 font-bold text-white text-lg">
+                <div className="bg-brand-500 p-0.5 rounded-full text-black">
+                  <CheckIcon className="w-4 h-4" />
+                </div>
+                Unlimited AI Generations
               </li>
-              <li className="flex items-center gap-3 font-bold text-gray-300">
-                <CheckIcon className="w-5 h-5 text-white" />
-                API Access Key
+              <li className="flex items-center gap-3 font-bold text-white text-lg">
+                <div className="bg-brand-500 p-0.5 rounded-full text-black">
+                  <CheckIcon className="w-4 h-4" />
+                </div>
+                No Watermarks
               </li>
-              <li className="flex items-center gap-3 font-bold text-gray-300">
-                <CheckIcon className="w-5 h-5 text-white" />
-                Team Collaboration
+              <li className="flex items-center gap-3 font-bold text-white text-lg">
+                <div className="bg-brand-500 p-0.5 rounded-full text-black">
+                  <CheckIcon className="w-4 h-4" />
+                </div>
+                Priority Fast Processing
+              </li>
+              <li className="flex items-center gap-3 font-bold text-white text-lg">
+                <div className="bg-brand-500 p-0.5 rounded-full text-black">
+                  <CheckIcon className="w-4 h-4" />
+                </div>
+                Commercial Usage Rights
               </li>
             </ul>
 
             <button
               onClick={onSignupClick}
-              className="w-full py-4 rounded-xl border-2 border-white bg-transparent font-black text-white uppercase tracking-wider hover:bg-white hover:text-black transition-all"
+              className="w-full py-5 rounded-xl bg-brand-500 text-black font-black text-xl uppercase tracking-widest border-2 border-transparent hover:bg-white hover:scale-[1.02] shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all"
             >
-              Contact Sales
+              Unlock Forever 🚀
             </button>
+
+            <p className="text-center text-xs text-gray-500 mt-4 font-bold uppercase tracking-widest">
+              30-Day Money Back Guarantee
+            </p>
           </div>
+
         </div>
       </section>
 

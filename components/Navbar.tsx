@@ -53,14 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({
           {user ? (
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full border border-gray-300">
-                {user.photoURL ? (
-                  <img src={user.photoURL} alt="User" className="w-6 h-6 rounded-full border border-gray-300" />
-                ) : (
-                  <div className="w-6 h-6 rounded-full bg-pop-yellow text-black border border-black flex items-center justify-center font-bold text-xs">
-                    {user.email ? user.email[0].toUpperCase() : 'U'}
-                  </div>
-                )}
-                <span className="hidden md:block text-sm font-bold text-gray-800">
+                <span className="text-sm font-bold text-gray-800">
                   {user.displayName || 'Meme Lord'}
                 </span>
               </div>

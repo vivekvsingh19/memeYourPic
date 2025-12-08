@@ -13,6 +13,16 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
+// Debug check
+const missingKeys = Object.entries(firebaseConfig)
+  .filter(([key, value]) => !value && key !== 'measurementId')
+  .map(([key]) => key);
+
+if (missingKeys.length > 0) {
+  console.error('Missing Firebase Configuration Keys:', missingKeys);
+  console.error('Please check your .env file or Vercel Environment Variables.');
+}
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
