@@ -526,111 +526,131 @@ const HomePage: React.FC<HomePageProps> = ({
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-5xl font-black text-black mb-4 uppercase tracking-tighter">
-            Unlock Infinite Memes
+            Get More Credits
           </h2>
           <p className="text-xl text-gray-600 font-bold max-w-2xl mx-auto">
-            One payment. Unlimited access. Forever.
+            Pay once, keep them forever. No monthly subscriptions. No hidden fees.
             <br />
-            <span className="text-brand-600">Stop counting credits. Start dominating the internet.</span>
+            <span className="text-brand-600">Just pure meme-making power.</span>
           </p>
         </div>
 
         {/* Pricing Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center max-w-screen-xl mx-auto">
 
-          {/* Free Tier */}
-          <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 flex flex-col hover:border-black hover:shadow-hard transition-all duration-300 relative">
-            <h3 className="text-3xl font-black uppercase text-gray-400 mb-2">Starter</h3>
-            <div className="flex items-baseline gap-1 mb-6">
-              <span className="text-5xl font-black text-black tracking-tighter">Free</span>
+          {/* Pack 1: Starter */}
+          <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 flex flex-col hover:border-black hover:shadow-hard transition-all duration-300 relative group">
+            <div className="mb-4">
+              <span className="text-sm font-black uppercase tracking-widest text-gray-400 group-hover:text-black transition-colors">Starter Pack</span>
+              <h3 className="text-5xl font-black text-black mt-2">50 <span className="text-2xl text-gray-500">Credits</span></h3>
             </div>
 
-            <ul className="space-y-4 mb-8 flex-1">
-              <li className="flex items-center gap-3 font-bold text-gray-700">
-                <CheckIcon className="w-5 h-5 text-black" />
-                2 Free Generations / Day
-              </li>
-              <li className="flex items-center gap-3 font-bold text-gray-700">
-                <CheckIcon className="w-5 h-5 text-black" />
-                Access to Standard Templates
-              </li>
-              <li className="flex items-center gap-3 font-bold text-gray-400 line-through">
-                <span className="w-5 h-5 flex items-center justify-center">✕</span>
-                Remove Watermark
-              </li>
-              <li className="flex items-center gap-3 font-bold text-gray-400 line-through">
-                <span className="w-5 h-5 flex items-center justify-center">✕</span>
-                Commercial License
-              </li>
-            </ul>
-
-            <button
-              disabled
-              className="w-full py-4 rounded-xl border-2 border-gray-200 bg-gray-50 text-gray-400 font-black uppercase tracking-wider cursor-default"
-            >
-              Current Plan
-            </button>
-          </div>
-
-          {/* Lifetime Deal */}
-          <div className="bg-black text-white border-4 border-black rounded-3xl p-8 flex flex-col shadow-2xl transform md:scale-110 relative overflow-hidden z-10">
-            {/* Decorative Badge */}
-            <div className="absolute top-6 right-0 bg-brand-500 text-black border-l-2 border-y-2 border-black px-4 py-1 font-black text-xs uppercase tracking-widest shadow-sm">
-              One-Time Payment
+            <div className="text-3xl font-bold text-black mb-6">
+              $4.99
             </div>
 
-            <div className="mb-2">
-              <h3 className="text-4xl font-meme text-white transform -rotate-2 origin-left drop-shadow-[2px_2px_0_#000]">LIFETIME PRO</h3>
-            </div>
-
-            <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-6xl font-black text-white tracking-tighter">$19.99</span>
-              <span className="text-xl text-gray-400 line-through font-bold">$49.99</span>
-            </div>
-
-            <p className="text-gray-300 font-medium mb-6 border-b border-gray-800 pb-6">
-              Pay once. Meme forever. No monthly fees, no credit counting. Just infinite power.
-            </p>
-
-            <ul className="space-y-4 mb-8 flex-1">
-              <li className="flex items-center gap-3 font-bold text-white text-lg">
-                <div className="bg-brand-500 p-0.5 rounded-full text-black">
-                  <CheckIcon className="w-4 h-4" />
-                </div>
-                Unlimited AI Generations
+            <ul className="space-y-3 mb-8 flex-1">
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <CheckIcon className="w-4 h-4 text-green-500" />
+                Perfect for casual roasting
               </li>
-              <li className="flex items-center gap-3 font-bold text-white text-lg">
-                <div className="bg-brand-500 p-0.5 rounded-full text-black">
-                  <CheckIcon className="w-4 h-4" />
-                </div>
-                No Watermarks
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <CheckIcon className="w-4 h-4 text-green-500" />
+                No expiration date
               </li>
-              <li className="flex items-center gap-3 font-bold text-white text-lg">
-                <div className="bg-brand-500 p-0.5 rounded-full text-black">
-                  <CheckIcon className="w-4 h-4" />
-                </div>
-                Priority Fast Processing
-              </li>
-              <li className="flex items-center gap-3 font-bold text-white text-lg">
-                <div className="bg-brand-500 p-0.5 rounded-full text-black">
-                  <CheckIcon className="w-4 h-4" />
-                </div>
-                Commercial Usage Rights
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <CheckIcon className="w-4 h-4 text-green-500" />
+                Remove watermarks
               </li>
             </ul>
 
             <button
               onClick={onSignupClick}
-              className="w-full py-5 rounded-xl bg-brand-500 text-black font-black text-xl uppercase tracking-widest border-2 border-transparent hover:bg-white hover:scale-[1.02] shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all"
+              className="w-full py-3 rounded-xl border-2 border-black bg-white text-black font-black uppercase tracking-wider hover:bg-black hover:text-white transition-all"
             >
-              Unlock Forever 🚀
+              Get Started
             </button>
-
-            <p className="text-center text-xs text-gray-500 mt-4 font-bold uppercase tracking-widest">
-              30-Day Money Back Guarantee
-            </p>
           </div>
 
+          {/* Pack 2: Pro (Featured) */}
+          <div className="bg-black text-white border-4 border-black rounded-3xl p-8 flex flex-col shadow-2xl transform md:-translate-y-4 relative overflow-hidden z-10">
+            <div className="absolute top-0 right-0 bg-brand-500 text-black text-xs font-black uppercase px-3 py-1 rounded-bl-xl">
+              Most Popular
+            </div>
+
+            <div className="mb-4 relative">
+              <div className="absolute -top-4 -left-4 w-20 h-20 bg-brand-500 rounded-full blur-3xl opacity-20"></div>
+              <span className="text-sm font-black uppercase tracking-widest text-brand-500">Pro Stash</span>
+              <h3 className="text-6xl font-black text-white mt-2">200 <span className="text-2xl text-gray-400">Credits</span></h3>
+            </div>
+
+            <div className="flex items-end gap-2 mb-8">
+              <span className="text-4xl font-bold text-white">$14.99</span>
+              <span className="text-sm text-gray-400 line-through mb-1">$19.99</span>
+            </div>
+
+            <ul className="space-y-4 mb-8 flex-1">
+              <li className="flex items-center gap-3 font-bold text-gray-200">
+                <div className="bg-brand-500 p-0.5 rounded-full text-black">
+                  <CheckIcon className="w-3 h-3" />
+                </div>
+                Best value for creators
+              </li>
+              <li className="flex items-center gap-3 font-bold text-gray-200">
+                <div className="bg-brand-500 p-0.5 rounded-full text-black">
+                  <CheckIcon className="w-3 h-3" />
+                </div>
+                Priority generation queue
+              </li>
+              <li className="flex items-center gap-3 font-bold text-gray-200">
+                <div className="bg-brand-500 p-0.5 rounded-full text-black">
+                  <CheckIcon className="w-3 h-3" />
+                </div>
+                Access to exclusive styles
+              </li>
+            </ul>
+
+            <button
+              onClick={onSignupClick}
+              className="w-full py-4 rounded-xl bg-brand-500 text-black font-black text-lg uppercase tracking-widest hover:bg-white hover:scale-[1.02] transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+            >
+              Buy Now
+            </button>
+          </div>
+
+          {/* Pack 3: Ultimate */}
+          <div className="bg-white border-2 border-gray-200 rounded-3xl p-8 flex flex-col hover:border-black hover:shadow-hard transition-all duration-300 relative group">
+            <div className="mb-4">
+              <span className="text-sm font-black uppercase tracking-widest text-gray-400 group-hover:text-black transition-colors">Meme God</span>
+              <h3 className="text-5xl font-black text-black mt-2">500 <span className="text-2xl text-gray-500">Credits</span></h3>
+            </div>
+
+            <div className="text-3xl font-bold text-black mb-6">
+              $29.99
+            </div>
+
+            <ul className="space-y-3 mb-8 flex-1">
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <CheckIcon className="w-4 h-4 text-green-500" />
+                Lowest cost per meme
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <CheckIcon className="w-4 h-4 text-green-500" />
+                Commercial license included
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <CheckIcon className="w-4 h-4 text-green-500" />
+                24/7 Priority Support
+              </li>
+            </ul>
+
+            <button
+              onClick={onSignupClick}
+              className="w-full py-3 rounded-xl border-2 border-black bg-white text-black font-black uppercase tracking-wider hover:bg-black hover:text-white transition-all"
+            >
+              Get Ultimate
+            </button>
+          </div>
         </div>
       </section>
 
