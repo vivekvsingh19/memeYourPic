@@ -135,6 +135,47 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
     window.addEventListener('pointerup', onUp);
   };
 
+  // Text Width Resize Logic (Side Handles)
+  const handleWidthResizeStart = (e: React.PointerEvent, side: 'left' | 'right') => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!elementRef.current || !containerRef.current) return;
+
+    const startX = e.clientX;
+    const containerRect = containerRef.current.getBoundingClientRect();
+
+    // If width is not set yet, calculate current width in %
+    const currentWidthPx = elementRef.current.offsetWidth;
+    const startWidthPercent = layer.width || (currentWidthPx / containerRect.width) * 100;
+
+    const onMove = (moveEvent: PointerEvent) => {
+      const dx = moveEvent.clientX - startX;
+      // Convert dx to percentage
+      const dxPercent = (dx / containerRect.width) * 100;
+
+      let newWidth;
+      if (side === 'right') {
+        newWidth = startWidthPercent + dxPercent;
+      } else {
+        newWidth = startWidthPercent - dxPercent;
+      }
+
+      // Min width constraint (e.g. 5%)
+      newWidth = Math.max(5, newWidth);
+
+      onUpdate(layer.id, { width: newWidth }, false);
+    };
+
+    const onUp = () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      if (onInteractionEnd) onInteractionEnd();
+    };
+
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  };
+
   // Helper for font families
   const getFontFamily = () => {
     switch (layer.fontFamily) {
@@ -269,6 +310,24 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
               onPointerDown={handleScaleStart}
               className="absolute -bottom-2 -right-2 w-4 h-4 bg-white border-2 border-brand-500 rounded-full cursor-nwse-resize z-20 shadow-sm hover:scale-125 transition-transform"
             />
+
+            {/* Side Handles for Text Width (Left/Right) */}
+            {layer.type === 'text' && (
+              <>
+                {/* Left Handle */}
+                <div
+                  data-control
+                  onPointerDown={(e) => handleWidthResizeStart(e, 'left')}
+                  className="absolute top-1/2 -left-3 -translate-y-1/2 w-2 h-6 bg-white border-2 border-brand-500 rounded-full cursor-ew-resize z-20 shadow-sm hover:scale-110 transition-transform"
+                />
+                {/* Right Handle */}
+                <div
+                  data-control
+                  onPointerDown={(e) => handleWidthResizeStart(e, 'right')}
+                  className="absolute top-1/2 -right-3 -translate-y-1/2 w-2 h-6 bg-white border-2 border-brand-500 rounded-full cursor-ew-resize z-20 shadow-sm hover:scale-110 transition-transform"
+                />
+              </>
+            )}
           </>
         )}
       </div>
