@@ -282,6 +282,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     // Template Search State
     const [templateSearch, setTemplateSearch] = useState('');
 
+
     // File inputs Refs
     const addImageInputRef = useRef<HTMLInputElement>(null);
     const replaceBgInputRef = useRef<HTMLInputElement>(null);
@@ -387,38 +388,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                 {activeTab === 'text' && (
                     <div className="space-y-6">
 
-                        {/* AI Persona Selector (New) */}
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-gray-400 uppercase flex items-center gap-2">
-                                <FireIcon className="w-4 h-4 text-brand-500" />
-                                AI Persona Mode
-                            </label>
-                            <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar snap-x">
-                                {[
-                                    { id: 'savage', label: 'Savage', emoji: '🔥', desc: 'No mercy roasts' },
-                                    { id: 'chill', label: 'Chill', emoji: '🧊', desc: 'Good vibes only' },
-                                    { id: 'british', label: 'British', emoji: '☕', desc: 'Dry sarcasm' },
-                                    { id: 'zoomer', label: 'Zoomer', emoji: '💀', desc: 'fr fr no cap' },
-                                    { id: 'toxic', label: 'Toxic Ex', emoji: '🚩', desc: 'Gaslighting 101' },
-                                    { id: 'sigma', label: 'Sigma', emoji: '🗿', desc: 'Grindset mindset' },
-                                    { id: 'anime', label: 'Tsundere', emoji: '💢', desc: 'It\'s not like I like you!' },
-                                ].map((p) => (
-                                    <button
-                                        key={p.id}
-                                        onClick={() => {
-                                            // In a real app, this would trigger a re-generation or update state
-                                            // For now, we'll just show visual selection (mock)
-                                            // You might want to add a prop `onPersonaChange` later
-                                        }}
-                                        className="snap-start flex-none flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-black hover:bg-white transition-all focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
-                                        title={p.desc}
-                                    >
-                                        <span className="text-2xl mb-1">{p.emoji}</span>
-                                        <span className="text-[10px] font-black uppercase">{p.label}</span>
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
+
 
                         {/* Layers List */}
                         <div className="space-y-2">
