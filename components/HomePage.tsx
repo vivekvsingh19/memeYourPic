@@ -337,6 +337,18 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* ================= RECENTLY CREATED (Mock) ================= */}
+      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-12 border-t-2 border-dashed border-gray-300">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-black uppercase tracking-tight text-gray-800">
+            Community Gallery <span className="text-brand-500">🔥</span>
+          </h2>
+          <button className="text-sm font-bold text-gray-500 hover:text-black underline">View All</button>
+        </div>
+
+        <AutoScrollGallery />
+      </section>
+
       {/* ================= DAILY VIRAL PACKS SECTION ================= */}
       <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 mb-24">
         <div className="flex justify-between items-end mb-8">
@@ -428,6 +440,33 @@ const HomePage: React.FC<HomePageProps> = ({
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* ================= STEPS SECTION ================= */}
+      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-black uppercase mb-4">How to go viral</h2>
+          <div className="h-2 w-24 bg-brand-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            { icon: UploadIcon, title: "1. Upload", desc: "Drag, drop, or shoot. We accept everything.", color: "bg-acid-green" },
+            { icon: MagicIcon, title: "2. AI Magic", desc: "Our AI roasts you & writes the captions.", color: "bg-brand-400" },
+            { icon: DownloadIcon, title: "3. Go Viral", desc: "Export in HD. Post it. Watch the likes roll in.", color: "bg-hot-pink" }
+          ].map((step, idx) => (
+            <div key={idx} className="group relative">
+              <div className={`absolute inset-0 ${step.color} rounded-2xl border-2 border-black transform translate-x-2 translate-y-2`}></div>
+              <div className="relative bg-white p-8 rounded-2xl border-2 border-black hover:-translate-y-2 hover:-translate-x-2 transition-transform duration-300 flex flex-col items-center text-center h-full">
+                <div className={`w-16 h-16 rounded-xl border-2 border-black mb-6 flex items-center justify-center ${step.color} shadow-hard-sm`}>
+                  <step.icon className="w-8 h-8 text-black" />
+                </div>
+                <h3 className="text-2xl font-black uppercase mb-3">{step.title}</h3>
+                <p className="font-medium text-gray-600">{step.desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -527,31 +566,7 @@ const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ================= STEPS SECTION ================= */}
-      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-24">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-black uppercase mb-4">How to go viral</h2>
-          <div className="h-2 w-24 bg-brand-500 mx-auto rounded-full"></div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { icon: UploadIcon, title: "1. Upload", desc: "Drag, drop, or shoot. We accept everything.", color: "bg-acid-green" },
-            { icon: MagicIcon, title: "2. AI Magic", desc: "Our AI roasts you & writes the captions.", color: "bg-brand-400" },
-            { icon: DownloadIcon, title: "3. Go Viral", desc: "Export in HD. Post it. Watch the likes roll in.", color: "bg-hot-pink" }
-          ].map((step, idx) => (
-            <div key={idx} className="group relative">
-              <div className={`absolute inset-0 ${step.color} rounded-2xl border-2 border-black transform translate-x-2 translate-y-2`}></div>
-              <div className="relative bg-white p-8 rounded-2xl border-2 border-black hover:-translate-y-2 hover:-translate-x-2 transition-transform duration-300 flex flex-col items-center text-center h-full">
-                <div className={`w-16 h-16 rounded-xl border-2 border-black mb-6 flex items-center justify-center ${step.color} shadow-hard-sm`}>
-                  <step.icon className="w-8 h-8 text-black" />
-                </div>
-                <h3 className="text-2xl font-black uppercase mb-3">{step.title}</h3>
-                <p className="font-medium text-gray-600">{step.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* ================= PRICING SECTION ================= */}
       <section id="pricing" className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-24 mb-12">
@@ -687,16 +702,7 @@ const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ================= RECENTLY CREATED (Mock) ================= */}
-      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-12 border-t-2 border-dashed border-gray-300">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-black uppercase tracking-tight text-gray-800">
-            Community Gallery <span className="text-brand-500">🔥</span>
-          </h2>
-          <button className="text-sm font-bold text-gray-500 hover:text-black underline">View All</button>
-        </div>
 
-        <AutoScrollGallery />
-      </section>
 
 
     </div>
