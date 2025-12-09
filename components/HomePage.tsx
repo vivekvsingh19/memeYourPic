@@ -363,17 +363,24 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { id: 'npc', title: 'NPC Week', desc: 'Oblivion dialogue vibes', emoji: '🤖', color: 'bg-blue-100' },
-            { id: 'gym', title: 'Gym Bro Pack', desc: 'Do you even lift?', emoji: '💪', color: 'bg-gray-200' },
-            { id: 'anime', title: 'Anime Roast', desc: 'Main character energy', emoji: '✨', color: 'bg-pink-100' },
-            { id: 'corp', title: 'Corporate Life', desc: 'Per my last email', emoji: '💼', color: 'bg-indigo-100' },
-          ].map((pack) => (
+          {DAILY_PACKS.map((pack) => (
             <div key={pack.id} className={`relative p-6 rounded-3xl border-2 border-black ${pack.color} hover:-translate-y-2 transition-transform cursor-pointer shadow-hard-sm group`}>
               <div className="absolute top-4 right-4 text-4xl group-hover:scale-125 transition-transform">{pack.emoji}</div>
               <h3 className="text-2xl font-black uppercase mt-8 mb-2">{pack.title}</h3>
               <p className="text-sm font-bold text-gray-600 mb-6">{pack.desc}</p>
-              <button className="w-full py-3 bg-white border-2 border-black rounded-xl font-black uppercase text-xs tracking-wider hover:bg-black hover:text-white transition-colors">
+              <button
+                onClick={() => {
+                  // Find first matching template that exists in our popular templates list
+                  const template = POPULAR_TEMPLATES.find(t => pack.templates.includes(t.id));
+                  if (template) {
+                    onTemplateSelect(template);
+                  } else {
+                    // Fallback to first popular template if none match (should not happen if constants are correct)
+                    onTemplateSelect(POPULAR_TEMPLATES[0]);
+                  }
+                }}
+                className="w-full py-3 bg-white border-2 border-black rounded-xl font-black uppercase text-xs tracking-wider hover:bg-black hover:text-white transition-colors"
+              >
                 Generate Pack
               </button>
             </div>
