@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { UploadIcon, MagicIcon, FireIcon, DownloadIcon, CheckIcon, ArrowDownIcon, SearchIcon, CrownIcon, CameraIcon, ShareIcon } from './Icons';
 import BeforeAfterSlider from './BeforeAfterSlider';
-import { POPULAR_TEMPLATES, MemeTemplateImage, SUPPORTED_LANGUAGES } from '../constants';
+import { POPULAR_TEMPLATES, MemeTemplateImage, SUPPORTED_LANGUAGES, DAILY_PACKS } from '../constants';
 
 interface HomePageProps {
   onFileSelect: (file: File) => void;

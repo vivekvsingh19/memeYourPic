@@ -3,47 +3,47 @@
 import { MemeStyle } from './types';
 
 export const MEME_STYLES: MemeStyle[] = [
-  { 
-    id: 'toxic', 
-    label: 'Toxic', 
-    emoji: '😈', 
-    prompt: 'Style: Roast-heavy, toxic, sarcastic, and slightly mean. Focus on bad decisions and red flags.' 
+  {
+    id: 'toxic',
+    label: 'Toxic',
+    emoji: '😈',
+    prompt: 'Style: Roast-heavy, toxic, sarcastic, and slightly mean. Focus on bad decisions and red flags.'
   },
-  { 
-    id: 'crush', 
-    label: 'Crush Gone Wrong', 
-    emoji: '💔', 
-    prompt: 'Style: Self-deprecating, cringey, or heartbroken. Focus on being ignored, delusional, or friend-zoned.' 
+  {
+    id: 'crush',
+    label: 'Crush Gone Wrong',
+    emoji: '💔',
+    prompt: 'Style: Self-deprecating, cringey, or heartbroken. Focus on being ignored, delusional, or friend-zoned.'
   },
-  { 
-    id: 'exam', 
-    label: 'Exam Struggle', 
-    emoji: '📚', 
-    prompt: 'Style: Academic failure, procrastination, last-minute studying, and the pain of being a student.' 
+  {
+    id: 'exam',
+    label: 'Exam Struggle',
+    emoji: '📚',
+    prompt: 'Style: Academic failure, procrastination, last-minute studying, and the pain of being a student.'
   },
-  { 
-    id: 'corporate', 
-    label: 'Corporate Slave', 
-    emoji: '💼', 
-    prompt: 'Style: Cynical 9-to-5 humor, annoying bosses, endless meetings, and fake corporate enthusiasm.' 
+  {
+    id: 'corporate',
+    label: 'Corporate Slave',
+    emoji: '💼',
+    prompt: 'Style: Cynical 9-to-5 humor, annoying bosses, endless meetings, and fake corporate enthusiasm.'
   },
-  { 
-    id: 'bollywood', 
-    label: 'Bollywood Drama', 
-    emoji: '🎬', 
-    prompt: 'Style: Overly dramatic, soap-opera reactions. Think plot twists, shocked relatives, and extreme close-ups.' 
+  {
+    id: 'bollywood',
+    label: 'Bollywood Drama',
+    emoji: '🎬',
+    prompt: 'Style: Overly dramatic, soap-opera reactions. Think plot twists, shocked relatives, and extreme close-ups.'
   },
-  { 
-    id: 'pain', 
-    label: 'Life is Pain', 
-    emoji: '😭', 
-    prompt: 'Style: Dark humor, existential dread, and "why is this happening to me" energy.' 
+  {
+    id: 'pain',
+    label: 'Life is Pain',
+    emoji: '😭',
+    prompt: 'Style: Dark humor, existential dread, and "why is this happening to me" energy.'
   },
-  { 
-    id: 'wholesome', 
-    label: 'Wholesome', 
-    emoji: '🥰', 
-    prompt: 'Style: Cute, uplifting, supportive, and positive vibes. Focus on friendship and good days.' 
+  {
+    id: 'wholesome',
+    label: 'Wholesome',
+    emoji: '🥰',
+    prompt: 'Style: Cute, uplifting, supportive, and positive vibes. Focus on friendship and good days.'
   },
 ];
 
@@ -256,5 +256,40 @@ export const POPULAR_TEMPLATES: MemeTemplateImage[] = [
     id: 'exit-ramp',
     name: 'Left Exit 12 Off Ramp',
     url: 'https://i.imgflip.com/22bdq6.jpg',
+  },
+];
+
+export const DAILY_PACKS = [
+  {
+    id: 'npc',
+    title: 'NPC Week',
+    desc: 'Oblivion dialogue vibes',
+    emoji: '🤖',
+    color: 'bg-blue-100',
+    templates: ['drake', 'distracted', 'buttons']
+  },
+  {
+    id: 'gym',
+    title: 'Gym Bro Pack',
+    desc: 'Do you even lift?',
+    emoji: '💪',
+    color: 'bg-gray-200',
+    templates: ['buff-doge', 'chad', 'success']
+  },
+  {
+    id: 'anime',
+    title: 'Anime Roast',
+    desc: 'Main character energy',
+    emoji: '✨',
+    color: 'bg-pink-100',
+    templates: ['pikachu', 'pigeon', 'anime']
+  },
+  {
+    id: 'corp',
+    title: 'Corporate Life',
+    desc: 'Per my last email',
+    emoji: '💼',
+    color: 'bg-indigo-100',
+    templates: ['office', 'harold', 'fine']
   },
 ];
