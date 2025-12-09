@@ -10,6 +10,9 @@ interface NavbarProps {
   onLogoClick: () => void;
   onPricingClick: () => void;
   onLogoutClick?: () => void;
+  onBattleClick?: () => void;
+  onExploreClick?: () => void;
+  onDashboardClick?: () => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -18,7 +21,10 @@ const Navbar: React.FC<NavbarProps> = ({
   onSignupClick,
   onLogoClick,
   onPricingClick,
-  onLogoutClick
+  onLogoutClick,
+  onBattleClick,
+  onExploreClick,
+  onDashboardClick
 }) => {
   return (
     <nav className="w-full fixed top-0 z-50 py-4 px-4 flex justify-center pointer-events-none">
@@ -40,23 +46,40 @@ const Navbar: React.FC<NavbarProps> = ({
             </span>
           </div>
 
-          <button
-            onClick={onPricingClick}
-            className="hidden md:block text-sm font-bold text-gray-600 hover:text-black hover:underline decoration-2 underline-offset-4 decoration-pop-yellow transition-all"
-          >
-            Pricing
-          </button>
+          <div className="hidden md:flex items-center gap-4">
+            <button
+              onClick={onExploreClick}
+              className="text-sm font-bold text-gray-600 hover:text-black hover:underline decoration-2 underline-offset-4 decoration-pop-yellow transition-all"
+            >
+              Explore
+            </button>
+            <button
+              onClick={onPricingClick}
+              className="text-sm font-bold text-gray-600 hover:text-black hover:underline decoration-2 underline-offset-4 decoration-pop-yellow transition-all"
+            >
+              Pricing
+            </button>
+            <button
+              onClick={onBattleClick}
+              className="text-sm font-bold text-red-600 hover:text-red-700 hover:underline decoration-2 underline-offset-4 decoration-red-200 transition-all flex items-center gap-1"
+            >
+              <span className="animate-pulse">🔥</span> Battle Mode
+            </button>
+          </div>
         </div>
 
         {/* Right: Actions */}
         <div className="flex items-center gap-3">
           {user ? (
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-full border border-gray-300">
+              <button
+                onClick={onDashboardClick}
+                className="flex items-center gap-2 px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full border border-gray-300 transition-colors"
+              >
                 <span className="text-sm font-bold text-gray-800">
                   {user.displayName || 'Meme Lord'}
                 </span>
-              </div>
+              </button>
               <button
                 onClick={onLogoutClick}
                 className="text-sm font-bold bg-white text-red-500 hover:bg-red-50 border-2 border-transparent hover:border-red-500 px-3 py-1.5 rounded-full transition-all"

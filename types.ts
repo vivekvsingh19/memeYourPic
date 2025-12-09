@@ -66,3 +66,30 @@ export interface EditorState {
   layers: Layer[];
   selectedId: string | null;
 }
+
+export interface DailyPack {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  date: string;
+  isNew?: boolean;
+}
+
+export type PersonaType = 'savage' | 'chill' | 'british' | 'zoomer' | 'toxic-ex' | 'sigma' | 'anime';
+
+export interface Persona {
+  id: PersonaType;
+  label: string;
+  emoji: string;
+  description: string;
+}
+
+export interface BattleResult {
+  winner: 1 | 2;
+  winnerTitle: string;
+  reason: string;
+  roastP1: string;
+  roastP2: string;
+  overallVerdict: string;
+}

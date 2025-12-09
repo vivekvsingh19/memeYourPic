@@ -217,8 +217,8 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
         className={`
           relative w-full
           ${isSelected
-            ? 'border-2 border-dashed border-brand-500 bg-brand-500/5 shadow-[0_0_0_9999px_rgba(0,0,0,0.5)] shadow-none'
-            : 'border-2 border-transparent hover:border-white/50'
+            ? 'border-[1.5px] border-[#8B3DFF] shadow-none'
+            : 'border-[1.5px] border-transparent hover:border-white/50'
           }
         `}
       >
@@ -267,23 +267,23 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
             <button
               data-control
               onClick={(e) => { e.stopPropagation(); onDelete(layer.id); }}
-              className="absolute -top-8 -right-8 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center shadow-lg z-30 hover:scale-110 hover:bg-red-600 transition-all border-2 border-white"
+              className="absolute -top-[min(22px,6cqw)] -right-[min(22px,6cqw)] w-[min(22px,6cqw)] h-[min(22px,6cqw)] bg-white text-gray-700 rounded-full flex items-center justify-center shadow-md z-30 hover:scale-110 hover:text-red-500 transition-all"
               title="Delete Layer"
             >
-              <TrashIcon className="w-4 h-4" />
+              <TrashIcon className="w-[50%] h-[50%]" />
             </button>
 
             {/* Rotation Handle (Top Center Stick) */}
             <div
-              className="absolute -top-8 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-brand-500 z-20"
+              className="absolute -top-[min(22px,6cqw)] left-1/2 -translate-x-1/2 w-0.5 h-[min(22px,6cqw)] bg-[#8B3DFF] z-20"
             />
             <div
               data-control
               onPointerDown={handleRotateStart}
-              className="absolute -top-10 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-2 border-brand-500 rounded-full flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing z-30 hover:scale-110 text-brand-600"
+              className="absolute -top-[min(32px,9cqw)] left-1/2 -translate-x-1/2 w-[min(22px,6cqw)] h-[min(22px,6cqw)] bg-white rounded-full flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing z-30 hover:scale-110 text-gray-700"
               title="Rotate"
             >
-              <RotateIcon className="w-4 h-4" />
+              <RotateIcon className="w-[50%] h-[50%]" />
             </div>
 
             {/* 4 Corner Resize Handles */}
@@ -291,25 +291,25 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
             <div
               data-control
               onPointerDown={handleScaleStart}
-              className="absolute -top-2 -left-2 w-4 h-4 bg-white border-2 border-brand-500 rounded-full cursor-nwse-resize z-20 shadow-sm hover:scale-125 transition-transform"
+              className="absolute -top-[min(6px,2cqw)] -left-[min(6px,2cqw)] w-[min(12px,4cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-nwse-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-125 transition-transform"
             />
             {/* NE */}
             <div
               data-control
               onPointerDown={handleScaleStart}
-              className="absolute -top-2 -right-2 w-4 h-4 bg-white border-2 border-brand-500 rounded-full cursor-nesw-resize z-20 shadow-sm hover:scale-125 transition-transform"
+              className="absolute -top-[min(6px,2cqw)] -right-[min(6px,2cqw)] w-[min(12px,4cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-nesw-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-125 transition-transform"
             />
             {/* SW */}
             <div
               data-control
               onPointerDown={handleScaleStart}
-              className="absolute -bottom-2 -left-2 w-4 h-4 bg-white border-2 border-brand-500 rounded-full cursor-nesw-resize z-20 shadow-sm hover:scale-125 transition-transform"
+              className="absolute -bottom-[min(6px,2cqw)] -left-[min(6px,2cqw)] w-[min(12px,4cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-nesw-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-125 transition-transform"
             />
             {/* SE */}
             <div
               data-control
               onPointerDown={handleScaleStart}
-              className="absolute -bottom-2 -right-2 w-4 h-4 bg-white border-2 border-brand-500 rounded-full cursor-nwse-resize z-20 shadow-sm hover:scale-125 transition-transform"
+              className="absolute -bottom-[min(6px,2cqw)] -right-[min(6px,2cqw)] w-[min(12px,4cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-nwse-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-125 transition-transform"
             />
 
             {/* Side Handles for Text Width (Left/Right) */}
@@ -319,13 +319,13 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
                 <div
                   data-control
                   onPointerDown={(e) => handleWidthResizeStart(e, 'left')}
-                  className="absolute top-1/2 -left-3 -translate-y-1/2 w-2 h-6 bg-white border-2 border-brand-500 rounded-full cursor-ew-resize z-20 shadow-sm hover:scale-110 transition-transform"
+                  className="absolute top-1/2 -left-[min(8px,2.5cqw)] -translate-y-1/2 w-[min(6px,2cqw)] h-[min(16px,5cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-110 transition-transform"
                 />
                 {/* Right Handle */}
                 <div
                   data-control
                   onPointerDown={(e) => handleWidthResizeStart(e, 'right')}
-                  className="absolute top-1/2 -right-3 -translate-y-1/2 w-2 h-6 bg-white border-2 border-brand-500 rounded-full cursor-ew-resize z-20 shadow-sm hover:scale-110 transition-transform"
+                  className="absolute top-1/2 -right-[min(8px,2.5cqw)] -translate-y-1/2 w-[min(6px,2cqw)] h-[min(16px,5cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-110 transition-transform"
                 />
               </>
             )}

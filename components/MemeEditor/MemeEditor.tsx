@@ -375,7 +375,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
   };
 
   // Mobile UI State
-  const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
+  const [isPanelCollapsed, setIsPanelCollapsed] = useState(true);
 
   // --- Calculate Container Style ---
   const effectiveRatio = (canvasConfig.aspectRatio === 'original' && imgDimensions.w && imgDimensions.h)
@@ -415,7 +415,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
   }
 
   return (
-    <div className="flex flex-col h-screen max-h-screen bg-deep-black overflow-hidden font-sans">
+    <div className="flex flex-col h-screen max-h-screen bg-gray-100 overflow-hidden font-sans">
       {/* Header */}
       <div className="flex-none bg-white border-b-2 border-black px-4 py-3 flex items-center justify-between z-20">
         <div className="flex items-center gap-2">
@@ -468,10 +468,16 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
         <div
           ref={workspaceRef}
           className={`
-            flex-1 bg-deep-black flex items-center justify-center p-4 md:p-8 overflow-hidden touch-none relative transition-all duration-300
+            flex-1 bg-gray-100 flex items-center justify-center p-4 md:p-8 overflow-hidden touch-none relative transition-all duration-300
             ${isPanelCollapsed ? 'h-full' : 'h-1/2 md:h-full'}
           `}
-          onClick={() => setSelectedId(null)}
+          onClick={() => {
+            setSelectedId(null);
+            // On mobile, clicking canvas collapses the panel to show just tabs
+            if (window.innerWidth < 768) {
+              setIsPanelCollapsed(true);
+            }
+          }}
         >
           {/* Subtle pattern background for the editor workspace */}
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#333_1px,transparent_1px)] [background-size:20px_20px]"></div>
@@ -504,25 +510,13 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
               ))}
             </div>
           </div>
-
-          {/* Mobile Toggle Button (Floating) */}
-          <button
-            onClick={(e) => { e.stopPropagation(); setIsPanelCollapsed(!isPanelCollapsed); }}
-            className="md:hidden absolute bottom-4 right-4 z-50 bg-black text-white p-3 rounded-full shadow-lg border-2 border-white"
-          >
-            {isPanelCollapsed ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6" /></svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
-            )}
-          </button>
         </div>
 
         {/* Editing Panel (Sidebar / Bottom Sheet) */}
         <div
           className={`
             flex-none w-full md:w-80 lg:w-96 bg-white z-10 border-t-4 md:border-t-0 md:border-l-4 border-black transition-all duration-300
-            ${isPanelCollapsed ? 'h-0 overflow-hidden' : 'h-1/2 md:h-auto overflow-visible'}
+            ${isPanelCollapsed ? 'h-auto' : 'h-1/2 md:h-full'}
           `}
         >
           <ControlPanel
@@ -541,6 +535,9 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
             onReorderLayer={handleReorderLayer}
             onApplyTemplate={handleApplyTemplate}
             onUpdateCanvas={handleUpdateCanvas}
+            isPanelCollapsed={isPanelCollapsed}
+            onToggleCollapse={() => setIsPanelCollapsed(!isPanelCollapsed)}
+            onExport={handleExport}
           />
         </div>
       </div>

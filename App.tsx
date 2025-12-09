@@ -7,6 +7,10 @@ import MemeEditor from './components/MemeEditor/MemeEditor';
 import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage';
+import FriendBattle from './components/FriendBattle';
+import ExplorePage from './components/ExplorePage';
+import UserDashboard from './components/UserDashboard';
+import DeveloperApiPage from './components/DeveloperApiPage';
 import { generateMemeCaptions } from './services/geminiService';
 import { GeneratedCaption, ViewState, User } from './types';
 import { auth } from './firebaseConfig';
@@ -18,7 +22,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
   // State
-  const [view, setView] = useState<ViewState>('HOME');
+  const [view, setView] = useState<ViewState | 'BATTLE' | 'EXPLORE' | 'DASHBOARD' | 'API'>('HOME');
   const [user, setUser] = useState<User | null>(null);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -192,6 +196,86 @@ function App() {
     );
   }
 
+  if (view === 'BATTLE') {
+    return (
+      <>
+        <Navbar
+          user={user}
+          onLoginClick={() => setView('LOGIN')}
+          onSignupClick={() => setView('SIGNUP')}
+          onLogoClick={() => setView('HOME')}
+          onPricingClick={handlePricingClick}
+          onLogoutClick={handleLogout}
+          onBattleClick={() => setView('BATTLE')}
+          onExploreClick={() => setView('EXPLORE')}
+          onDashboardClick={() => setView('DASHBOARD')}
+        />
+        <FriendBattle />
+      </>
+    );
+  }
+
+  if (view === 'EXPLORE') {
+    return (
+      <>
+        <Navbar
+          user={user}
+          onLoginClick={() => setView('LOGIN')}
+          onSignupClick={() => setView('SIGNUP')}
+          onLogoClick={() => setView('HOME')}
+          onPricingClick={handlePricingClick}
+          onLogoutClick={handleLogout}
+          onBattleClick={() => setView('BATTLE')}
+          onExploreClick={() => setView('EXPLORE')}
+          onDashboardClick={() => setView('DASHBOARD')}
+        />
+        <ExplorePage />
+      </>
+    );
+  }
+
+  if (view === 'DASHBOARD') {
+    return (
+      <>
+        <Navbar
+          user={user}
+          onLoginClick={() => setView('LOGIN')}
+          onSignupClick={() => setView('SIGNUP')}
+          onLogoClick={() => setView('HOME')}
+          onPricingClick={handlePricingClick}
+          onLogoutClick={handleLogout}
+          onBattleClick={() => setView('BATTLE')}
+          onExploreClick={() => setView('EXPLORE')}
+          onDashboardClick={() => setView('DASHBOARD')}
+        />
+        <UserDashboard
+          user={user || { uid: 'guest', email: 'guest@example.com' }}
+          credits={credits}
+          onApiClick={() => setView('API')}
+        />
+      </>
+    );
+  }
+
+  if (view === 'API') {
+    return (
+      <>
+        <Navbar
+          user={user}
+          onLoginClick={() => setView('LOGIN')}
+          onSignupClick={() => setView('SIGNUP')}
+          onLogoClick={() => setView('HOME')}
+          onPricingClick={handlePricingClick}
+          onLogoutClick={handleLogout}
+          onBattleClick={() => setView('BATTLE')}
+          onExploreClick={() => setView('EXPLORE')}
+          onDashboardClick={() => setView('DASHBOARD')}
+        />
+        <DeveloperApiPage />
+      </>
+    );
+  }
+
   // Auth Views
   if (view === 'LOGIN') {
     return (
@@ -231,6 +315,9 @@ function App() {
         onLogoClick={() => setView('HOME')}
         onPricingClick={handlePricingClick}
         onLogoutClick={handleLogout}
+        onBattleClick={() => setView('BATTLE')}
+        onExploreClick={() => setView('EXPLORE')}
+        onDashboardClick={() => setView('DASHBOARD')}
       />
 
       <main className="flex-grow flex flex-col items-center w-full">

@@ -1,6 +1,6 @@
 
 import React, { useRef, useState, useEffect, useMemo } from 'react';
-import { UploadIcon, MagicIcon, FireIcon, DownloadIcon, CheckIcon, ArrowDownIcon, SearchIcon, CrownIcon, CameraIcon } from './Icons';
+import { UploadIcon, MagicIcon, FireIcon, DownloadIcon, CheckIcon, ArrowDownIcon, SearchIcon, CrownIcon, CameraIcon, ShareIcon } from './Icons';
 import BeforeAfterSlider from './BeforeAfterSlider';
 import { POPULAR_TEMPLATES, MemeTemplateImage, SUPPORTED_LANGUAGES } from '../constants';
 
@@ -161,8 +161,8 @@ const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-black leading-[0.9] mb-2">
-            MAKE MEMES <br />
-            THAT <span className="text-brand-600 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-sm origin-left">SLAP.</span>
+            DAILY VIRAL <br />
+            MEME <span className="text-brand-600 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-sm origin-left">IDEAS.</span>
           </h1>
 
           <p className="text-xl md:text-2xl font-medium text-gray-600 max-w-lg mx-auto lg:mx-0 leading-relaxed">
@@ -171,7 +171,7 @@ const HomePage: React.FC<HomePageProps> = ({
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center lg:justify-start mt-4">
-            {['Free to Start', 'Viral Ready', 'Instant Roasts'].map((tag) => (
+            {['Free to Start', 'Viral Ready', 'TikTok Optimized'].map((tag) => (
               <span key={tag} className="px-3 py-1 bg-white border-2 border-black rounded-lg text-sm font-bold shadow-hard-sm hover:-translate-y-1 transition-transform cursor-default">
                 {tag}
               </span>
@@ -334,6 +334,38 @@ const HomePage: React.FC<HomePageProps> = ({
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ================= DAILY VIRAL PACKS SECTION ================= */}
+      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 mb-24">
+        <div className="flex justify-between items-end mb-8">
+          <div>
+            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest border border-red-600 mb-2 inline-block animate-pulse">
+              Refreshes in 12h 30m
+            </span>
+            <h2 className="text-4xl font-black text-black uppercase tracking-tight">
+              Daily Viral Packs
+            </h2>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { id: 'npc', title: 'NPC Week', desc: 'Oblivion dialogue vibes', emoji: '🤖', color: 'bg-blue-100' },
+            { id: 'gym', title: 'Gym Bro Pack', desc: 'Do you even lift?', emoji: '💪', color: 'bg-gray-200' },
+            { id: 'anime', title: 'Anime Roast', desc: 'Main character energy', emoji: '✨', color: 'bg-pink-100' },
+            { id: 'corp', title: 'Corporate Life', desc: 'Per my last email', emoji: '💼', color: 'bg-indigo-100' },
+          ].map((pack) => (
+            <div key={pack.id} className={`relative p-6 rounded-3xl border-2 border-black ${pack.color} hover:-translate-y-2 transition-transform cursor-pointer shadow-hard-sm group`}>
+              <div className="absolute top-4 right-4 text-4xl group-hover:scale-125 transition-transform">{pack.emoji}</div>
+              <h3 className="text-2xl font-black uppercase mt-8 mb-2">{pack.title}</h3>
+              <p className="text-sm font-bold text-gray-600 mb-6">{pack.desc}</p>
+              <button className="w-full py-3 bg-white border-2 border-black rounded-xl font-black uppercase text-xs tracking-wider hover:bg-black hover:text-white transition-colors">
+                Generate Pack
+              </button>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -654,6 +686,87 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* ================= RECENTLY CREATED (Mock) ================= */}
+      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-12 border-t-2 border-dashed border-gray-300">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-black uppercase tracking-tight text-gray-800">
+            Community Gallery <span className="text-brand-500">🔥</span>
+          </h2>
+          <button className="text-sm font-bold text-gray-500 hover:text-black underline">View All</button>
+        </div>
+
+        <AutoScrollGallery />
+      </section>
+
+
+    </div>
+  );
+};
+const AutoScrollGallery = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    let animationFrameId: number;
+    // speed (pixels per frame)
+    const speed = 0.5;
+
+    const animate = () => {
+      if (scrollRef.current && !isPaused) {
+        scrollRef.current.scrollLeft += speed;
+
+        // Reset scroll when reaching the end (simple loop effect)
+        // Note: For a true seamless loop, we'd need to duplicate items.
+        // For now, this is a simple auto-scroll.
+        if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth - scrollRef.current.clientWidth - 1) {
+          scrollRef.current.scrollLeft = 0;
+        }
+      }
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isPaused]);
+
+  return (
+    <div
+      ref={scrollRef}
+      className="flex overflow-x-auto pb-8 -mx-4 px-4 hide-scrollbar gap-4"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
+    >
+      {[
+        "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=500&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=500&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500&auto=format&fit=crop&q=60",
+        // Duplicate for looping effect
+        "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop&q=60",
+      ].map((src, i) => (
+        <div key={i} className="flex-none w-64 md:w-80 group relative aspect-square rounded-xl overflow-hidden border-2 border-black bg-white shadow-hard-sm hover:-translate-y-1 transition-transform">
+          <img src={src} className="w-full h-full object-cover" alt="Meme" />
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+            <button
+              onClick={() => {
+                alert("Shared to Community Feed! (Direct sharing available in Editor)");
+              }}
+              className="bg-white text-black p-2 rounded-full hover:scale-110 transition-transform" title="Share"
+            >
+              <ShareIcon className="w-5 h-5" />
+            </button>
+          </div>
+          <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[10px] font-black px-2 py-0.5 rounded border border-black transform rotate-2">
+            VIRAL
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

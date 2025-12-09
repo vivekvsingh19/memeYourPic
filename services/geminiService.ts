@@ -172,3 +172,91 @@ export const generateMemeCaptions = async (
     throw new Error("Failed to generate memes. Please try again.");
   }
 };
+
+export const generateRoastBattle = async (
+  player1File: File,
+  player2File: File
+): Promise<{
+  winner: 1 | 2;
+  winnerTitle: string;
+  reason: string;
+  roastP1: string;
+  roastP2: string;
+  overallVerdict: string;
+}> => {
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("API Key not found");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
+
+  const p1Base64 = await fileToGenerativePart(player1File);
+  const p2Base64 = await fileToGenerativePart(player2File);
+
+  const prompt = `
+    You are the judge of a SAVAGE ROAST BATTLE between two people (Player 1 and Player 2).
+    Analyze their photos for meme potential, aura, vibe, and visible "fails".
+
+    Decide who has the "better" or "funnier" aura (or who is less roastable) to be the WINNER.
+    The loser gets the harsher roast.
+
+    OUTPUT JSON format:
+    {
+      "winner": 1 or 2,
+      "winnerTitle": "Short funny title for the winner (e.g. Rizz God, Main Character)",
+      "reason": "Why they won (funny reason)",
+      "roastP1": "A brutal but funny roast for Player 1 (max 15 words)",
+      "roastP2": "A brutal but funny roast for Player 2 (max 15 words)",
+      "overallVerdict": "A final punchline summarizing the battle"
+    }
+
+    BE SAVAGE BUT FUNNY. GEN-Z SLANG ENCOURAGED.
+  `;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: {
+        parts: [
+          { text: "PLAYER 1:" },
+          { inlineData: { mimeType: player1File.type, data: p1Base64 } },
+          { text: "PLAYER 2:" },
+          { inlineData: { mimeType: player2File.type, data: p2Base64 } },
+          { text: prompt }
+        ]
+      },
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            winner: { type: Type.INTEGER },
+            winnerTitle: { type: Type.STRING },
+            reason: { type: Type.STRING },
+            roastP1: { type: Type.STRING },
+            roastP2: { type: Type.STRING },
+            overallVerdict: { type: Type.STRING }
+          }
+        },
+        temperature: 1.3,
+      }
+    });
+
+    const jsonText = response.text;
+    if (!jsonText) throw new Error("No response from judge");
+
+    const result = JSON.parse(jsonText);
+
+    // Fix potential type mismatch if model returns string "1" instead of number
+    result.winner = Number(result.winner) as 1 | 2;
+
+    return result;
+
+  } catch (error: any) {
+    console.error("Battle generation failed:", error);
+    throw new Error("The judge is asleep. Try again.");
+  }
+};
+

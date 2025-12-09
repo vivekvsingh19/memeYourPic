@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Layer, MemeTemplate, GeneratedCaption } from '../../types';
-import { TextIcon, StickerIcon, PaletteIcon, LayersIcon, TrashIcon, UppercaseIcon, StrikethroughIcon, BringToFrontIcon, SendToBackIcon, MoveForwardIcon, MoveBackwardIcon, BoldIcon, CheckIcon, CloseIcon, AspectRatioIcon, SquareIcon, PortraitIcon, LandscapeIcon, ImageIcon, RefreshIcon, UploadIcon, SearchIcon } from '../Icons';
+import { TextIcon, StickerIcon, PaletteIcon, LayersIcon, TrashIcon, UppercaseIcon, StrikethroughIcon, BringToFrontIcon, SendToBackIcon, MoveForwardIcon, MoveBackwardIcon, BoldIcon, CheckIcon, CloseIcon, AspectRatioIcon, SquareIcon, PortraitIcon, LandscapeIcon, ImageIcon, RefreshIcon, UploadIcon, SearchIcon, FireIcon, DownloadIcon } from '../Icons';
 import { POPULAR_TEMPLATES, MemeTemplateImage } from '../../constants';
 
 interface ControlPanelProps {
@@ -23,6 +23,9 @@ interface ControlPanelProps {
     onReorderLayer: (id: string, direction: 'front' | 'back' | 'forward' | 'backward') => void;
     onApplyTemplate: (template: MemeTemplate) => void;
     onUpdateCanvas: (updates: { aspectRatio?: number | 'original'; backgroundColor?: string }) => void;
+    isPanelCollapsed?: boolean;
+    onToggleCollapse?: () => void;
+    onExport?: () => void;
 }
 
 const TABS = [
@@ -31,6 +34,7 @@ const TABS = [
     { id: 'images', label: 'Images', icon: ImageIcon },
     { id: 'style', label: 'Style', icon: PaletteIcon },
     { id: 'templates', label: 'Layouts', icon: LayersIcon },
+    { id: 'export', label: 'Export', icon: DownloadIcon },
 ];
 
 const FONTS = [
@@ -262,7 +266,10 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     onSelectLayer,
     onReorderLayer,
     onApplyTemplate,
-    onUpdateCanvas
+    onUpdateCanvas,
+    isPanelCollapsed = false,
+    onToggleCollapse,
+    onExport
 }) => {
     const [activeTab, setActiveTab] = useState('text');
 
@@ -335,17 +342,30 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
         onUpdateLayer(id, {}, true); // Commit history with empty update
     };
 
+    const handleTabClick = (tabId: string) => {
+        if (activeTab === tabId) {
+            // If clicking active tab, toggle collapse (mobile only)
+            if (onToggleCollapse) onToggleCollapse();
+        } else {
+            setActiveTab(tabId);
+            // If collapsed, expand
+            if (isPanelCollapsed && onToggleCollapse) {
+                onToggleCollapse();
+            }
+        }
+    };
+
     return (
-        <div className="w-full h-full bg-white flex flex-col">
+        <div className="w-full h-full bg-white flex flex-col-reverse md:flex-col">
             {/* Tabs */}
-            <div className="flex border-b-2 border-black bg-gray-50 overflow-x-auto">
+            <div className="flex-none flex border-t-2 md:border-t-0 md:border-b-2 border-black bg-gray-50 overflow-x-auto z-20 relative">
                 {TABS.map(tab => (
                     <button
                         key={tab.id}
-                        onClick={() => setActiveTab(tab.id)}
+                        onClick={() => handleTabClick(tab.id)}
                         className={`flex-1 min-w-[60px] py-4 flex flex-col items-center justify-center gap-1 text-xs font-black uppercase tracking-wider transition-all
-              ${activeTab === tab.id
-                                ? 'text-brand-600 bg-white border-t-4 border-t-brand-500 -mb-[2px] pb-[18px]'
+              ${activeTab === tab.id && !isPanelCollapsed
+                                ? 'text-brand-600 bg-white md:border-t-4 md:border-t-brand-500 md:-mb-[2px] md:pb-[18px] border-t-4 border-t-brand-500'
                                 : 'text-gray-400 hover:text-gray-600 hover:bg-gray-100'}
             `}
                     >
@@ -356,11 +376,49 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
             </div>
 
             {/* Content Area */}
-            <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
+            <div className={`flex-1 overflow-y-auto p-6 custom-scrollbar ${isPanelCollapsed ? 'hidden md:block' : ''}`}>
+
+                {/* Mobile Drag Handle / Close Indicator */}
+                <div className="md:hidden w-full flex justify-center mb-4" onClick={onToggleCollapse}>
+                    <div className="w-12 h-1.5 bg-gray-300 rounded-full"></div>
+                </div>
 
                 {/* TEXT TAB */}
                 {activeTab === 'text' && (
                     <div className="space-y-6">
+
+                        {/* AI Persona Selector (New) */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-bold text-gray-400 uppercase flex items-center gap-2">
+                                <FireIcon className="w-4 h-4 text-brand-500" />
+                                AI Persona Mode
+                            </label>
+                            <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar snap-x">
+                                {[
+                                    { id: 'savage', label: 'Savage', emoji: '🔥', desc: 'No mercy roasts' },
+                                    { id: 'chill', label: 'Chill', emoji: '🧊', desc: 'Good vibes only' },
+                                    { id: 'british', label: 'British', emoji: '☕', desc: 'Dry sarcasm' },
+                                    { id: 'zoomer', label: 'Zoomer', emoji: '💀', desc: 'fr fr no cap' },
+                                    { id: 'toxic', label: 'Toxic Ex', emoji: '🚩', desc: 'Gaslighting 101' },
+                                    { id: 'sigma', label: 'Sigma', emoji: '🗿', desc: 'Grindset mindset' },
+                                    { id: 'anime', label: 'Tsundere', emoji: '💢', desc: 'It\'s not like I like you!' },
+                                ].map((p) => (
+                                    <button
+                                        key={p.id}
+                                        onClick={() => {
+                                            // In a real app, this would trigger a re-generation or update state
+                                            // For now, we'll just show visual selection (mock)
+                                            // You might want to add a prop `onPersonaChange` later
+                                        }}
+                                        className="snap-start flex-none flex flex-col items-center justify-center w-20 h-20 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-black hover:bg-white transition-all focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                                        title={p.desc}
+                                    >
+                                        <span className="text-2xl mb-1">{p.emoji}</span>
+                                        <span className="text-[10px] font-black uppercase">{p.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
 
                         {/* Layers List */}
                         <div className="space-y-2">
@@ -1003,6 +1061,70 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                                 <span className="text-xs text-gray-400 font-bold">Apply preset</span>
                             </button>
                         ))}
+                    </div>
+                )}
+
+                {/* EXPORT TAB */}
+                {activeTab === 'export' && (
+                    <div className="space-y-8">
+                        {/* 1. Format Selector */}
+                        <div>
+                            <label className="block text-xs font-bold text-gray-400 uppercase mb-3">Output Format</label>
+                            <div className="flex bg-gray-100 p-1 rounded-xl border border-gray-200">
+                                {['Image', 'GIF', 'Video'].map((fmt) => (
+                                    <button
+                                        key={fmt}
+                                        className={`flex-1 py-2 rounded-lg text-sm font-black uppercase transition-all ${fmt === 'Image' ? 'bg-white text-black shadow-sm border border-gray-200' : 'text-gray-400 hover:text-gray-600'}`}
+                                    >
+                                        {fmt}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* 2. Viral Card Types */}
+                        <div>
+                            <label className="block text-xs font-bold text-gray-400 uppercase mb-3">Viral Card Type</label>
+                            <div className="grid grid-cols-2 gap-3">
+                                {[
+                                    { label: 'Meme Card', icon: '🖼️', desc: 'Standard 1:1' },
+                                    { label: 'Vibe Check', icon: '✨', desc: 'Rating Card' },
+                                    { label: 'NPC Identity', icon: '🤖', desc: 'Stats Card' },
+                                    { label: 'Toxic Trait', icon: '🚩', desc: 'Warning Label' },
+                                    { label: 'Persona Score', icon: '💯', desc: 'Rank Card' },
+                                    { label: 'Vs Reality', icon: '🆚', desc: 'Side by Side' },
+                                ].map((card) => (
+                                    <button
+                                        key={card.label}
+                                        className="p-3 bg-white border-2 border-gray-200 rounded-xl hover:border-black hover:shadow-hard-sm transition-all text-left group"
+                                    >
+                                        <div className="text-2xl mb-1 group-hover:scale-110 transition-transform origin-left">{card.icon}</div>
+                                        <div className="font-black text-xs uppercase">{card.label}</div>
+                                        <div className="text-[10px] text-gray-400 font-bold">{card.desc}</div>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* 3. Story Mode Toggle */}
+                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 flex items-center justify-between">
+                            <div>
+                                <h4 className="font-black text-sm uppercase">Story Mode</h4>
+                                <p className="text-xs text-gray-500 font-bold">Auto-resize to 9:16 for TikTok/IG</p>
+                            </div>
+                            <div className="w-12 h-6 bg-gray-300 rounded-full relative cursor-pointer">
+                                <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all"></div>
+                            </div>
+                        </div>
+
+                        {/* Export CTA */}
+                        <button
+                            onClick={onExport}
+                            className="w-full py-4 bg-brand-500 text-black rounded-xl font-black uppercase tracking-widest hover:bg-brand-400 transition shadow-hard btn-press flex items-center justify-center gap-2"
+                        >
+                            <DownloadIcon className="w-5 h-5" />
+                            Export Viral Card
+                        </button>
                     </div>
                 )}
             </div>
