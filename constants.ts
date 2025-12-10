@@ -257,4 +257,124 @@ export const POPULAR_TEMPLATES: MemeTemplateImage[] = [
     name: 'Left Exit 12 Off Ramp',
     url: 'https://i.imgflip.com/22bdq6.jpg',
   },
+  {
+    id: 'gigachad',
+    name: 'Gigachad',
+    url: 'https://i.imgflip.com/6jhg7q.jpg',
+  },
+  {
+    id: 'spiderman-pointing',
+    name: 'Spiderman Pointing',
+    url: 'https://i.imgflip.com/2swmeh.jpg',
+  },
+  {
+    id: 'gru-plan',
+    name: 'Grus Plan',
+    url: 'https://i.imgflip.com/26jxvz.jpg',
+  },
+  {
+    id: 'american-chopper',
+    name: 'American Chopper Argument',
+    url: 'https://i.imgflip.com/2896ro.jpg',
+  },
+  {
+    id: 'trump-bill',
+    name: 'Trump Bill Signing',
+    url: 'https://i.imgflip.com/1ii4oc.jpg',
+  },
+  {
+    id: 'expanding-brain',
+    name: 'Expanding Brain',
+    url: 'https://i.imgflip.com/1jwhww.jpg',
+  },
+  {
+    id: 'waiting-skeleton',
+    name: 'Waiting Skeleton',
+    url: 'https://i.imgflip.com/2fm6x.jpg',
+  },
+  {
+    id: 'math-lady',
+    name: 'Confused Math Lady',
+    url: 'https://i.imgflip.com/1vjz2s.jpg',
+  },
+  {
+    id: 'star-wars-yoda',
+    name: 'Star Wars Yoda',
+    url: 'https://i.imgflip.com/1ur0g.jpg',
+  },
+  {
+    id: 'car-salesma',
+    name: 'Car Salesman Slaps Roof',
+    url: 'https://i.imgflip.com/2d3al6.jpg',
+  },
+  {
+    id: 'laughing-leo',
+    name: 'Leonardo DiCaprio Cheers',
+    url: 'https://i.imgflip.com/39t1o.jpg',
+  },
+  {
+    id: 'pepe-silvia',
+    name: 'Pepe Silvia Charlie',
+    url: 'https://i.imgflip.com/1itoun.jpg',
+  },
+  {
+    id: 'brain-size',
+    name: 'Galaxy Brain',
+    url: 'https://i.imgflip.com/1jwhww.jpg',
+  },
+  {
+    id: 'tuxedo-winnie',
+    name: 'Tuxedo Winnie Pooh',
+    url: 'https://i.imgflip.com/2ybua0.jpg',
+  },
+  {
+    id: 'they-same',
+    name: 'They Are The Same Picture',
+    url: 'https://i.imgflip.com/1c1uej.jpg',
+  },
+  {
+    id: 'bike-fall',
+    name: 'Bike Fall',
+    url: 'https://i.imgflip.com/1bkm6v.jpg',
+  },
+  {
+    id: 'unsettled-tom',
+    name: 'Unsettled Tom',
+    url: 'https://i.imgflip.com/2wifvo.jpg',
+  },
+  {
+    id: 'wojak-crying',
+    name: 'Wojak',
+    url: 'https://i.imgflip.com/5c7lwq.jpg',
+  },
+  {
+    id: 'charlie-conspiracy',
+    name: 'Charlie Conspiracy',
+    url: 'https://i.imgflip.com/1itoun.jpg',
+  },
+  {
+    id: 'patrick-wallet',
+    name: 'Patrick Wallet',
+    url: 'https://i.imgflip.com/2ybua0.jpg',
+  },
+  {
+    id: 'disaster-girl-2',
+    name: 'Why Not Both',
+    url: 'https://i.imgflip.com/26m0ao.jpg',
+  },
+  {
+    id: 'leonardo-walking',
+    name: 'Leonardo DiCaprio Walking',
+    url: 'https://i.imgflip.com/39t1o.jpg',
+  },
+  {
+    id: 'awkward-monkey',
+    name: 'Awkward Look Monkey',
+    url: 'https://i.imgflip.com/30b1gx.jpg',
+  },
+  {
+    id: 'boardroom',
+    name: 'Boardroom Meeting',
+    url: 'https://i.imgflip.com/m78d.jpg',
+  },
 ];
