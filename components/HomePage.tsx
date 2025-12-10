@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { UploadIcon, MagicIcon, FireIcon, DownloadIcon, CheckIcon, ArrowDownIcon, SearchIcon, CrownIcon, CameraIcon, ShareIcon } from './Icons';
 import BeforeAfterSlider from './BeforeAfterSlider';
-import { POPULAR_TEMPLATES, MemeTemplateImage, SUPPORTED_LANGUAGES, DAILY_PACKS } from '../constants';
+import { POPULAR_TEMPLATES, MemeTemplateImage, SUPPORTED_LANGUAGES } from '../constants';
 
 interface HomePageProps {
   onFileSelect: (file: File) => void;
@@ -349,44 +349,7 @@ const HomePage: React.FC<HomePageProps> = ({
         <AutoScrollGallery />
       </section>
 
-      {/* ================= DAILY VIRAL PACKS SECTION ================= */}
-      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 mb-24">
-        <div className="flex justify-between items-end mb-8">
-          <div>
-            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest border border-red-600 mb-2 inline-block animate-pulse">
-              Refreshes in 12h 30m
-            </span>
-            <h2 className="text-4xl font-black text-black uppercase tracking-tight">
-              Daily Viral Packs
-            </h2>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {DAILY_PACKS.map((pack) => (
-            <div key={pack.id} className={`relative p-6 rounded-3xl border-2 border-black ${pack.color} hover:-translate-y-2 transition-transform cursor-pointer shadow-hard-sm group`}>
-              <div className="absolute top-4 right-4 text-4xl group-hover:scale-125 transition-transform">{pack.emoji}</div>
-              <h3 className="text-2xl font-black uppercase mt-8 mb-2">{pack.title}</h3>
-              <p className="text-sm font-bold text-gray-600 mb-6">{pack.desc}</p>
-              <button
-                onClick={() => {
-                  // Find first matching template that exists in our popular templates list
-                  const template = POPULAR_TEMPLATES.find(t => pack.templates.includes(t.id));
-                  if (template) {
-                    onTemplateSelect(template);
-                  } else {
-                    // Fallback to first popular template if none match (should not happen if constants are correct)
-                    onTemplateSelect(POPULAR_TEMPLATES[0]);
-                  }
-                }}
-                className="w-full py-3 bg-white border-2 border-black rounded-xl font-black uppercase text-xs tracking-wider hover:bg-black hover:text-white transition-colors"
-              >
-                Generate Pack
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* ================= CAMERA MODAL ================= */}
       {isCameraOpen && (

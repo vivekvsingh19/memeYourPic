@@ -258,38 +258,3 @@ export const POPULAR_TEMPLATES: MemeTemplateImage[] = [
     url: 'https://i.imgflip.com/22bdq6.jpg',
   },
 ];
-
-export const DAILY_PACKS = [
-  {
-    id: 'npc',
-    title: 'NPC Week',
-    desc: 'Oblivion dialogue vibes',
-    emoji: '🤖',
-    color: 'bg-blue-100',
-    templates: ['drake', 'distracted', 'buttons']
-  },
-  {
-    id: 'gym',
-    title: 'Gym Bro Pack',
-    desc: 'Do you even lift?',
-    emoji: '💪',
-    color: 'bg-gray-200',
-    templates: ['buff-doge', 'chad', 'success']
-  },
-  {
-    id: 'anime',
-    title: 'Anime Roast',
-    desc: 'Main character energy',
-    emoji: '✨',
-    color: 'bg-pink-100',
-    templates: ['pikachu', 'pigeon', 'anime']
-  },
-  {
-    id: 'corp',
-    title: 'Corporate Life',
-    desc: 'Per my last email',
-    emoji: '💼',
-    color: 'bg-indigo-100',
-    templates: ['office', 'harold', 'fine']
-  },
-];
