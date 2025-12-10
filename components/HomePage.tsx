@@ -682,6 +682,73 @@ const AutoScrollGallery = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
 
+  // Community gallery - meme images with text overlays
+  const memeItems = [
+    {
+      image: "/cat_meme_after_1765357687792.png",
+      hasOverlay: false, // Already has text baked in
+    },
+    {
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=60",
+      topText: "SHOWING UP TO WORK",
+      bottomText: "ON A MONDAY",
+      hasOverlay: true,
+    },
+    {
+      image: "/dog_meme_after_1765357710645.png",
+      hasOverlay: false,
+    },
+    {
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60",
+      topText: "WHEN YOU FINALLY",
+      bottomText: "GET THE JOKE",
+      hasOverlay: true,
+    },
+    {
+      image: "/surprised_cat_meme_1765357750933.png",
+      hasOverlay: false,
+    },
+    {
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=60",
+      topText: "TRYING TO LOOK",
+      bottomText: "PRODUCTIVE AT WORK",
+      hasOverlay: true,
+    },
+    {
+      image: "/judgmental_cat_meme_1765357785438.png",
+      hasOverlay: false,
+    },
+    {
+      image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500&auto=format&fit=crop&q=60",
+      topText: "WHEN SOMEONE SAYS",
+      bottomText: "\"IT'S EASY\"",
+      hasOverlay: true,
+    },
+    {
+      image: "/kitten_pov_meme_1765357805278.png",
+      hasOverlay: false,
+    },
+    {
+      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&auto=format&fit=crop&q=60",
+      topText: "PRETENDING TO LISTEN",
+      bottomText: "TO ADVICE",
+      hasOverlay: true,
+    },
+    {
+      image: "/relaxed_cat_meme_1765357834521.png",
+      hasOverlay: false,
+    },
+    {
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60",
+      topText: "ME AFTER SAYING",
+      bottomText: "\"I'M FINE\"",
+      hasOverlay: true,
+    },
+  ];
+
+  // Duplicate for seamless looping
+  const duplicatedItems = [...memeItems, ...memeItems];
+
   useEffect(() => {
     let animationFrameId: number;
     // speed (pixels per frame)
@@ -691,9 +758,7 @@ const AutoScrollGallery = () => {
       if (scrollRef.current && !isPaused) {
         scrollRef.current.scrollLeft += speed;
 
-        // Reset scroll when reaching the end (simple loop effect)
-        // Note: For a true seamless loop, we'd need to duplicate items.
-        // For now, this is a simple auto-scroll.
+        // Reset scroll when reaching the end (seamless loop)
         if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth - scrollRef.current.clientWidth - 1) {
           scrollRef.current.scrollLeft = 0;
         }
@@ -709,37 +774,76 @@ const AutoScrollGallery = () => {
   return (
     <div
       ref={scrollRef}
-      className="flex overflow-x-auto pb-8 -mx-4 px-4 hide-scrollbar gap-4"
+      className="flex overflow-x-auto pb-8 -mx-4 px-4 hide-scrollbar gap-6"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={() => setIsPaused(true)}
       onTouchEnd={() => setIsPaused(false)}
     >
-      {[
-        "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500&auto=format&fit=crop&q=60",
-        "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop&q=60",
-        "https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=500&auto=format&fit=crop&q=60",
-        "https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=500&auto=format&fit=crop&q=60",
-        "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500&auto=format&fit=crop&q=60",
-        "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=500&auto=format&fit=crop&q=60",
-        // Duplicate for looping effect
-        "https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=500&auto=format&fit=crop&q=60",
-        "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop&q=60",
-      ].map((src, i) => (
-        <div key={i} className="flex-none w-64 md:w-80 group relative aspect-square rounded-xl overflow-hidden border-2 border-black bg-white shadow-hard-sm hover:-translate-y-1 transition-transform">
-          <img src={src} className="w-full h-full object-cover" alt="Meme" />
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+      {duplicatedItems.map((item, i) => (
+        <div key={i} className="flex-none w-72 md:w-96 group relative rounded-2xl overflow-hidden border-4 border-black bg-white shadow-hard-lg hover:-translate-y-2 transition-all duration-300">
+          {/* Meme Image */}
+          <div className="aspect-square relative">
+            <img
+              src={item.image}
+              alt="Community Meme"
+              className="w-full h-full object-cover"
+            />
+
+            {/* Meme Text Overlay for people photos */}
+            {item.hasOverlay && (
+              <>
+                {/* Top Text */}
+                {item.topText && (
+                  <div className="absolute top-4 left-0 right-0 text-center px-4">
+                    <span
+                      className="text-white font-black text-2xl md:text-4xl uppercase tracking-wider leading-tight"
+                      style={{
+                        textShadow: '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -3px 0 0 #000, 3px 0 0 #000, 0 -3px 0 #000, 0 3px 0 #000',
+                        fontFamily: 'Impact, "Anton", "Bebas Neue", sans-serif',
+                        WebkitTextStroke: '1px black'
+                      }}
+                    >
+                      {item.topText}
+                    </span>
+                  </div>
+                )}
+
+                {/* Bottom Text */}
+                {item.bottomText && (
+                  <div className="absolute bottom-4 left-0 right-0 text-center px-4">
+                    <span
+                      className="text-white font-black text-2xl md:text-4xl uppercase tracking-wider leading-tight"
+                      style={{
+                        textShadow: '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, -3px 0 0 #000, 3px 0 0 #000, 0 -3px 0 #000, 0 3px 0 #000',
+                        fontFamily: 'Impact, "Anton", "Bebas Neue", sans-serif',
+                        WebkitTextStroke: '1px black'
+                      }}
+                    >
+                      {item.bottomText}
+                    </span>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+
+          {/* Viral Badge */}
+          <div className="absolute top-3 right-3 bg-yellow-400 text-black text-[10px] font-black px-3 py-1.5 rounded-lg border-2 border-black transform rotate-2 shadow-hard-sm animate-pulse">
+            VIRAL
+          </div>
+
+          {/* Hover Overlay */}
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
             <button
               onClick={() => {
                 alert("Shared to Community Feed! (Direct sharing available in Editor)");
               }}
-              className="bg-white text-black p-2 rounded-full hover:scale-110 transition-transform" title="Share"
+              className="bg-white text-black p-3 rounded-full hover:scale-110 transition-transform shadow-hard-sm border-2 border-black"
+              title="Share"
             >
               <ShareIcon className="w-5 h-5" />
             </button>
-          </div>
-          <div className="absolute top-2 right-2 bg-yellow-400 text-black text-[10px] font-black px-2 py-0.5 rounded border border-black transform rotate-2">
-            VIRAL
           </div>
         </div>
       ))}
