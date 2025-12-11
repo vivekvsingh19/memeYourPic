@@ -172,11 +172,7 @@ export const POPULAR_TEMPLATES: MemeTemplateImage[] = [
     name: 'Leonardo Django Laugh',
     url: 'https://i.imgflip.com/46hhvr.jpg',
   },
-  {
-    id: 'bernie',
-    name: 'Bernie Sanders Mittens',
-    url: 'https://i.imgflip.com/4u7ax6.jpg',
-  },
+
   {
     id: 'uno-draw',
     name: 'Uno Draw 25 Cards',
@@ -187,11 +183,7 @@ export const POPULAR_TEMPLATES: MemeTemplateImage[] = [
     name: 'Clown Makeup',
     url: 'https://i.imgflip.com/38el31.jpg',
   },
-  {
-    id: 'buff-doge',
-    name: 'Buff Doge vs Cheems',
-    url: 'https://i.imgflip.com/43a45p.jpg',
-  },
+
   {
     id: 'sad-pablo',
     name: 'Sad Pablo Escobar',
@@ -202,11 +194,7 @@ export const POPULAR_TEMPLATES: MemeTemplateImage[] = [
     name: 'One Does Not Simply',
     url: 'https://i.imgflip.com/1bij.jpg',
   },
-  {
-    id: 'ancient-aliens',
-    name: 'Ancient Aliens',
-    url: 'https://i.imgflip.com/18k14.jpg',
-  },
+
   {
     id: 'philosoraptor',
     name: 'Philosoraptor',
@@ -217,31 +205,13 @@ export const POPULAR_TEMPLATES: MemeTemplateImage[] = [
     name: 'Bad Luck Brian',
     url: 'https://i.imgflip.com/1bip.jpg',
   },
-  {
-    id: 'monkey-puppet',
-    name: 'Monkey Puppet',
-    url: 'https://i.imgflip.com/326kwi.jpg',
-  },
-  {
-    id: 'panik-kalm',
-    name: 'Panik Kalm Panik',
-    url: 'https://i.imgflip.com/3qqcim.jpg',
-  },
+
   {
     id: 'trade-offer',
     name: 'Trade Offer',
     url: 'https://i.imgflip.com/54hjww.jpg',
   },
-  {
-    id: 'always-has-been',
-    name: 'Always Has Been',
-    url: 'https://i.imgflip.com/46e43q.jpg',
-  },
-  {
-    id: 'anakin-padme',
-    name: 'Anakin Padme',
-    url: 'https://i.imgflip.com/5c7lwq.jpg',
-  },
+
   {
     id: 'think-mark',
     name: 'Think Mark Think',
@@ -256,125 +226,5 @@ export const POPULAR_TEMPLATES: MemeTemplateImage[] = [
     id: 'exit-ramp',
     name: 'Left Exit 12 Off Ramp',
     url: 'https://i.imgflip.com/22bdq6.jpg',
-  },
-  {
-    id: 'gigachad',
-    name: 'Gigachad',
-    url: 'https://i.imgflip.com/6jhg7q.jpg',
-  },
-  {
-    id: 'spiderman-pointing',
-    name: 'Spiderman Pointing',
-    url: 'https://i.imgflip.com/2swmeh.jpg',
-  },
-  {
-    id: 'gru-plan',
-    name: 'Grus Plan',
-    url: 'https://i.imgflip.com/26jxvz.jpg',
-  },
-  {
-    id: 'american-chopper',
-    name: 'American Chopper Argument',
-    url: 'https://i.imgflip.com/2896ro.jpg',
-  },
-  {
-    id: 'trump-bill',
-    name: 'Trump Bill Signing',
-    url: 'https://i.imgflip.com/1ii4oc.jpg',
-  },
-  {
-    id: 'expanding-brain',
-    name: 'Expanding Brain',
-    url: 'https://i.imgflip.com/1jwhww.jpg',
-  },
-  {
-    id: 'waiting-skeleton',
-    name: 'Waiting Skeleton',
-    url: 'https://i.imgflip.com/2fm6x.jpg',
-  },
-  {
-    id: 'math-lady',
-    name: 'Confused Math Lady',
-    url: 'https://i.imgflip.com/1vjz2s.jpg',
-  },
-  {
-    id: 'star-wars-yoda',
-    name: 'Star Wars Yoda',
-    url: 'https://i.imgflip.com/1ur0g.jpg',
-  },
-  {
-    id: 'car-salesma',
-    name: 'Car Salesman Slaps Roof',
-    url: 'https://i.imgflip.com/2d3al6.jpg',
-  },
-  {
-    id: 'laughing-leo',
-    name: 'Leonardo DiCaprio Cheers',
-    url: 'https://i.imgflip.com/39t1o.jpg',
-  },
-  {
-    id: 'pepe-silvia',
-    name: 'Pepe Silvia Charlie',
-    url: 'https://i.imgflip.com/1itoun.jpg',
-  },
-  {
-    id: 'brain-size',
-    name: 'Galaxy Brain',
-    url: 'https://i.imgflip.com/1jwhww.jpg',
-  },
-  {
-    id: 'tuxedo-winnie',
-    name: 'Tuxedo Winnie Pooh',
-    url: 'https://i.imgflip.com/2ybua0.jpg',
-  },
-  {
-    id: 'they-same',
-    name: 'They Are The Same Picture',
-    url: 'https://i.imgflip.com/1c1uej.jpg',
-  },
-  {
-    id: 'bike-fall',
-    name: 'Bike Fall',
-    url: 'https://i.imgflip.com/1bkm6v.jpg',
-  },
-  {
-    id: 'unsettled-tom',
-    name: 'Unsettled Tom',
-    url: 'https://i.imgflip.com/2wifvo.jpg',
-  },
-  {
-    id: 'wojak-crying',
-    name: 'Wojak',
-    url: 'https://i.imgflip.com/5c7lwq.jpg',
-  },
-  {
-    id: 'charlie-conspiracy',
-    name: 'Charlie Conspiracy',
-    url: 'https://i.imgflip.com/1itoun.jpg',
-  },
-  {
-    id: 'patrick-wallet',
-    name: 'Patrick Wallet',
-    url: 'https://i.imgflip.com/2ybua0.jpg',
-  },
-  {
-    id: 'disaster-girl-2',
-    name: 'Why Not Both',
-    url: 'https://i.imgflip.com/26m0ao.jpg',
-  },
-  {
-    id: 'leonardo-walking',
-    name: 'Leonardo DiCaprio Walking',
-    url: 'https://i.imgflip.com/39t1o.jpg',
-  },
-  {
-    id: 'awkward-monkey',
-    name: 'Awkward Look Monkey',
-    url: 'https://i.imgflip.com/30b1gx.jpg',
-  },
-  {
-    id: 'boardroom',
-    name: 'Boardroom Meeting',
-    url: 'https://i.imgflip.com/m78d.jpg',
   },
 ];

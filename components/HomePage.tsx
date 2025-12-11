@@ -161,8 +161,8 @@ const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-black leading-[0.9] mb-2">
-            DAILY VIRAL <br />
-            MEME <span className="text-brand-600 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-sm origin-left">IDEAS.</span>
+            MAKE MEMES <br />
+            THAT <span className="text-brand-600 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-sm origin-left">SLAP.</span>
           </h1>
 
           <p className="text-xl md:text-2xl font-medium text-gray-600 max-w-lg mx-auto lg:mx-0 leading-relaxed">
