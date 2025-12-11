@@ -41,8 +41,8 @@ function App() {
     if (saved !== null) {
       setCredits(parseInt(saved, 10));
     } else {
-      // New user or guest without history gets 2 free credits
-      const initialCredits = 2;
+      // New user or guest without history gets 4 free credits
+      const initialCredits = 4;
       localStorage.setItem(storageKey, initialCredits.toString());
       setCredits(initialCredits);
     }

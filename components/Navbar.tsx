@@ -47,18 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <button
-              onClick={onExploreClick}
-              className="text-sm font-bold text-gray-600 hover:text-black hover:underline decoration-2 underline-offset-4 decoration-pop-yellow transition-all"
-            >
-              Explore
-            </button>
-            <button
-              onClick={onPricingClick}
-              className="text-sm font-bold text-gray-600 hover:text-black hover:underline decoration-2 underline-offset-4 decoration-pop-yellow transition-all"
-            >
-              Pricing
-            </button>
+            {/* Explore and Pricing Hidden for MVP */}
             <button
               onClick={onBattleClick}
               className="text-sm font-bold text-red-600 hover:text-red-700 hover:underline decoration-2 underline-offset-4 decoration-red-200 transition-all flex items-center gap-1"
