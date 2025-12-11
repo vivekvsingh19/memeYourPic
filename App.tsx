@@ -19,6 +19,7 @@ import { authService } from './services/authService';
 import { MemeTemplateImage } from './constants';
 import { InstagramIcon } from './components/Icons';
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   // State
@@ -308,6 +309,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col font-sans">
       <SpeedInsights />
+      <Analytics />
       <Navbar
         user={user}
         onLoginClick={() => setView('LOGIN')}
