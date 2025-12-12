@@ -47,12 +47,17 @@ const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            {/* Explore and Pricing Hidden for MVP */}
+            <button
+              onClick={onExploreClick}
+              className="text-sm font-bold text-gray-600 hover:text-black hover:underline decoration-2 underline-offset-4 decoration-gray-300 transition-all flex items-center gap-1"
+            >
+              <span>🔥</span> Explore
+            </button>
             <button
               onClick={onBattleClick}
               className="text-sm font-bold text-red-600 hover:text-red-700 hover:underline decoration-2 underline-offset-4 decoration-red-200 transition-all flex items-center gap-1"
             >
-              <span className="animate-pulse">🔥</span> Battle Mode
+              <span className="animate-pulse">⚔️</span> Battle Mode
             </button>
           </div>
         </div>

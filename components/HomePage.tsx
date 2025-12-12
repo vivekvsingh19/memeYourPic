@@ -58,7 +58,7 @@ const HomePage: React.FC<HomePageProps> = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  // API Templates State
+  // API Templates State (Imgflip)
   const [apiTemplates, setApiTemplates] = useState<ImgflipMeme[]>([]);
   const [isLoadingTemplates, setIsLoadingTemplates] = useState(true);
   const [templateError, setTemplateError] = useState<string | null>(null);
@@ -73,7 +73,6 @@ const HomePage: React.FC<HomePageProps> = ({
     } catch (error) {
       console.error('Failed to load templates:', error);
       setTemplateError('Failed to load templates. Using cached templates.');
-      // Fallback handled in filteredTemplates
     } finally {
       setIsLoadingTemplates(false);
     }
@@ -533,9 +532,8 @@ const HomePage: React.FC<HomePageProps> = ({
           // Template Cards
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
             {displayedTemplates.map((template) => (
-              <button
+              <div
                 key={template.id}
-                onClick={() => onTemplateSelect(template)}
                 className="group relative aspect-square bg-white rounded-xl border-2 border-black overflow-hidden hover:shadow-hard-lg hover:-translate-y-1 transition-all duration-300"
               >
                 <img
@@ -545,15 +543,30 @@ const HomePage: React.FC<HomePageProps> = ({
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2">
-                  <span className="text-white text-xs font-bold text-center leading-tight mb-2 line-clamp-2">
+                <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 gap-2">
+                  <span className="text-white text-xs font-bold text-center leading-tight line-clamp-2">
                     {template.name}
                   </span>
-                  <span className="bg-brand-500 text-black px-3 py-1 rounded-full text-[10px] font-black uppercase shadow-hard-sm">
+                  <button
+                    onClick={() => onTemplateSelect(template)}
+                    className="bg-brand-500 text-black px-4 py-1.5 rounded-full text-[10px] font-black uppercase shadow-hard-sm hover:scale-105 transition-transform"
+                  >
                     Use This
-                  </span>
+                  </button>
+                  <a
+                    href={`https://imgflip.com/meme/${template.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-white/70 text-[10px] font-bold hover:text-white underline underline-offset-2 flex items-center gap-1"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    See Examples
+                  </a>
                 </div>
-              </button>
+              </div>
             ))}
           </div>
         )}
@@ -565,17 +578,16 @@ const HomePage: React.FC<HomePageProps> = ({
               onClick={handleLoadMore}
               className="px-8 py-4 bg-black text-white rounded-xl border-2 border-black font-black uppercase tracking-wide hover:bg-gray-800 transition-colors shadow-hard hover:translate-y-[-2px]"
             >
-              Load More Templates ({filteredTemplates.length - visibleCount} remaining)
+              Load More Templates
             </button>
           </div>
         )}
+
 
       </section>
 
       {/* ================= PRICING SECTION ================= */}
       {/* Pricing Section Hidden for MVP */}
-
-      {/* ================= RECENTLY CREATED (Mock) ================= */}
 
 
 
