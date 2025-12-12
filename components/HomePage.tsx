@@ -1,8 +1,9 @@
 
-import React, { useRef, useState, useEffect, useMemo } from 'react';
+import React, { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import { UploadIcon, MagicIcon, FireIcon, DownloadIcon, CheckIcon, ArrowDownIcon, SearchIcon, CrownIcon, CameraIcon, ShareIcon } from './Icons';
 import BeforeAfterSlider from './BeforeAfterSlider';
-import { POPULAR_TEMPLATES, MemeTemplateImage, SUPPORTED_LANGUAGES } from '../constants';
+import { MemeTemplateImage, SUPPORTED_LANGUAGES, POPULAR_TEMPLATES } from '../constants';
+import { fetchMemeTemplates, ImgflipMeme, toMemeTemplateImage } from '../services/imgflipService';
 
 interface HomePageProps {
   onFileSelect: (file: File) => void;
@@ -56,6 +57,31 @@ const HomePage: React.FC<HomePageProps> = ({
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  // API Templates State
+  const [apiTemplates, setApiTemplates] = useState<ImgflipMeme[]>([]);
+  const [isLoadingTemplates, setIsLoadingTemplates] = useState(true);
+  const [templateError, setTemplateError] = useState<string | null>(null);
+
+  // Fetch templates from Imgflip API
+  const loadTemplates = useCallback(async () => {
+    setIsLoadingTemplates(true);
+    setTemplateError(null);
+    try {
+      const memes = await fetchMemeTemplates();
+      setApiTemplates(memes);
+    } catch (error) {
+      console.error('Failed to load templates:', error);
+      setTemplateError('Failed to load templates. Using cached templates.');
+      // Fallback handled in filteredTemplates
+    } finally {
+      setIsLoadingTemplates(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadTemplates();
+  }, [loadTemplates]);
 
   useEffect(() => {
     if (isLoading) {
@@ -115,13 +141,19 @@ const HomePage: React.FC<HomePageProps> = ({
     }
   };
 
-  // Filter Templates
+  // Filter Templates - Use API templates or fallback to static ones
   const filteredTemplates = useMemo(() => {
     const lowerSearch = searchTerm.toLowerCase();
-    return POPULAR_TEMPLATES.filter(t =>
+
+    // Use API templates if available, otherwise fallback to static templates
+    const templatesToUse = apiTemplates.length > 0
+      ? apiTemplates.map(toMemeTemplateImage)
+      : POPULAR_TEMPLATES;
+
+    return templatesToUse.filter(t =>
       t.name.toLowerCase().includes(lowerSearch)
     );
-  }, [searchTerm]);
+  }, [searchTerm, apiTemplates]);
 
   const displayedTemplates = filteredTemplates.slice(0, visibleCount);
   const hasMore = visibleCount < filteredTemplates.length;
@@ -441,10 +473,104 @@ const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ================= TEMPLATES SECTION ================= */}
-      {/* Templates Section Hidden for MVP */}
+      <section id="templates-section" className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-24 border-t-2 border-black">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-black uppercase mb-4">
+            Viral Templates <span className="text-brand-500">🔥</span>
+          </h2>
+          <p className="text-lg text-gray-600 font-medium max-w-xl mx-auto">
+            Choose from {apiTemplates.length > 0 ? apiTemplates.length : '100+'} popular meme templates. Click to edit instantly!
+          </p>
+          <div className="h-2 w-24 bg-brand-500 mx-auto rounded-full mt-4"></div>
+        </div>
 
-      {/* ================= STEPS SECTION ================= */}
+        {/* Search & Refresh */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-8 max-w-2xl mx-auto">
+          <div className="relative flex-1">
+            <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search templates... (e.g. Drake, Distracted Boyfriend)"
+              value={searchTerm}
+              onChange={(e) => { setSearchTerm(e.target.value); setVisibleCount(ITEMS_PER_PAGE); }}
+              className="w-full py-4 pl-12 pr-4 bg-white border-2 border-black rounded-xl font-bold focus:outline-none focus:shadow-hard-sm transition-shadow"
+            />
+          </div>
+          <button
+            onClick={() => { loadTemplates(); setSearchTerm(''); setVisibleCount(ITEMS_PER_PAGE); }}
+            disabled={isLoadingTemplates}
+            className="px-6 py-4 bg-white border-2 border-black rounded-xl font-black uppercase text-sm flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors shadow-hard-sm hover:translate-y-[-2px] disabled:opacity-50"
+          >
+            <svg className={`w-5 h-5 ${isLoadingTemplates ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Refresh
+          </button>
+        </div>
 
+        {/* Error Banner */}
+        {templateError && (
+          <div className="mb-8 p-4 bg-yellow-100 border-2 border-yellow-500 text-yellow-800 rounded-xl font-bold text-center">
+            ⚠️ {templateError}
+          </div>
+        )}
+
+        {/* Template Grid */}
+        {isLoadingTemplates ? (
+          // Loading Skeleton
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="aspect-square bg-gray-200 rounded-xl border-2 border-gray-300 animate-pulse"></div>
+            ))}
+          </div>
+        ) : filteredTemplates.length === 0 ? (
+          // No Results
+          <div className="text-center py-16">
+            <p className="text-2xl font-black text-gray-400">No templates found 😢</p>
+            <p className="text-gray-500 mt-2">Try a different search term</p>
+          </div>
+        ) : (
+          // Template Cards
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+            {displayedTemplates.map((template) => (
+              <button
+                key={template.id}
+                onClick={() => onTemplateSelect(template)}
+                className="group relative aspect-square bg-white rounded-xl border-2 border-black overflow-hidden hover:shadow-hard-lg hover:-translate-y-1 transition-all duration-300"
+              >
+                <img
+                  src={template.url}
+                  alt={template.name}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2">
+                  <span className="text-white text-xs font-bold text-center leading-tight mb-2 line-clamp-2">
+                    {template.name}
+                  </span>
+                  <span className="bg-brand-500 text-black px-3 py-1 rounded-full text-[10px] font-black uppercase shadow-hard-sm">
+                    Use This
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Load More */}
+        {hasMore && !isLoadingTemplates && (
+          <div className="text-center mt-10">
+            <button
+              onClick={handleLoadMore}
+              className="px-8 py-4 bg-black text-white rounded-xl border-2 border-black font-black uppercase tracking-wide hover:bg-gray-800 transition-colors shadow-hard hover:translate-y-[-2px]"
+            >
+              Load More Templates ({filteredTemplates.length - visibleCount} remaining)
+            </button>
+          </div>
+        )}
+
+      </section>
 
       {/* ================= PRICING SECTION ================= */}
       {/* Pricing Section Hidden for MVP */}
