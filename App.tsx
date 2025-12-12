@@ -28,6 +28,7 @@ function App() {
 
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<MemeTemplateImage | null>(null);
   const [roastMode, setRoastMode] = useState<boolean>(false);
   const [language, setLanguage] = useState<string>('english');
 
@@ -103,6 +104,7 @@ function App() {
   const handleTemplateSelect = (template: MemeTemplateImage) => {
     setImageFile(null); // Clear file as we are using a URL
     setImagePreview(template.url);
+    setSelectedTemplate(template); // Store the template
     setError(null);
     setCaptions([]); // Clear captions for new template
     setIsWatermarked(false); // No watermark for templates
