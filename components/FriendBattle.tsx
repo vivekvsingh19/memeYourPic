@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { UploadIcon, FireIcon } from './Icons';
 import { generateRoastBattle } from '../services/geminiService';
 import { BattleResult } from '../types';
+import html2canvas from 'html2canvas';
 
 const FriendBattle: React.FC = () => {
   const [player1, setPlayer1] = useState<File | null>(null);
@@ -9,9 +10,12 @@ const FriendBattle: React.FC = () => {
   const [p1Preview, setP1Preview] = useState<string | null>(null);
   const [p2Preview, setP2Preview] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSharing, setIsSharing] = useState(false);
   const [result, setResult] = useState<BattleResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showVsAnim, setShowVsAnim] = useState(false);
+
+  const battleCardRef = useRef<HTMLDivElement>(null);
 
   const handleFileSelect = (file: File, player: 1 | 2) => {
     const reader = new FileReader();
@@ -57,41 +61,49 @@ const FriendBattle: React.FC = () => {
   };
 
   const handleShareResult = async () => {
-    if (!result) return;
+    if (!result || !battleCardRef.current) return;
+    setIsSharing(true);
 
-    const text = `
-🔥 MEME BATTLE RESULT 🔥
-👑 WINNER: ${result.winnerTitle}
-🏆 REASON: ${result.reason}
-
-💀 ROAST P1: ${result.roastP1}
-💀 ROAST P2: ${result.roastP2}
-
-Verdict: ${result.overallVerdict}
-
-Judge by Meme Your Pic 🤖
-    `.trim();
-
-    // Try Native Share first (Mobile/Supported Browsers)
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Meme Battle Verdict 🥊',
-          text: text,
-        });
-        return; // Success
-      } catch (err) {
-        console.log('Share cancelled or failed, falling back to clipboard');
-      }
-    }
-
-    // Fallback to Clipboard
     try {
-      await navigator.clipboard.writeText(text);
-      alert("Battle results copied to clipboard! Go spam the group chat. 💀");
-    } catch (err) {
-      console.error("Clipboard failed", err);
-      alert("Could not share. Take a screenshot! 📸");
+      // 1. Generate Image from the off-screen template
+      const canvas = await html2canvas(battleCardRef.current, {
+        backgroundColor: '#ffffff',
+        scale: 2, // High resolution
+        useCORS: true,
+      });
+
+      const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, 'image/png', 1.0)
+      );
+
+      if (!blob) throw new Error("Failed to create image");
+
+      const file = new File([blob], 'meme-battle-verdict.png', { type: 'image/png' });
+
+      // 2. Try Native Share with File
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'Meme Battle Verdict 🥊',
+          text: `👑 Winner: ${result.winnerTitle}\n🔥 Roast Battle Result from Meme Your Pic`,
+        });
+      } else {
+        // 3. Fallback to Download
+        const link = document.createElement('a');
+        link.download = 'meme-battle-verdict.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+
+      }
+
+    } catch (err: any) {
+      console.error("Share failed", err);
+      // Fallback to text copy if image fails
+      const text = `🔥 MEME BATTLE: ${result.winnerTitle} WON! 🏆\nReason: ${result.reason}`;
+      navigator.clipboard.writeText(text);
+      alert("Could not generate image. Text copied instead.");
+    } finally {
+      setIsSharing(false);
     }
   };
 
@@ -100,6 +112,98 @@ Judge by Meme Your Pic 🤖
 
       {/* Dynamic Background */}
       <div className="absolute inset-0 z-0 bg-grid-pattern opacity-50 pointer-events-none" />
+
+      {/* ================= HIDDEN EXPORT TEMPLATE ================= */}
+      {/* This renders just off-screen so we can capture a perfect "Desktop" layout even on mobile */}
+      <div
+        style={{ position: 'fixed', left: '-9999px', top: 0, width: '1200px' }}
+      >
+        <div ref={battleCardRef} className="bg-white p-12 border-[12px] border-black font-sans relative overflow-hidden">
+          {/* Watermark/Logo */}
+          <div className="absolute top-6 left-6 flex items-center gap-2 opacity-50">
+            <span className="font-black text-2xl uppercase tracking-tighter">Meme Your Pic</span>
+          </div>
+
+          {/* Title */}
+          <div className="text-center mb-12 mt-4">
+            <h2 className="text-7xl font-black uppercase tracking-tighter text-black" style={{ WebkitTextStroke: '2px black' }}>
+              Friend <span className="text-red-500">Battle</span>
+            </h2>
+            <div className="inline-block bg-black text-white px-4 py-1 mt-2 text-xl font-bold uppercase tracking-widest">
+              Official Verdict
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-12 items-start relative">
+            {/* VS Badge */}
+            <div className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 z-20 w-32 h-32 bg-black text-pop-yellow rounded-full border-8 border-white flex items-center justify-center">
+              <span className="font-black text-6xl italic pr-2 pt-1">VS</span>
+            </div>
+
+            {/* P1 */}
+            <div className={`
+                  relative border-8 border-black rounded-3xl p-6 bg-blue-50
+                  ${result?.winner === 1 ? 'ring-8 ring-yellow-400 scale-[1.02] z-10' : 'opacity-80 grayscale-[0.3]'}
+               `}>
+              {result?.winner === 1 && (
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-yellow-400 text-black px-8 py-3 rounded-2xl border-4 border-black font-black uppercase text-2xl tracking-widest shadow-hard z-30">
+                  👑 WINNER
+                </div>
+              )}
+              <div className="aspect-[3/4] bg-white rounded-2xl border-4 border-black overflow-hidden mb-6 relative">
+                {p1Preview && <img src={p1Preview} className="w-full h-full object-cover" />}
+                <div className="absolute bottom-0 left-0 right-0 bg-blue-500 text-white p-2 text-center font-black uppercase border-t-4 border-black">
+                  Player 1
+                </div>
+              </div>
+              {result && (
+                <div className="bg-white border-4 border-black p-4 rounded-xl">
+                  <p className="text-sm font-black text-gray-500 uppercase mb-1">Roast</p>
+                  <p className="text-xl font-bold italic leading-tight">"{result.roastP1}"</p>
+                </div>
+              )}
+            </div>
+
+            {/* P2 */}
+            <div className={`
+                  relative border-8 border-black rounded-3xl p-6 bg-red-50
+                  ${result?.winner === 2 ? 'ring-8 ring-yellow-400 scale-[1.02] z-10' : 'opacity-80 grayscale-[0.3]'}
+               `}>
+              {result?.winner === 2 && (
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-yellow-400 text-black px-8 py-3 rounded-2xl border-4 border-black font-black uppercase text-2xl tracking-widest shadow-hard z-30">
+                  👑 WINNER
+                </div>
+              )}
+              <div className="aspect-[3/4] bg-white rounded-2xl border-4 border-black overflow-hidden mb-6 relative">
+                {p2Preview && <img src={p2Preview} className="w-full h-full object-cover" />}
+                <div className="absolute bottom-0 left-0 right-0 bg-red-500 text-white p-2 text-center font-black uppercase border-t-4 border-black">
+                  Player 2
+                </div>
+              </div>
+              {result && (
+                <div className="bg-white border-4 border-black p-4 rounded-xl">
+                  <p className="text-sm font-black text-gray-500 uppercase mb-1">Roast</p>
+                  <p className="text-xl font-bold italic leading-tight">"{result.roastP2}"</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Final Verdict */}
+          {result && (
+            <div className="mt-12 bg-black text-white p-8 rounded-3xl border-8 border-pop-yellow text-center shadow-hard">
+              <h3 className="text-2xl font-bold text-pop-yellow uppercase tracking-widest mb-2">The Judge Has Spoken</h3>
+              <p className="text-4xl font-black mb-6 italic">"{result.overallVerdict}"</p>
+              <div className="bg-white/20 inline-block px-6 py-2 rounded-xl">
+                <span className="font-bold uppercase text-gray-300 mr-2">Why?</span>
+                <span className="font-medium text-xl">{result.reason}</span>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      {/* ================= END EXPORT TEMPLATE ================= */}
+
 
       {/* Battle Overlay Animation */}
       {isGenerating && showVsAnim && (
@@ -293,9 +397,17 @@ Judge by Meme Your Pic 🤖
               </button>
               <button
                 onClick={handleShareResult}
-                className="flex-1 bg-yellow-400 border-4 border-black py-4 rounded-xl font-black uppercase text-lg shadow-hard hover:-translate-y-1 transition-transform"
+                disabled={isSharing}
+                className="flex-1 bg-yellow-400 border-4 border-black py-4 rounded-xl font-black uppercase text-lg shadow-hard hover:-translate-y-1 transition-transform relative"
               >
-                Share Result
+                {isSharing ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="animate-spin h-5 w-5 border-2 border-black border-t-transparent rounded-full" />
+                    Saving...
+                  </span>
+                ) : (
+                  'Share Result'
+                )}
               </button>
             </div>
           </div>
