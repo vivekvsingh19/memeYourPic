@@ -175,7 +175,8 @@ export const generateMemeCaptions = async (
 
 export const generateRoastBattle = async (
   player1File: File,
-  player2File: File
+  player2File: File,
+  languageId: string = 'english'
 ): Promise<{
   winner: 1 | 2;
   winnerTitle: string;
@@ -195,12 +196,18 @@ export const generateRoastBattle = async (
   const p1Base64 = await fileToGenerativePart(player1File);
   const p2Base64 = await fileToGenerativePart(player2File);
 
+  // Get specific prompt instruction for the selected language
+  const languageObj = SUPPORTED_LANGUAGES.find(l => l.id === languageId) || SUPPORTED_LANGUAGES[0];
+  const languageInstruction = languageObj.prompt;
+
   const prompt = `
     You are the judge of a SAVAGE ROAST BATTLE between two people (Player 1 and Player 2).
     Analyze their photos for meme potential, aura, vibe, and visible "fails".
 
     Decide who has the "better" or "funnier" aura (or who is less roastable) to be the WINNER.
     The loser gets the harsher roast.
+
+    OUTPUT LANGUAGE: ${languageInstruction}
 
     OUTPUT JSON format:
     {
@@ -212,7 +219,7 @@ export const generateRoastBattle = async (
       "overallVerdict": "A final punchline summarizing the battle"
     }
 
-    BE SAVAGE BUT FUNNY. GEN-Z SLANG ENCOURAGED.
+    BE SAVAGE BUT FUNNY. USE SLANG APPROPRIATE FOR THE SELECTED LANGUAGE.
   `;
 
   try {

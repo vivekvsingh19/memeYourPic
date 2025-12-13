@@ -4,11 +4,14 @@ import { generateRoastBattle } from '../services/geminiService';
 import { BattleResult } from '../types';
 import html2canvas from 'html2canvas';
 
+import { SUPPORTED_LANGUAGES } from '../constants';
+
 const FriendBattle: React.FC = () => {
   const [player1, setPlayer1] = useState<File | null>(null);
   const [player2, setPlayer2] = useState<File | null>(null);
   const [p1Preview, setP1Preview] = useState<string | null>(null);
   const [p2Preview, setP2Preview] = useState<string | null>(null);
+  const [language, setLanguage] = useState<string>('english');
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
   const [result, setResult] = useState<BattleResult | null>(null);
@@ -45,7 +48,7 @@ const FriendBattle: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     try {
-      const data = await generateRoastBattle(player1, player2);
+      const data = await generateRoastBattle(player1, player2, language);
       // Artificial delay for tension if the API is too fast
       setTimeout(() => {
         setResult(data);
@@ -357,19 +360,40 @@ const FriendBattle: React.FC = () => {
         )}
 
         {!result ? (
-          <button
-            onClick={handleBattle}
-            disabled={!player1 || !player2 || isGenerating}
-            className={`
+          <>
+            <div className="mb-6 bg-white border-4 border-black rounded-2xl p-2 flex items-center shadow-hard-sm">
+              <span className="pl-4 text-2xl">🗣️</span>
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="w-full bg-transparent font-bold text-lg px-4 py-2 outline-none cursor-pointer appearance-none"
+              >
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <option key={lang.id} value={lang.id}>
+                    Judge in {lang.label}
+                  </option>
+                ))}
+              </select>
+              <div className="pr-4 pointer-events-none">
+                <svg className="w-5 h-5 fill-current text-black" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+              </div>
+            </div>
+
+            <button
+
+              onClick={handleBattle}
+              disabled={!player1 || !player2 || isGenerating}
+              className={`
               w-full py-6 rounded-2xl text-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 border-4 border-black transition-all shadow-hard transform
               ${!player1 || !player2
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300'
-                : 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:scale-105 hover:from-red-400 hover:to-red-500 active:scale-95'
-              }
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300'
+                  : 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:scale-105 hover:from-red-400 hover:to-red-500 active:scale-95'
+                }
             `}
-          >
-            {isGenerating ? 'Judgement Day...' : (<><FireIcon className="w-8 h-8" /> FIGHT!</>)}
-          </button>
+            >
+              {isGenerating ? 'Judgement Day...' : (<><FireIcon className="w-8 h-8" /> FIGHT!</>)}
+            </button>
+          </>
         ) : (
           <div className="space-y-4">
             {/* Verdict Box */}
