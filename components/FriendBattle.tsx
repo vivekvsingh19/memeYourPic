@@ -231,9 +231,7 @@ const FriendBattle: React.FC = () => {
       )}
 
       <div className="max-w-4xl mx-auto text-center mb-12 relative z-10">
-        <div className="inline-block bg-red-500 text-white px-6 py-2 rounded-full text-sm font-black uppercase tracking-widest border-2 border-black mb-4 animate-bounce shadow-hard-sm">
-          🔥 SAVAGE MODE
-        </div>
+
         <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-4 drop-shadow-[4px_4px_0_rgba(0,0,0,1)] text-white" style={{ WebkitTextStroke: '2px black' }}>
           Meme <span className="text-red-500">Battle</span>
         </h1>
