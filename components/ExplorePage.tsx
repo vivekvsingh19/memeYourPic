@@ -1,42 +1,41 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { FireIcon, HeartIcon, ShareIcon } from './Icons';
-import { fetchRedditMemes, RedditMeme, MEME_SUBREDDITS } from '../services/redditMemeService';
+import { FireIcon } from './Icons';
+import { fetchRedditMemes, RedditMeme } from '../services/redditMemeService';
 
-const ExplorePage: React.FC = () => {
+interface ExplorePageProps {
+  onMemeSelect: (imageUrl: string) => void;
+}
+
+const ExplorePage: React.FC<ExplorePageProps> = ({ onMemeSelect }) => {
   const [memes, setMemes] = useState<RedditMeme[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedSubreddit, setSelectedSubreddit] = useState<string>('');
-  const [activeFilter, setActiveFilter] = useState<string>('Hot');
 
   // Fetch memes
-  const loadMemes = useCallback(async (subreddit?: string) => {
+  const loadMemes = useCallback(async (append: boolean = false) => {
     setIsLoading(true);
     setError(null);
     try {
-      const fetchedMemes = await fetchRedditMemes(30, subreddit || undefined);
-      setMemes(fetchedMemes);
+      const fetchedMemes = await fetchRedditMemes(20);
+      if (append) {
+        // Append new memes to existing ones
+        setMemes(prev => [...prev, ...fetchedMemes]);
+      } else {
+        // Replace with new memes
+        setMemes(fetchedMemes);
+      }
     } catch (err) {
       console.error('Failed to load memes:', err);
-      setError('Failed to load memes. Please try again.');
+      setError('Failed to load trending memes. Please try again.');
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    loadMemes();
+    loadMemes(false);
   }, [loadMemes]);
-
-  const handleSubredditChange = (subreddit: string) => {
-    setSelectedSubreddit(subreddit);
-    loadMemes(subreddit || undefined);
-  };
-
-  const handleRefresh = () => {
-    loadMemes(selectedSubreddit || undefined);
-  };
 
   const formatUpvotes = (ups: number): string => {
     if (ups >= 1000000) return `${(ups / 1000000).toFixed(1)}M`;
@@ -44,156 +43,92 @@ const ExplorePage: React.FC = () => {
     return ups.toString();
   };
 
-  const getTimeAgo = (): string => {
-    const times = ['Just now', '2 min ago', '5 min ago', '10 min ago', '30 min ago', '1 hour ago', '2 hours ago'];
-    return times[Math.floor(Math.random() * times.length)];
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white pt-24 pb-12 px-4">
-      <div className="max-w-2xl mx-auto">
-
-        {/* Header */}
-        <div className="flex flex-col gap-4 mb-8">
-          <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-black uppercase tracking-tighter flex items-center gap-2">
-              Explore <FireIcon className="w-8 h-8 text-orange-500" />
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="w-full bg-gradient-to-br from-brand-500 via-orange-500 to-red-500 border-b-4 border-black pt-32 pb-16">
+        <div className="max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-32 xl:px-48">
+          <div className="text-center">
+            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white mb-4 drop-shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+              Trending Memes 🔥
             </h1>
+            <p className="text-xl md:text-2xl font-bold text-white mb-8 drop-shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">
+              The hottest memes from around the internet
+            </p>
+
+            {/* Refresh Button */}
             <button
-              onClick={handleRefresh}
+              onClick={() => loadMemes(false)}
               disabled={isLoading}
-              className="px-4 py-2 bg-orange-500 text-white border-2 border-black rounded-full font-bold text-sm hover:bg-orange-600 transition-colors shadow-hard-sm flex items-center gap-2 disabled:opacity-50"
+              className="px-8 py-4 bg-white text-black border-4 border-black rounded-xl font-black uppercase tracking-wide text-lg hover:translate-y-[-4px] transition-transform shadow-hard hover:shadow-hard-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <svg className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Refresh
+              <span className="flex items-center gap-2">
+                <svg className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                {isLoading ? 'Loading...' : 'Refresh Feed'}
+              </span>
             </button>
-          </div>
-
-          {/* Subreddit Filter */}
-          <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
-            <button
-              onClick={() => handleSubredditChange('')}
-              className={`px-4 py-2 border-2 border-black rounded-full font-bold text-sm whitespace-nowrap transition-colors ${selectedSubreddit === '' ? 'bg-orange-500 text-white' : 'bg-white hover:bg-gray-100'
-                }`}
-            >
-              🎲 All
-            </button>
-            {MEME_SUBREDDITS.map(sub => (
-              <button
-                key={sub}
-                onClick={() => handleSubredditChange(sub)}
-                className={`px-4 py-2 border-2 border-black rounded-full font-bold text-sm whitespace-nowrap transition-colors ${selectedSubreddit === sub ? 'bg-orange-500 text-white' : 'bg-white hover:bg-gray-100'
-                  }`}
-              >
-                r/{sub}
-              </button>
-            ))}
-          </div>
-
-          {/* Filter Buttons */}
-          <div className="flex gap-2">
-            {['Hot', 'New', 'Top'].map(filter => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`px-4 py-2 border-2 border-black rounded-full font-bold text-sm transition-colors ${activeFilter === filter ? 'bg-black text-white' : 'bg-white hover:bg-black hover:text-white'
-                  }`}
-              >
-                {filter}
-              </button>
-            ))}
           </div>
         </div>
+      </section>
 
+      {/* Memes Grid Section */}
+      <section className="w-full max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-32 xl:px-48 py-16">
         {/* Error Banner */}
         {error && (
-          <div className="mb-6 p-4 bg-red-100 border-2 border-red-500 text-red-800 rounded-xl font-bold text-center">
-            ⚠️ {error}
+          <div className="mb-8 p-6 bg-red-100 border-4 border-red-500 rounded-xl">
+            <p className="text-red-800 font-black text-lg text-center">⚠️ {error}</p>
           </div>
         )}
 
         {/* Loading State */}
         {isLoading ? (
-          <div className="space-y-8">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="bg-white border-2 border-gray-200 rounded-3xl overflow-hidden animate-pulse">
-                <div className="p-4 flex items-center gap-3 border-b-2 border-gray-100">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
-                  <div className="flex-1">
-                    <div className="h-4 w-24 bg-gray-200 rounded mb-1"></div>
-                    <div className="h-3 w-16 bg-gray-200 rounded"></div>
-                  </div>
-                </div>
-                <div className="aspect-square bg-gray-200"></div>
-                <div className="p-4">
-                  <div className="h-4 w-full bg-gray-200 rounded mb-2"></div>
-                  <div className="h-4 w-3/4 bg-gray-200 rounded"></div>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="aspect-square bg-orange-100 rounded-xl border-2 border-orange-200 animate-pulse"></div>
             ))}
           </div>
         ) : memes.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-2xl font-black text-gray-400">No memes found 😢</p>
-            <p className="text-gray-500 mt-2">Try a different subreddit or refresh</p>
+          <div className="text-center py-20">
+            <p className="text-4xl font-black text-gray-400 uppercase">No Memes Found 😢</p>
+            <p className="text-xl font-bold text-gray-500 mt-4">Try refreshing the page</p>
           </div>
         ) : (
-          /* Feed */
-          <div className="space-y-8">
+          /* Memes Grid */
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {memes.map((meme, index) => (
-              <div key={`${meme.postLink}-${index}`} className="bg-white border-2 border-black rounded-3xl overflow-hidden shadow-hard">
-                {/* Header */}
-                <div className="p-4 flex items-center justify-between border-b-2 border-gray-100">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-red-500 rounded-full border-2 border-black flex items-center justify-center text-white font-black text-sm">
-                      {meme.author.charAt(0).toUpperCase()}
-                    </div>
-                    <div>
-                      <p className="font-black text-sm">u/{meme.author}</p>
-                      <p className="text-xs text-gray-500 font-bold">{getTimeAgo()}</p>
-                    </div>
-                  </div>
-                  <div className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-black border border-orange-200">
-                    r/{meme.subreddit}
-                  </div>
-                </div>
-
-                {/* Title */}
-                <div className="px-4 py-3 border-b border-gray-100">
-                  <p className="font-bold text-gray-800 line-clamp-2">{meme.title}</p>
+              <div
+                key={`${meme.postLink}-${index}`}
+                onClick={() => onMemeSelect(meme.url)}
+                className="group relative bg-white rounded-xl border-2 border-black overflow-hidden hover:shadow-hard-lg hover:-translate-y-2 transition-all duration-300 shadow-hard-sm cursor-pointer"
+              >
+                {/* Popularity Badge */}
+                <div className="absolute top-2 right-2 z-10 bg-white px-2 py-1 rounded-lg text-xs font-black flex items-center gap-1 border-2 border-black shadow-hard-xs">
+                  <span className="text-orange-500">🔥</span>
+                  {formatUpvotes(meme.ups)}
                 </div>
 
                 {/* Image */}
-                <div className="aspect-auto max-h-[600px] bg-gray-100 relative overflow-hidden">
+                <div className="aspect-square bg-gray-100 relative overflow-hidden">
                   <img
                     src={meme.url}
                     alt={meme.title}
-                    className="w-full h-full object-contain"
                     loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x400?text=Image+not+available';
                     }}
                   />
-                </div>
 
-                {/* Actions */}
-                <div className="p-4">
-                  <div className="flex items-center gap-6">
-                    <button className="flex items-center gap-2 text-gray-600 hover:text-orange-500 transition-colors group">
-                      <span className="text-orange-500 font-black text-xl group-hover:scale-110 transition-transform">▲</span>
-                      <span className="font-black text-sm">{formatUpvotes(meme.ups)}</span>
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-4 gap-3">
+                    <p className="text-white text-sm font-bold text-center leading-tight line-clamp-3">
+                      {meme.title}
+                    </p>
+                    <button className="bg-brand-500 text-black px-6 py-2 rounded-lg text-sm font-black uppercase shadow-hard-sm border-2 border-black hover:scale-105 transition-transform">
+                      Edit This Meme →
                     </button>
-                    <a
-                      href={meme.postLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-gray-600 hover:text-blue-500 transition-colors group"
-                    >
-                      <ShareIcon className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                      <span className="font-black text-sm">View on Reddit</span>
-                    </a>
                   </div>
                 </div>
               </div>
@@ -201,19 +136,18 @@ const ExplorePage: React.FC = () => {
           </div>
         )}
 
-        {/* Load More */}
+        {/* Load More Button */}
         {!isLoading && memes.length > 0 && (
-          <div className="text-center mt-12">
+          <div className="text-center mt-16">
             <button
-              onClick={handleRefresh}
-              className="px-8 py-4 bg-black text-white rounded-full font-black uppercase tracking-widest hover:scale-105 transition-transform shadow-hard-sm border-2 border-black"
+              onClick={() => loadMemes(true)}
+              className="px-12 py-5 bg-brand-500 text-black border-4 border-black rounded-xl font-black uppercase tracking-widest text-xl hover:translate-y-[-4px] transition-transform shadow-hard hover:shadow-hard-lg"
             >
               Load More Memes 🔥
             </button>
           </div>
         )}
-
-      </div>
+      </section>
     </div>
   );
 };

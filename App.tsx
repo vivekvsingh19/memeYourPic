@@ -111,6 +111,16 @@ function App() {
     setView('RESULT'); // Go straight to editor
   };
 
+  const handleMemeSelect = (imageUrl: string) => {
+    setImageFile(null); // Clear file as we are using a URL
+    setImagePreview(imageUrl);
+    setSelectedTemplate(null);
+    setError(null);
+    setCaptions([]); // Clear captions
+    setIsWatermarked(false); // No watermark
+    setView('RESULT'); // Go straight to editor
+  };
+
   const handleClearImage = () => {
     setImageFile(null);
     setImagePreview(null);
@@ -232,7 +242,7 @@ function App() {
           onExploreClick={() => setView('EXPLORE')}
           onDashboardClick={() => setView('DASHBOARD')}
         />
-        <ExplorePage />
+        <ExplorePage onMemeSelect={handleMemeSelect} />
       </>
     );
   }
