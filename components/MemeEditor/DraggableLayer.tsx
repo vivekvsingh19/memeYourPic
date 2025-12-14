@@ -267,7 +267,7 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
             <button
               data-control
               onClick={(e) => { e.stopPropagation(); onDelete(layer.id); }}
-              className="absolute -top-[min(22px,6cqw)] -right-[min(22px,6cqw)] w-[min(22px,6cqw)] h-[min(22px,6cqw)] bg-white text-gray-700 rounded-full flex items-center justify-center shadow-md z-30 hover:scale-110 hover:text-red-500 transition-all"
+              className="absolute -top-[min(18px,5cqw)] -right-[min(18px,5cqw)] w-[min(18px,5cqw)] h-[min(18px,5cqw)] bg-white text-gray-700 rounded-full flex items-center justify-center shadow-sm border border-gray-100 z-30 hover:scale-110 hover:text-red-500 transition-all"
               title="Delete Layer"
             >
               <TrashIcon className="w-[50%] h-[50%]" />
@@ -275,12 +275,12 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
 
             {/* Rotation Handle (Top Center Stick) */}
             <div
-              className="absolute -top-[min(22px,6cqw)] left-1/2 -translate-x-1/2 w-0.5 h-[min(22px,6cqw)] bg-[#8B3DFF] z-20"
+              className="absolute -top-[min(18px,5cqw)] left-1/2 -translate-x-1/2 w-[1px] h-[min(18px,5cqw)] bg-[#8B3DFF] z-20"
             />
             <div
               data-control
               onPointerDown={handleRotateStart}
-              className="absolute -top-[min(32px,9cqw)] left-1/2 -translate-x-1/2 w-[min(22px,6cqw)] h-[min(22px,6cqw)] bg-white rounded-full flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing z-30 hover:scale-110 text-gray-700"
+              className="absolute -top-[min(26px,8cqw)] left-1/2 -translate-x-1/2 w-[min(18px,5cqw)] h-[min(18px,5cqw)] bg-white rounded-full flex items-center justify-center shadow-sm border border-gray-100 cursor-grab active:cursor-grabbing z-30 hover:scale-110 text-gray-700"
               title="Rotate"
             >
               <RotateIcon className="w-[50%] h-[50%]" />
@@ -291,25 +291,25 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
             <div
               data-control
               onPointerDown={handleScaleStart}
-              className="absolute -top-[min(6px,2cqw)] -left-[min(6px,2cqw)] w-[min(12px,4cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-nwse-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-125 transition-transform"
+              className="absolute -top-[min(4px,1.5cqw)] -left-[min(4px,1.5cqw)] w-[min(9px,2.5cqw)] h-[min(9px,2.5cqw)] bg-white border border-gray-200 rounded-full cursor-nwse-resize z-20 shadow-sm hover:scale-125 transition-transform"
             />
             {/* NE */}
             <div
               data-control
               onPointerDown={handleScaleStart}
-              className="absolute -top-[min(6px,2cqw)] -right-[min(6px,2cqw)] w-[min(12px,4cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-nesw-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-125 transition-transform"
+              className="absolute -top-[min(4px,1.5cqw)] -right-[min(4px,1.5cqw)] w-[min(9px,2.5cqw)] h-[min(9px,2.5cqw)] bg-white border border-gray-200 rounded-full cursor-nesw-resize z-20 shadow-sm hover:scale-125 transition-transform"
             />
             {/* SW */}
             <div
               data-control
               onPointerDown={handleScaleStart}
-              className="absolute -bottom-[min(6px,2cqw)] -left-[min(6px,2cqw)] w-[min(12px,4cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-nesw-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-125 transition-transform"
+              className="absolute -bottom-[min(4px,1.5cqw)] -left-[min(4px,1.5cqw)] w-[min(9px,2.5cqw)] h-[min(9px,2.5cqw)] bg-white border border-gray-200 rounded-full cursor-nesw-resize z-20 shadow-sm hover:scale-125 transition-transform"
             />
             {/* SE */}
             <div
               data-control
               onPointerDown={handleScaleStart}
-              className="absolute -bottom-[min(6px,2cqw)] -right-[min(6px,2cqw)] w-[min(12px,4cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-nwse-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-125 transition-transform"
+              className="absolute -bottom-[min(4px,1.5cqw)] -right-[min(4px,1.5cqw)] w-[min(9px,2.5cqw)] h-[min(9px,2.5cqw)] bg-white border border-gray-200 rounded-full cursor-nwse-resize z-20 shadow-sm hover:scale-125 transition-transform"
             />
 
             {/* Side Handles for Width Resize (Left/Right) - For ALL types */}
@@ -318,20 +318,16 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
               <div
                 data-control
                 onPointerDown={(e) => handleWidthResizeStart(e, 'left')}
-                className="absolute top-1/2 -left-[min(12px,3cqw)] -translate-y-1/2 w-[min(8px,2.5cqw)] h-[min(24px,8cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-[0_1px_4px_rgba(0,0,0,0.5)] border border-gray-100 hover:scale-110 transition-transform flex items-center justify-center"
+                className="absolute top-1/2 -left-[min(5px,1.5cqw)] -translate-y-1/2 w-[min(5px,1.5cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-sm border border-gray-200 hover:scale-110 transition-transform flex items-center justify-center"
               >
-                {/* Visual Grip Line */}
-                <div className="w-[1px] h-[40%] bg-gray-300"></div>
               </div>
 
               {/* Right Handle */}
               <div
                 data-control
                 onPointerDown={(e) => handleWidthResizeStart(e, 'right')}
-                className="absolute top-1/2 -right-[min(12px,3cqw)] -translate-y-1/2 w-[min(8px,2.5cqw)] h-[min(24px,8cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-[0_1px_4px_rgba(0,0,0,0.5)] border border-gray-100 hover:scale-110 transition-transform flex items-center justify-center"
+                className="absolute top-1/2 -right-[min(5px,1.5cqw)] -translate-y-1/2 w-[min(5px,1.5cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-sm border border-gray-200 hover:scale-110 transition-transform flex items-center justify-center"
               >
-                {/* Visual Grip Line */}
-                <div className="w-[1px] h-[40%] bg-gray-300"></div>
               </div>
             </>
           </>
