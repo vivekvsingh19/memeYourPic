@@ -1037,55 +1037,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                 {/* EXPORT TAB */}
                 {activeTab === 'export' && (
                     <div className="space-y-8">
-                        {/* 1. Format Selector */}
-                        <div>
-                            <label className="block text-xs font-bold text-gray-400 uppercase mb-3">Output Format</label>
-                            <div className="flex bg-gray-100 p-1 rounded-xl border border-gray-200">
-                                {['Image', 'GIF', 'Video'].map((fmt) => (
-                                    <button
-                                        key={fmt}
-                                        className={`flex-1 py-2 rounded-lg text-sm font-black uppercase transition-all ${fmt === 'Image' ? 'bg-white text-black shadow-sm border border-gray-200' : 'text-gray-400 hover:text-gray-600'}`}
-                                    >
-                                        {fmt}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
 
-                        {/* 2. Viral Card Types */}
-                        <div>
-                            <label className="block text-xs font-bold text-gray-400 uppercase mb-3">Viral Card Type</label>
-                            <div className="grid grid-cols-2 gap-3">
-                                {[
-                                    { label: 'Meme Card', icon: '🖼️', desc: 'Standard 1:1' },
-                                    { label: 'Vibe Check', icon: '✨', desc: 'Rating Card' },
-                                    { label: 'NPC Identity', icon: '🤖', desc: 'Stats Card' },
-                                    { label: 'Toxic Trait', icon: '🚩', desc: 'Warning Label' },
-                                    { label: 'Persona Score', icon: '💯', desc: 'Rank Card' },
-                                    { label: 'Vs Reality', icon: '🆚', desc: 'Side by Side' },
-                                ].map((card) => (
-                                    <button
-                                        key={card.label}
-                                        className="p-3 bg-white border-2 border-gray-200 rounded-xl hover:border-black hover:shadow-hard-sm transition-all text-left group"
-                                    >
-                                        <div className="text-2xl mb-1 group-hover:scale-110 transition-transform origin-left">{card.icon}</div>
-                                        <div className="font-black text-xs uppercase">{card.label}</div>
-                                        <div className="text-[10px] text-gray-400 font-bold">{card.desc}</div>
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* 3. Story Mode Toggle */}
-                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 flex items-center justify-between">
-                            <div>
-                                <h4 className="font-black text-sm uppercase">Story Mode</h4>
-                                <p className="text-xs text-gray-500 font-bold">Auto-resize to 9:16 for TikTok/IG</p>
-                            </div>
-                            <div className="w-12 h-6 bg-gray-300 rounded-full relative cursor-pointer">
-                                <div className="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all"></div>
-                            </div>
-                        </div>
 
                         {/* Export CTA */}
                         <button
