@@ -252,7 +252,7 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
           >
             {layer.content || "Double tap to edit"}
           </p>
-        ) : (layer.type === 'image' || (layer.type === 'sticker' && layer.src)) ? (
+        ) : (layer.src) ? (
           <div className="rounded-lg overflow-hidden pointer-events-none w-full">
             <img src={layer.src} alt="Overlay" className="w-full h-auto object-cover" />
           </div>
