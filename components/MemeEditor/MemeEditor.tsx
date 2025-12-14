@@ -253,6 +253,29 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
     setSelectedId(newLayer.id);
   };
 
+  const handleAddStickerImage = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        const newLayer: Layer = {
+          id: `sticker-img-${Date.now()}`,
+          type: 'sticker',
+          content: 'Sticker',
+          src: e.target.result as string,
+          x: 50,
+          y: 50,
+          rotation: 0,
+          scale: 1,
+        };
+        const newLayers = [...layers, newLayer];
+        setLayers(newLayers);
+        addToHistory(newLayers);
+        setSelectedId(newLayer.id);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleAddImageLayer = (file: File) => {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -528,6 +551,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
             onAddText={handleAddText}
             onAddSticker={handleAddSticker}
             onAddImageLayer={handleAddImageLayer}
+            onAddStickerImage={handleAddStickerImage}
             onReplaceBackground={handleReplaceBackground}
             onUpdateBgImage={onUpdateImage}
             onDeleteLayer={handleDeleteLayer}
