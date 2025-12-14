@@ -253,8 +253,8 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
             {layer.content || "Double tap to edit"}
           </p>
         ) : (layer.type === 'image' || (layer.type === 'sticker' && layer.src)) ? (
-          <div className="rounded-lg overflow-hidden pointer-events-none">
-            <img src={layer.src} alt="Overlay" className="w-40 h-auto object-cover" />
+          <div className="rounded-lg overflow-hidden pointer-events-none w-full">
+            <img src={layer.src} alt="Overlay" className="w-full h-auto object-cover" />
           </div>
         ) : (
           <div className="text-6xl px-2 py-1">{layer.content}</div>
@@ -312,23 +312,28 @@ const DraggableLayer: React.FC<DraggableLayerProps> = ({
               className="absolute -bottom-[min(6px,2cqw)] -right-[min(6px,2cqw)] w-[min(12px,4cqw)] h-[min(12px,4cqw)] bg-white rounded-full cursor-nwse-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-125 transition-transform"
             />
 
-            {/* Side Handles for Text Width (Left/Right) */}
-            {layer.type === 'text' && (
-              <>
-                {/* Left Handle */}
-                <div
-                  data-control
-                  onPointerDown={(e) => handleWidthResizeStart(e, 'left')}
-                  className="absolute top-1/2 -left-[min(8px,2.5cqw)] -translate-y-1/2 w-[min(6px,2cqw)] h-[min(16px,5cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-110 transition-transform"
-                />
-                {/* Right Handle */}
-                <div
-                  data-control
-                  onPointerDown={(e) => handleWidthResizeStart(e, 'right')}
-                  className="absolute top-1/2 -right-[min(8px,2.5cqw)] -translate-y-1/2 w-[min(6px,2cqw)] h-[min(16px,5cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-[0_1px_3px_rgba(0,0,0,0.3)] hover:scale-110 transition-transform"
-                />
-              </>
-            )}
+            {/* Side Handles for Width Resize (Left/Right) - For ALL types */}
+            <>
+              {/* Left Handle */}
+              <div
+                data-control
+                onPointerDown={(e) => handleWidthResizeStart(e, 'left')}
+                className="absolute top-1/2 -left-[min(12px,3cqw)] -translate-y-1/2 w-[min(8px,2.5cqw)] h-[min(24px,8cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-[0_1px_4px_rgba(0,0,0,0.5)] border border-gray-100 hover:scale-110 transition-transform flex items-center justify-center"
+              >
+                {/* Visual Grip Line */}
+                <div className="w-[1px] h-[40%] bg-gray-300"></div>
+              </div>
+
+              {/* Right Handle */}
+              <div
+                data-control
+                onPointerDown={(e) => handleWidthResizeStart(e, 'right')}
+                className="absolute top-1/2 -right-[min(12px,3cqw)] -translate-y-1/2 w-[min(8px,2.5cqw)] h-[min(24px,8cqw)] bg-white rounded-full cursor-ew-resize z-20 shadow-[0_1px_4px_rgba(0,0,0,0.5)] border border-gray-100 hover:scale-110 transition-transform flex items-center justify-center"
+              >
+                {/* Visual Grip Line */}
+                <div className="w-[1px] h-[40%] bg-gray-300"></div>
+              </div>
+            </>
           </>
         )}
       </div>

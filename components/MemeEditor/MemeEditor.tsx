@@ -246,6 +246,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
       y: 50,
       rotation: 0,
       scale: 1,
+      width: 30,
     };
     const newLayers = [...layers, newLayer];
     setLayers(newLayers);
@@ -266,6 +267,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
           y: 50,
           rotation: 0,
           scale: 1,
+          width: 30, // Initial responsive width
         };
         const newLayers = [...layers, newLayer];
         setLayers(newLayers);
@@ -289,6 +291,7 @@ const MemeEditor: React.FC<MemeEditorProps> = ({ imageSrc, initialCaptions, onBa
           y: 50,
           rotation: 0,
           scale: 1,
+          width: 40, // Initial responsive width
         };
         const newLayers = [...layers, newLayer];
         setLayers(newLayers);
