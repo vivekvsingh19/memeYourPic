@@ -521,7 +521,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                                 `}
                                     >
                                         <div className="w-10 h-10 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center border border-gray-300 flex-shrink-0">
-                                            {l.type === 'image' && l.src ? (
+                                            {l.src ? (
                                                 <img src={l.src} alt="layer" className="w-full h-full object-cover" />
                                             ) : (
                                                 <span className="text-xl">{l.content}</span>
