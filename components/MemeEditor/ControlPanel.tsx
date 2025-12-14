@@ -26,6 +26,7 @@ interface ControlPanelProps {
     isPanelCollapsed?: boolean;
     onToggleCollapse?: () => void;
     onExport?: () => void;
+    onAddStickerImage: (file: File) => void;
 }
 
 const TABS = [
@@ -260,6 +261,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
     onAddText,
     onAddSticker,
     onAddImageLayer,
+    onAddStickerImage,
     onReplaceBackground,
     onUpdateBgImage,
     onDeleteLayer,
@@ -1002,6 +1004,25 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
                 {/* STICKERS TAB */}
                 {activeTab === 'stickers' && (
                     <div>
+                        <div className="mb-6">
+                            <label className="block text-xs font-bold text-gray-400 uppercase mb-3">Custom Sticker</label>
+                            <button
+                                onClick={() => {
+                                    const input = document.createElement('input');
+                                    input.type = 'file';
+                                    input.accept = 'image/*';
+                                    input.onchange = (e) => {
+                                        const file = (e.target as HTMLInputElement).files?.[0];
+                                        if (file) onAddStickerImage(file);
+                                    };
+                                    input.click();
+                                }}
+                                className="w-full py-3 bg-white border border-gray-300 rounded-xl font-bold hover:border-black transition shadow-sm hover:translate-y-[-1px] btn-press flex items-center justify-center gap-2 text-gray-700"
+                            >
+                                <UploadIcon className="w-4 h-4" />
+                                UPLOAD STICKER
+                            </button>
+                        </div>
                         <label className="block text-xs font-bold text-gray-400 uppercase mb-4">Click to add</label>
                         <div className="grid grid-cols-4 gap-3">
                             {STICKERS.map(emoji => (
