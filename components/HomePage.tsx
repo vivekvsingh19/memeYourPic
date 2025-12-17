@@ -19,9 +19,12 @@ interface HomePageProps {
   onLanguageChange: (lang: string) => void;
   onSignupClick: () => void;
   credits: number;
+  onBuyCredits: (amount: number, cost: string) => void;
+  currency?: 'USD' | 'INR';
 }
 
 const DEMO_IMG = "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?q=80&w=1000&auto=format&fit=crop";
+//const DEMO_IMG2 = "https://i.pinimg.com/736x/e1/71/a7/e171a7ff9681364e122c77ab285c80b8.jpg?q=80&w=1000&auto=format&fit=crop";
 
 const LOADING_JOKES = [
   "Consulting the Meme Gods... 🧘‍♂️",
@@ -46,7 +49,9 @@ const HomePage: React.FC<HomePageProps> = ({
   selectedLanguage,
   onLanguageChange,
   onSignupClick,
-  credits
+  credits,
+  onBuyCredits,
+  currency = 'USD'
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [loadingText, setLoadingText] = useState("Generating...");
@@ -192,17 +197,17 @@ const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-black leading-[0.9] mb-2">
-            MAKE MEMES <br />
-            THAT <span className="text-brand-600 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-sm origin-left">SLAP.</span>
+            COOK YOUR <br />
+            PICS WITH <span className="text-brand-600 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-sm origin-left">AI.</span>
           </h1>
 
           <p className="text-xl md:text-2xl font-medium text-gray-600 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-            Turn boring photos into <span className="bg-pop-yellow px-2 py-0.5 border-2 border-black rounded-md text-black font-bold transform -skew-x-3 inline-block shadow-[2px_2px_0_0_rgba(0,0,0,1)]">viral gold</span> instantly.
-            <br /><span className="text-gray-400 text-lg mt-2 inline-block">Zero skills required. Just pure vibes.</span>
+            Turn mid photos into <span className="bg-pop-yellow px-2 py-0.5 border-2 border-black rounded-md text-black font-bold transform -skew-x-3 inline-block shadow-[2px_2px_0_0_rgba(0,0,0,1)]">legendary roasts</span> or battle for clout.
+            <br /><span className="text-gray-400 text-lg mt-2 inline-block">Don't be basic. Meme better.</span>
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center lg:justify-start mt-4">
-            {['Free to Start', 'Viral Ready', 'TikTok Optimized'].map((tag) => (
+            {['💀 Brutal Roasts', '🏆 Meme Battles', '✨ Viral Templates'].map((tag) => (
               <span key={tag} className="px-3 py-1 bg-white border-2 border-black rounded-lg text-sm font-bold shadow-hard-sm hover:-translate-y-1 transition-transform cursor-default">
                 {tag}
               </span>
@@ -575,9 +580,137 @@ const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ================= PRICING SECTION ================= */}
-      {/* Pricing Section Hidden for MVP */}
+      <section id="pricing" className="w-full max-w-screen-xl px-4 md:px-8 lg:px-16 py-24 border-t-2 border-black bg-gradient-to-b from-pop-blue/5 to-white">
+        <div className="text-center mb-16">
+          <div className="inline-block bg-black text-white px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-4 animate-bounce">
+            💎 Invest in Your Clout
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black uppercase mb-6 text-black tracking-tight">
+            Go Viral <span className="text-brand-600 underline decoration-4 decoration-black underline-offset-4">Today</span>
+          </h2>
+          <p className="text-xl font-medium text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Stop posting weak memes. Get the tools you need to dominate the feed.
+            <br className="hidden md:block" />
+            <span className="text-sm font-bold text-gray-400 mt-2 block">One-time payment. Yours forever.</span>
+          </p>
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-end">
 
+          {/* STARTER PACK */}
+          <div className="relative group bg-white rounded-3xl border-2 border-gray-200 p-8 flex flex-col hover:border-black transition-all duration-300 hover:shadow-hard-sm">
+            <h3 className="text-xl font-black uppercase tracking-tight mb-2 text-gray-500">Roast Rookie</h3>
+            <div className="flex items-baseline gap-1 mb-6">
+              <span className="text-4xl font-black">{currency === 'INR' ? '₹149' : '$4.99'}</span>
+              <span className="text-gray-400 font-bold">/ pack</span>
+            </div>
+
+            <div className="text-6xl mb-6 text-center grayscale group-hover:grayscale-0 transition-all">⚡️</div>
+            <div className="text-center mb-8">
+              <span className="text-4xl font-black">100</span>
+              <span className="text-sm uppercase font-bold text-gray-400 ml-2">Credits</span>
+            </div>
+
+            <ul className="space-y-3 mb-8 flex-1">
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <span className="text-green-500 text-lg">✓</span> 10 AI Generations
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <span className="text-green-500 text-lg">✓</span> Standard Speed
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-400 line-through decoration-2">
+                <span className="text-gray-300 text-lg">×</span> Remove Watermark
+              </li>
+            </ul>
+
+            <button
+              onClick={() => onBuyCredits(100, currency === 'INR' ? '₹149' : '$4.99')}
+              className="w-full py-4 bg-gray-100 hover:bg-black hover:text-white border-2 border-black rounded-xl font-black uppercase tracking-wider transition-all"
+            >
+              Get Started
+            </button>
+          </div>
+
+          {/* PRO PACK (Highlighted) */}
+          <div className="relative group bg-brand-500 rounded-3xl border-4 border-black p-8 flex flex-col transform md:-translate-y-4 shadow-hard">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-white px-6 py-2 rounded-full font-black uppercase text-xs tracking-widest border-2 border-white shadow-lg">
+              🔥 Best Value
+            </div>
+
+            <h3 className="text-2xl font-black uppercase tracking-tight mb-2 text-white drop-shadow-md">Meme God</h3>
+            <div className="flex items-baseline gap-1 mb-6">
+              <span className="text-5xl font-black text-white drop-shadow-md">{currency === 'INR' ? '₹499' : '$14.99'}</span>
+              <span className="text-black/60 font-bold">/ pack</span>
+            </div>
+
+            <div className="text-7xl mb-6 text-center drop-shadow-lg animate-pulse-slow">👑</div>
+            <div className="text-center mb-8">
+              <span className="text-5xl font-black text-white drop-shadow-md">500</span>
+              <span className="text-sm uppercase font-bold text-black/60 ml-2">Credits</span>
+            </div>
+
+            <ul className="space-y-3 mb-8 flex-1">
+              <li className="flex items-center gap-3 text-sm font-bold text-black">
+                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> 50 AI Generations
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-black">
+                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> <span className="underline decoration-black decoration-2">No Watermarks</span>
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-black">
+                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> Priority Server Access
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-black">
+                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> HD Downloads
+              </li>
+            </ul>
+
+            <button
+              onClick={() => onBuyCredits(500, currency === 'INR' ? '₹499' : '$14.99')}
+              className="w-full py-4 bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black rounded-xl font-black uppercase tracking-wider transition-all shadow-lg hover:shadow-none translate-y-0 hover:translate-y-1"
+            >
+              Go Pro Now
+            </button>
+            <p className="text-center text-xs font-bold text-black/50 mt-4">Safe & Secure Payment</p>
+          </div>
+
+          {/* WHALE PACK */}
+          <div className="relative group bg-white rounded-3xl border-2 border-gray-200 p-8 flex flex-col hover:border-black transition-all duration-300 hover:shadow-hard-sm">
+            <h3 className="text-xl font-black uppercase tracking-tight mb-2 text-gray-500">Agency</h3>
+            <div className="flex items-baseline gap-1 mb-6">
+              <span className="text-4xl font-black">{currency === 'INR' ? '₹999' : '$29.99'}</span>
+              <span className="text-gray-400 font-bold">/ pack</span>
+            </div>
+
+            <div className="text-6xl mb-6 text-center grayscale group-hover:grayscale-0 transition-all">🚀</div>
+            <div className="text-center mb-8">
+              <span className="text-4xl font-black">1500</span>
+              <span className="text-sm uppercase font-bold text-gray-400 ml-2">Credits</span>
+            </div>
+
+            <ul className="space-y-3 mb-8 flex-1">
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <span className="text-green-500 text-lg">✓</span> 150 AI Generations
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <span className="text-green-500 text-lg">✓</span> No Watermarks
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <span className="text-green-500 text-lg">✓</span> Commercial License
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
+                <span className="text-green-500 text-lg">✓</span> 24/7 Priority Support
+              </li>
+            </ul>
+
+            <button
+              onClick={() => onBuyCredits(1500, currency === 'INR' ? '₹999' : '$29.99')}
+              className="w-full py-4 bg-gray-100 hover:bg-black hover:text-white border-2 border-black rounded-xl font-black uppercase tracking-wider transition-all"
+            >
+              Get Agency
+            </button>
+          </div>
+        </div>
+      </section>
 
     </div>
   );
