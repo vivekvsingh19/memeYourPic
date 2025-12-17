@@ -11,7 +11,7 @@ interface NavbarProps {
   onPricingClick: () => void;
   onLogoutClick?: () => void;
   onBattleClick?: () => void;
-  onExploreClick?: () => void;
+
   onDashboardClick?: () => void;
 }
 
@@ -23,7 +23,7 @@ const Navbar: React.FC<NavbarProps> = ({
   onPricingClick,
   onLogoutClick,
   onBattleClick,
-  onExploreClick,
+
   onDashboardClick
 }) => {
   return (
@@ -48,16 +48,16 @@ const Navbar: React.FC<NavbarProps> = ({
 
           <div className="hidden md:flex items-center gap-4">
             <button
-              onClick={onExploreClick}
-              className="text-sm font-bold text-gray-600 hover:text-black hover:underline decoration-2 underline-offset-4 decoration-gray-300 transition-all flex items-center gap-1"
-            >
-              <span>🔥</span> Explore
-            </button>
-            <button
               onClick={onBattleClick}
               className="text-sm font-bold text-red-600 hover:text-red-700 hover:underline decoration-2 underline-offset-4 decoration-red-200 transition-all flex items-center gap-1"
             >
-              <span className="animate-pulse">⚔️</span> Battle Mode
+              Battle Mode
+            </button>
+            <button
+              onClick={onPricingClick}
+              className="text-sm font-bold text-gray-600 hover:text-black hover:underline decoration-2 underline-offset-4 decoration-gray-300 transition-all flex items-center gap-1"
+            >
+              Pricing
             </button>
           </div>
         </div>
@@ -68,9 +68,14 @@ const Navbar: React.FC<NavbarProps> = ({
             <div className="flex items-center gap-3">
               <button
                 onClick={onDashboardClick}
-                className="flex items-center gap-2 px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full border border-gray-300 transition-colors"
+                className="flex items-center gap-2 px-1 md:px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded-full border border-gray-300 transition-colors"
               >
-                <span className="text-sm font-bold text-gray-800">
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt="User" referrerPolicy="no-referrer" className="w-6 h-6 rounded-full border border-black object-cover" />
+                ) : (
+                  <div className="w-6 h-6 rounded-full bg-brand-500 border border-black flex items-center justify-center text-[10px]">😎</div>
+                )}
+                <span className="text-sm font-bold text-gray-800 pr-2">
                   {user.displayName || 'Meme Lord'}
                 </span>
               </button>
