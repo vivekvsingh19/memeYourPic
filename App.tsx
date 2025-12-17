@@ -8,10 +8,10 @@ import LoginPage from './components/LoginPage';
 import SignupPage from './components/SignupPage';
 import ForgotPasswordPage from './components/ForgotPasswordPage';
 import FriendBattle from './components/FriendBattle';
-import ExplorePage from './components/ExplorePage';
 import UserDashboard from './components/UserDashboard';
 import DeveloperApiPage from './components/DeveloperApiPage';
 import { generateMemeCaptions } from './services/geminiService';
+import { getDodoPaymentLink } from './services/paymentService'; // Import Service
 import { GeneratedCaption, ViewState, User } from './types';
 import { auth } from './firebaseConfig';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -23,7 +23,7 @@ import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   // State
-  const [view, setView] = useState<ViewState | 'BATTLE' | 'EXPLORE' | 'DASHBOARD' | 'API'>('HOME');
+  const [view, setView] = useState<ViewState | 'BATTLE' | 'DASHBOARD' | 'API'>('HOME');
   const [user, setUser] = useState<User | null>(null);
 
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -31,6 +31,20 @@ function App() {
   const [selectedTemplate, setSelectedTemplate] = useState<MemeTemplateImage | null>(null);
   const [roastMode, setRoastMode] = useState<boolean>(false);
   const [language, setLanguage] = useState<string>('english');
+  const [currency, setCurrency] = useState<'USD' | 'INR'>('USD');
+
+  // Detect Location for Pricing
+  useEffect(() => {
+    try {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      console.log("Detected Timezone:", timeZone); // Debug logging
+      if (timeZone === 'Asia/Kolkata' || timeZone === 'Asia/Calcutta' || timeZone.includes('India')) {
+        setCurrency('INR');
+      }
+    } catch (e) {
+      console.log('Could not detect timezone');
+    }
+  }, []);
 
   // Credit System
   const [credits, setCredits] = useState<number>(0);
@@ -43,8 +57,8 @@ function App() {
     if (saved !== null) {
       setCredits(parseInt(saved, 10));
     } else {
-      // New user or guest without history gets 4 free credits
-      const initialCredits = 4;
+      // New user or guest without history gets 20 free credits (2 generations)
+      const initialCredits = 20;
       localStorage.setItem(storageKey, initialCredits.toString());
       setCredits(initialCredits);
     }
@@ -139,14 +153,58 @@ function App() {
     }
   };
 
+  // Handle Payment Return
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('payment_success') === 'true') {
+      const pack = params.get('pack');
+      let addedCredits = 0;
+
+      if (pack === 'starter') addedCredits = 10;
+      if (pack === 'pro') addedCredits = 50;
+      if (pack === 'agency') addedCredits = 150;
+
+      if (addedCredits > 0) {
+        setCredits(prev => prev + addedCredits);
+        alert(`Payment Successful! ${addedCredits} credits added to your account.`);
+        // Clean URL
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+    }
+  }, []);
+
+  const handleBuyCredits = (amount: number, cost: string) => {
+    if (!user) {
+      if (confirm("You need to be signed in to purchase credits. Sign up now?")) {
+        setView('SIGNUP');
+      }
+      return;
+    }
+
+    // Determine Pack ID based on amount
+    let packId = 'starter';
+    if (amount === 500) packId = 'pro';
+    if (amount === 1500) packId = 'agency';
+
+    const paymentLink = getDodoPaymentLink(packId, currency);
+
+    if (!paymentLink || paymentLink === '#') {
+      alert(`Payment links for ${currency} not configured. Please check .env variables.`);
+      return;
+    }
+
+    // Redirect to Dodo Payment
+    window.location.href = paymentLink;
+  };
+
   const handleGenerate = async () => {
     if (!imageFile) {
       setError("Upload an image first, bestie!");
       return;
     }
 
-    if (credits <= 0) {
-      setError("You've used your 2 free AI generations! Upgrade for more.");
+    if (credits < 10) {
+      setError("You've used your free AI generations! Upgrade for more.");
       handlePricingClick();
       return;
     }
@@ -165,7 +223,7 @@ function App() {
       const generatedCaptions = await generateMemeCaptions(imageFile, roastMode, language);
 
       // Deduct credit only on success
-      const newCredits = credits - 1;
+      const newCredits = credits - 10;
       setCredits(newCredits);
 
       setCaptions(generatedCaptions);
@@ -220,7 +278,6 @@ function App() {
           onPricingClick={handlePricingClick}
           onLogoutClick={handleLogout}
           onBattleClick={() => setView('BATTLE')}
-          onExploreClick={() => setView('EXPLORE')}
           onDashboardClick={() => setView('DASHBOARD')}
         />
         <FriendBattle />
@@ -228,24 +285,7 @@ function App() {
     );
   }
 
-  if (view === 'EXPLORE') {
-    return (
-      <>
-        <Navbar
-          user={user}
-          onLoginClick={() => setView('LOGIN')}
-          onSignupClick={() => setView('SIGNUP')}
-          onLogoClick={() => setView('HOME')}
-          onPricingClick={handlePricingClick}
-          onLogoutClick={handleLogout}
-          onBattleClick={() => setView('BATTLE')}
-          onExploreClick={() => setView('EXPLORE')}
-          onDashboardClick={() => setView('DASHBOARD')}
-        />
-        <ExplorePage onMemeSelect={handleMemeSelect} />
-      </>
-    );
-  }
+
 
   if (view === 'DASHBOARD') {
     return (
@@ -265,6 +305,7 @@ function App() {
           user={user || { uid: 'guest', email: 'guest@example.com' }}
           credits={credits}
           onApiClick={() => setView('API')}
+          onBuyCredits={handleBuyCredits}
         />
       </>
     );
@@ -330,7 +371,6 @@ function App() {
         onPricingClick={handlePricingClick}
         onLogoutClick={handleLogout}
         onBattleClick={() => setView('BATTLE')}
-        onExploreClick={() => setView('EXPLORE')}
         onDashboardClick={() => setView('DASHBOARD')}
       />
 
@@ -380,6 +420,8 @@ function App() {
           onLanguageChange={setLanguage}
           onSignupClick={() => setView('SIGNUP')}
           credits={credits}
+          onBuyCredits={handleBuyCredits}
+          currency={currency}
         />
 
       </main>
