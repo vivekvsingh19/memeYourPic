@@ -1,15 +1,19 @@
 
 import React from 'react';
 import { User } from '../types';
-import { CrownIcon, FireIcon, ImageIcon, KeyIcon } from './Icons';
+import { CrownIcon, FireIcon, ImageIcon } from './Icons';
 
 interface UserDashboardProps {
   user: User;
   credits: number;
-  onApiClick?: () => void;
+  onBuyCredits: (amount: number, cost: string) => void;
 }
 
-const UserDashboard: React.FC<UserDashboardProps> = ({ user, credits, onApiClick }) => {
+const UserDashboard: React.FC<UserDashboardProps> = ({ user, credits, onBuyCredits }) => {
+  const scrollToPricing = () => {
+    document.getElementById('dashboard-pricing')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4">
       <div className="max-w-4xl mx-auto">
@@ -18,7 +22,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user, credits, onApiClick
         <div className="bg-white border-2 border-black rounded-3xl p-8 mb-8 shadow-hard flex flex-col md:flex-row items-center gap-8">
           <div className="w-24 h-24 rounded-full border-4 border-black overflow-hidden bg-gray-200">
             {user.photoURL ? (
-              <img src={user.photoURL} alt={user.displayName || 'User'} className="w-full h-full object-cover" />
+              <img src={user.photoURL} alt={user.displayName || 'User'} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-4xl">😎</div>
             )}
@@ -38,7 +42,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user, credits, onApiClick
           <div className="text-center">
             <div className="text-4xl font-black mb-1">{credits}</div>
             <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">Credits Available</div>
-            <button className="mt-4 px-6 py-2 bg-black text-white rounded-xl font-bold text-sm hover:bg-gray-800 transition-colors">
+            <button onClick={scrollToPricing} className="mt-4 px-6 py-2 bg-black text-white rounded-xl font-bold text-sm hover:bg-gray-800 transition-colors">
               Buy More
             </button>
           </div>
@@ -62,10 +66,10 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user, credits, onApiClick
               <div className="p-2 bg-blue-100 rounded-lg">
                 <ImageIcon className="w-6 h-6 text-blue-500" />
               </div>
-              <h3 className="font-black uppercase text-sm">Memes Created</h3>
+              <h3 className="font-black uppercase text-sm">Credits Used</h3>
             </div>
             <p className="text-3xl font-black">142</p>
-            <p className="text-xs text-gray-500 font-bold mt-1">Top 5% of creators</p>
+            <p className="text-xs text-gray-500 font-bold mt-1">Lifetime Usage</p>
           </div>
 
           <div className="bg-white border-2 border-black rounded-2xl p-6 shadow-hard-sm">
@@ -97,25 +101,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user, credits, onApiClick
           </div>
         </div>
 
-        {/* API Key Section */}
-        <div className="mt-12 bg-gray-900 text-white rounded-3xl p-8 border-2 border-black shadow-hard">
-          <div className="flex items-start justify-between">
-            <div>
-              <h2 className="text-2xl font-black uppercase tracking-tight mb-2 flex items-center gap-2">
-                <KeyIcon className="w-6 h-6" /> Developer API
-              </h2>
-              <p className="text-gray-400 font-medium max-w-lg">
-                Build your own meme apps using our powerful AI engine. Get your API key and start roasting programmatically.
-              </p>
-            </div>
-            <button
-              onClick={onApiClick}
-              className="px-6 py-3 bg-white text-black rounded-xl font-black uppercase text-sm hover:bg-gray-200 transition-colors"
-            >
-              Manage Keys
-            </button>
-          </div>
-        </div>
+
 
       </div>
     </div>
