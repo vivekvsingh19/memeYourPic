@@ -57,8 +57,8 @@ function App() {
     if (saved !== null) {
       setCredits(parseInt(saved, 10));
     } else {
-      // New user or guest without history gets 20 free credits (2 generations)
-      const initialCredits = 20;
+      // New user or guest without history gets 40 free credits (2 memes + 2 battles)
+      const initialCredits = 40;
       localStorage.setItem(storageKey, initialCredits.toString());
       setCredits(initialCredits);
     }
@@ -252,6 +252,10 @@ function App() {
     }
   };
 
+  const handleSpendCredits = (amount: number) => {
+    setCredits(prev => Math.max(0, prev - amount));
+  };
+
   // Render logic
 
   // If in RESULT view, render the full screen Editor
@@ -280,7 +284,11 @@ function App() {
           onBattleClick={() => setView('BATTLE')}
           onDashboardClick={() => setView('DASHBOARD')}
         />
-        <FriendBattle />
+        <FriendBattle
+          credits={credits}
+          onSpendCredits={handleSpendCredits}
+          onBuyCredits={() => handlePricingClick()}
+        />
       </>
     );
   }
