@@ -51,7 +51,7 @@ function App() {
 
   // Load credits when user changes
   useEffect(() => {
-    const storageKey = user ? `meme_credits_v2_${user.uid}` : 'meme_credits_guest_v2';
+    const storageKey = user ? `meme_credits_v3_${user.uid}` : 'meme_credits_guest_v3';
     const saved = localStorage.getItem(storageKey);
 
     if (saved !== null) {
@@ -66,7 +66,7 @@ function App() {
 
   // Update storage whenever credits change
   useEffect(() => {
-    const storageKey = user ? `meme_credits_v2_${user.uid}` : 'meme_credits_guest_v2';
+    const storageKey = user ? `meme_credits_v3_${user.uid}` : 'meme_credits_guest_v3';
     localStorage.setItem(storageKey, credits.toString());
   }, [credits, user]);
 
