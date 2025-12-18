@@ -154,20 +154,40 @@ function App() {
   };
 
   // Handle Payment Return
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('payment_success') === 'true') {
-      const pack = params.get('pack');
-      let addedCredits = 0;
+  const paymentProcessed = React.useRef(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-      if (pack === 'starter') addedCredits = 10;
-      if (pack === 'pro') addedCredits = 50;
-      if (pack === 'agency') addedCredits = 150;
+  useEffect(() => {
+    // Prevent double processing in Strict Mode
+    if (paymentProcessed.current) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const isSuccess = params.get('payment_success') === 'true';
+
+    // Check for pending payment from local state (more reliable than URL params alone)
+    const pendingPayment = localStorage.getItem('pending_payment');
+
+    if (isSuccess) {
+      paymentProcessed.current = true;
+
+      let pack = params.get('pack');
+
+      // Fallback to local storage if URL param is missing
+      if (!pack && pendingPayment) {
+        pack = pendingPayment;
+      }
+
+      let addedCredits = 0;
+      if (pack === 'starter') addedCredits = 100; // Fixed: Starter gives 100 as per UI
+      if (pack === 'pro') addedCredits = 500;
+      if (pack === 'agency') addedCredits = 1500;
 
       if (addedCredits > 0) {
         setCredits(prev => prev + addedCredits);
-        alert(`Payment Successful! ${addedCredits} credits added to your account.`);
-        // Clean URL
+        setSuccessMessage(`Payment Successful! ${addedCredits} credits added to your account. 🚀`);
+
+        // Clean up
+        localStorage.removeItem('pending_payment');
         window.history.replaceState({}, '', window.location.pathname);
       }
     }
@@ -185,6 +205,7 @@ function App() {
     let packId = 'starter';
     if (amount === 500) packId = 'pro';
     if (amount === 1500) packId = 'agency';
+    if (amount === 100) packId = 'starter'; // Explicit check for starter amount
 
     const paymentLink = getDodoPaymentLink(packId, currency);
 
@@ -192,6 +213,9 @@ function App() {
       alert(`Payment links for ${currency} not configured. Please check .env variables.`);
       return;
     }
+
+    // Save pending state
+    localStorage.setItem('pending_payment', packId);
 
     // Redirect to Dodo Payment
     window.location.href = paymentLink;
