@@ -6,7 +6,13 @@ import html2canvas from 'html2canvas';
 
 import { SUPPORTED_LANGUAGES } from '../constants';
 
-const FriendBattle: React.FC = () => {
+interface FriendBattleProps {
+  credits: number;
+  onSpendCredits: (amount: number) => void;
+  onBuyCredits: () => void;
+}
+
+const FriendBattle: React.FC<FriendBattleProps> = ({ credits, onSpendCredits, onBuyCredits }) => {
   const [player1, setPlayer1] = useState<File | null>(null);
   const [player2, setPlayer2] = useState<File | null>(null);
   const [p1Preview, setP1Preview] = useState<string | null>(null);
@@ -39,6 +45,16 @@ const FriendBattle: React.FC = () => {
 
   const handleBattle = async () => {
     if (!player1 || !player2) return;
+
+    if (credits < 10) {
+      setError("Not enough credits! You need 10 credits for a battle.");
+      // Optional: Prompt to buy
+      if (confirm("You are out of credits! Buy more to continue?")) {
+        onBuyCredits();
+      }
+      return;
+    }
+
     setIsGenerating(true);
     setShowVsAnim(true);
     setResult(null);
@@ -49,6 +65,10 @@ const FriendBattle: React.FC = () => {
 
     try {
       const data = await generateRoastBattle(player1, player2, language);
+
+      // Deduct credits on success
+      onSpendCredits(10);
+
       // Artificial delay for tension if the API is too fast
       setTimeout(() => {
         setResult(data);
@@ -112,6 +132,12 @@ const FriendBattle: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-web-bg pt-24 pb-12 px-4 md:px-8 relative overflow-hidden">
+
+      {/* Credits Display */}
+      <div className="fixed top-24 right-4 z-40 bg-white border-2 border-black px-4 py-2 rounded-xl shadow-hard-sm flex items-center gap-2">
+        <span className="text-xl">💰</span>
+        <span className="font-black text-lg">{credits}</span>
+      </div>
 
       {/* Dynamic Background */}
       <div className="absolute inset-0 z-0 bg-grid-pattern opacity-50 pointer-events-none" />
