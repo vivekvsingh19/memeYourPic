@@ -33,6 +33,30 @@ function App() {
   const [roastMode, setRoastMode] = useState<boolean>(false);
   const [language, setLanguage] = useState<string>('english');
   const [currency, setCurrency] = useState<'USD' | 'INR'>('USD');
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [apiKeyModalOpen, setApiKeyModalOpen] = useState<boolean>(false);
+  const [captions, setCaptions] = useState<GeneratedCaption[]>([]);
+  const [isWatermarked, setIsWatermarked] = useState<boolean>(true);
+
+  // Auth state listener
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email || '',
+          displayName: firebaseUser.displayName || '',
+          photoURL: firebaseUser.photoURL || ''
+        });
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
 
   // Detect Location for Pricing
   useEffect(() => {
@@ -143,7 +167,62 @@ function App() {
     processPayment();
   }, [user]);
 
-  // ... (handleBuyCredits remains mostly same, just check user existence) ...
+  // Event Handlers
+  const handleFileSelect = (file: File) => {
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleClearImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+    setSelectedTemplate(null);
+  };
+
+  const handleTemplateSelect = (template: MemeTemplateImage) => {
+    setSelectedTemplate(template);
+    setImagePreview(template.url);
+    // Fetch the image and convert to File
+    fetch(template.url)
+      .then(res => res.blob())
+      .then(blob => {
+        const file = new File([blob], 'template.jpg', { type: 'image/jpeg' });
+        setImageFile(file);
+      });
+  };
+
+  const handlePricingClick = () => {
+    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      setView('HOME');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleReset = () => {
+    setView('HOME');
+    setCaptions([]);
+  };
+
+  const handleBuyCredits = async (amount: number, cost: string) => {
+    const packId = amount === 100 ? 'starter' : amount === 500 ? 'pro' : 'agency';
+    const link = getDodoPaymentLink(packId, currency);
+
+    // Save pending payment for guest recovery
+    localStorage.setItem('pending_payment', packId);
+
+    window.location.href = link;
+  };
+
 
   const handleGenerate = async () => {
     if (!imageFile) {
@@ -204,7 +283,7 @@ function App() {
     }
   };
 
-  // ... (Reset, Logout) ...
+
 
   const handleSpendCredits = async (amount: number) => {
     try {
