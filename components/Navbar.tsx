@@ -59,6 +59,15 @@ const Navbar: React.FC<NavbarProps> = ({
             >
               Pricing
             </button>
+            <a
+              href="https://buymeacoffee.com/vivekvsingh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-bold text-amber-600 hover:text-amber-700 hover:underline decoration-2 underline-offset-4 decoration-amber-200 transition-all flex items-center gap-1"
+            >
+              <span>☕</span>
+              Buy Me a Coffee
+            </a>
           </div>
         </div>
 
