@@ -446,85 +446,133 @@ const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ================= MEME BATTLE SECTION ================= */}
-      <section className="w-full py-24 border-t-2 border-black bg-gradient-to-br from-red-50 via-white to-yellow-50 relative overflow-hidden">
-        {/* Background Pattern */}
+      <section className="w-full py-24 border-t-2 border-black bg-gradient-to-br from-red-50 via-white to-orange-50 relative overflow-hidden">
+        {/* Background Decorative Elements */}
         <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
+        <div className="absolute top-20 left-10 text-6xl opacity-10 animate-float-fast grayscale selection:bg-transparent pointer-events-none">🥊</div>
+        <div className="absolute bottom-20 right-10 text-6xl opacity-10 animate-float-fast delay-700 grayscale selection:bg-transparent pointer-events-none">🔥</div>
+        <div className="absolute top-1/2 left-1/4 text-4xl opacity-5 animate-bounce delay-300 grayscale selection:bg-transparent pointer-events-none">💀</div>
 
-        <div className="relative z-10 max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left: Battle Visual */}
-          <div className="relative">
-            {/* VS Badge */}
-            <div className="relative w-full max-w-md mx-auto">
-              <div className="absolute inset-0 bg-black rounded-3xl transform rotate-3 translate-x-2 translate-y-2" />
-              <div className="relative bg-gradient-to-br from-red-500 to-red-600 rounded-3xl border-4 border-black p-8 shadow-hard-lg">
-                {/* Two Fighter Silhouettes */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-24 h-32 bg-blue-400 rounded-xl border-4 border-black transform -rotate-6 shadow-hard-sm flex items-center justify-center">
-                    <span className="text-5xl">🥊</span>
+          <div className="relative flex justify-center lg:justify-start">
+            {/* Main Battle Card Container */}
+            <div className="relative w-full max-w-lg group">
+              {/* Background shadow layer */}
+              <div className="absolute inset-0 bg-black rounded-[2rem] transform rotate-3 translate-x-3 translate-y-3 transition-transform group-hover:rotate-1 group-hover:translate-x-1 group-hover:translate-y-1" />
+
+              {/* Main Card */}
+              <div className="relative bg-white border-4 border-black rounded-[2rem] p-8 overflow-hidden">
+                {/* Internal gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-red-50 to-transparent opacity-50" />
+
+                <div className="relative z-10">
+                  {/* Two Fighter Cards Layout */}
+                  <div className="flex items-center justify-between gap-4 mb-8">
+                    {/* Fighter 1 */}
+                    <div className="flex-1">
+                      <div className="aspect-[3/4] bg-blue-100 rounded-2xl border-4 border-black shadow-hard-sm transform -rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden">
+                        <span className="text-6xl group-hover:scale-110 transition-transform">👤</span>
+                        <div className="absolute bottom-0 left-0 right-0 bg-blue-500 border-t-2 border-black py-1 text-center">
+                          <span className="text-[10px] font-black uppercase text-white tracking-widest">Player 1</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Central VS Badge */}
+                    <div className="relative z-20 flex-shrink-0">
+                      <div className="w-20 h-20 bg-pop-yellow rounded-full border-4 border-black flex items-center justify-center shadow-hard animate-bounce-slow">
+                        <span className="font-black text-3xl italic text-black">VS</span>
+                      </div>
+                      {/* Sparks decoration */}
+                      <div className="absolute -top-4 -right-4 text-2xl animate-pulse">✨</div>
+                      <div className="absolute -bottom-4 -left-4 text-2xl animate-pulse delay-500">💢</div>
+                    </div>
+
+                    {/* Fighter 2 */}
+                    <div className="flex-1">
+                      <div className="aspect-[3/4] bg-red-100 rounded-2xl border-4 border-black shadow-hard-sm transform rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden">
+                        <span className="text-6xl group-hover:scale-110 transition-transform">👤</span>
+                        <div className="absolute bottom-0 left-0 right-0 bg-red-500 border-t-2 border-black py-1 text-center">
+                          <span className="text-[10px] font-black uppercase text-white tracking-widest">Player 2</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="w-20 h-20 bg-pop-yellow rounded-full border-4 border-black flex items-center justify-center shadow-hard z-10">
-                    <span className="font-black text-3xl italic text-black">VS</span>
-                  </div>
-
-                  <div className="w-24 h-32 bg-red-400 rounded-xl border-4 border-black transform rotate-6 shadow-hard-sm flex items-center justify-center">
-                    <span className="text-5xl">🥊</span>
+                  <div className="text-center">
+                    <div className="inline-block bg-black text-white px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-4">
+                      The Ultimate Vibe Check
+                    </div>
+                    <h3 className="text-4xl font-black text-black uppercase tracking-tighter leading-none mb-2">
+                      MEME <span className="text-red-500">BATTLE</span>
+                    </h3>
+                    <p className="text-gray-500 font-bold text-sm">AI Judges. No Mercy. 100% Clout.</p>
                   </div>
                 </div>
+              </div>
 
-                <div className="text-center">
-                  <h3 className="text-4xl font-black text-white uppercase tracking-tighter drop-shadow-lg">
-                    Meme Battle
-                  </h3>
-                  <p className="text-white/90 font-bold mt-2">Two enter. One leaves with clout.</p>
-                </div>
+              {/* Floating Stat Cards (Visual Flair) */}
+              <div className="absolute -top-6 -right-6 bg-acid-green border-2 border-black p-3 rounded-xl shadow-hard-sm rotate-12 animate-float-fast hidden md:block">
+                <span className="font-black text-xs uppercase">Brutal Roast 🔥</span>
+              </div>
+              <div className="absolute -bottom-6 -left-6 bg-hot-pink text-white border-2 border-black p-3 rounded-xl shadow-hard-sm -rotate-12 animate-float-fast delay-300 hidden md:block">
+                <span className="font-black text-xs uppercase">Winner Gets Clout 👑</span>
               </div>
             </div>
           </div>
 
           {/* Right: Content */}
-          <div className="space-y-6">
-            <div className="inline-block bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider border-2 border-black shadow-hard-sm">
-              <FireIcon className="w-3 h-3 inline mr-1" />
-              Battle Mode
+          <div className="space-y-8">
+            <div className="inline-block bg-gradient-to-r from-red-600 to-red-400 text-white px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest border-2 border-black shadow-hard-sm">
+              <FireIcon className="w-4 h-4 inline mr-2" />
+              Arena Mode Active
             </div>
 
-            <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter leading-none">
-              SETTLE IT <br />
-              WITH <span className="text-red-600">AI.</span>
+            <h2 className="text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85] text-black">
+              SETTLE THE <br />
+              <span className="text-red-600 drop-shadow-[2px_2px_0_#000]">BEEF</span> WITH AI.
             </h2>
 
-            <p className="text-xl font-medium text-gray-600 leading-relaxed">
-              Upload two pics and let our AI judge who's got the better vibe.
-              Get brutal roasts for both and a final verdict that'll end friendships. 💀
+            <p className="text-xl md:text-2xl font-medium text-gray-600 leading-relaxed max-w-lg">
+              Upload two photos and let our <span className="text-black font-black underline decoration-red-500 decoration-4">unfiltered AI</span> decide who's basic and who's legendary.
             </p>
 
-            <ul className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { icon: '⚔️', text: 'AI-powered roast battles' },
-                { icon: '🏆', text: 'Instant winner declaration' },
-                { icon: '📱', text: 'Share results to flex' },
+                { icon: '⚔️', title: 'Brutal Verdicts', desc: 'AI roasts both and picks a winner.' },
+                { icon: '📱', title: 'Viral Share', desc: 'Download result cards for IG/X.' },
               ].map((item, idx) => (
-                <li key={idx} className="flex items-center gap-3">
-                  <span className="text-2xl">{item.icon}</span>
-                  <span className="font-bold text-gray-700">{item.text}</span>
-                </li>
+                <div key={idx} className="bg-white border-2 border-black p-4 rounded-2xl shadow-hard-sm hover:-translate-y-1 transition-transform">
+                  <div className="text-2xl mb-2">{item.icon}</div>
+                  <h4 className="font-black uppercase text-sm mb-1">{item.title}</h4>
+                  <p className="text-xs font-bold text-gray-400">{item.desc}</p>
+                </div>
               ))}
-            </ul>
+            </div>
 
-            <button
-              onClick={onBattleClick}
-              className="group bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl border-4 border-black font-black uppercase tracking-wider text-lg shadow-hard hover:translate-y-[-4px] hover:shadow-hard-lg transition-all flex items-center gap-3">
-              <FireIcon className="w-6 h-6 group-hover:animate-pulse" />
-              Start Battle
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </button>
+            <div className="pt-4 flex flex-col gap-4">
+              <button
+                onClick={onBattleClick}
+                className="group w-full md:w-fit bg-red-600 hover:bg-red-700 text-white px-10 py-5 rounded-2xl border-4 border-black font-black uppercase tracking-wider text-2xl shadow-hard hover:translate-y-[-4px] hover:shadow-hard-lg transition-all flex items-center justify-center gap-4">
+                <FireIcon className="w-8 h-8 group-hover:animate-pulse" />
+                ENTER THE ARENA
+                <svg className="w-6 h-6 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </button>
 
-            <p className="text-sm font-bold text-gray-400">
-              💰 Costs 10 credits per battle
-            </p>
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-gray-200 flex items-center justify-center font-black text-[10px]">👤</div>
+                  ))}
+                </div>
+                <p className="text-sm font-bold text-gray-400 bg-white px-3 py-1 rounded-full border border-gray-200">
+                  <span className="text-black">1.2k+</span> battles today
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
