@@ -415,6 +415,36 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
+      {/* ================= DEMO SECTION ================= */}
+      <section className="w-full bg-white border-y-2 border-black py-20 px-8 md:px-16 lg:px-32 xl:px-48">
+        <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-16">
+
+          <div className="flex-1 space-y-6">
+            <h2 className="text-5xl font-black text-black leading-none">
+              FROM <span className="text-gray-300 line-through decoration-4 decoration-red-500">CRINGE</span> <br />
+              TO <span className="bg-pop-yellow px-2 border-2 border-black rounded transform -rotate-1 inline-block shadow-hard-sm">BASED</span>.
+            </h2>
+            <p className="text-xl font-medium text-gray-600">
+              Our AI understands context better than your friends. It analyzes the vibe, the awkwardness, and the chaos to generate captions that actually hit.
+            </p>
+          </div>
+
+          <div className="flex-1 w-full max-w-lg">
+            <div className="rounded-2xl border-4 border-black shadow-hard-lg overflow-hidden bg-gray-100 relative">
+              <div className="absolute top-4 left-4 z-20 bg-white border-2 border-black px-3 py-1 rounded font-bold text-xs uppercase shadow-hard-sm">
+                Interactive Demo
+              </div>
+              <BeforeAfterSlider
+                originalSrc={DEMO_IMG}
+                memeSrc={DEMO_IMG}
+                className="aspect-[4/3]"
+              />
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* ================= MEME BATTLE SECTION ================= */}
       <section className="w-full py-24 border-t-2 border-black bg-gradient-to-br from-red-50 via-white to-yellow-50 relative overflow-hidden">
         {/* Background Pattern */}
@@ -533,35 +563,7 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
       )}
 
-      {/* ================= DEMO SECTION ================= */}
-      <section className="w-full bg-white border-y-2 border-black py-20 px-8 md:px-16 lg:px-32 xl:px-48">
-        <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center gap-16">
 
-          <div className="flex-1 space-y-6">
-            <h2 className="text-5xl font-black text-black leading-none">
-              FROM <span className="text-gray-300 line-through decoration-4 decoration-red-500">CRINGE</span> <br />
-              TO <span className="bg-pop-yellow px-2 border-2 border-black rounded transform -rotate-1 inline-block shadow-hard-sm">BASED</span>.
-            </h2>
-            <p className="text-xl font-medium text-gray-600">
-              Our AI understands context better than your friends. It analyzes the vibe, the awkwardness, and the chaos to generate captions that actually hit.
-            </p>
-          </div>
-
-          <div className="flex-1 w-full max-w-lg">
-            <div className="rounded-2xl border-4 border-black shadow-hard-lg overflow-hidden bg-gray-100 relative">
-              <div className="absolute top-4 left-4 z-20 bg-white border-2 border-black px-3 py-1 rounded font-bold text-xs uppercase shadow-hard-sm">
-                Interactive Demo
-              </div>
-              <BeforeAfterSlider
-                originalSrc={DEMO_IMG}
-                memeSrc={DEMO_IMG}
-                className="aspect-[4/3]"
-              />
-            </div>
-          </div>
-
-        </div>
-      </section>
 
 
 
