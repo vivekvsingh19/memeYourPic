@@ -472,7 +472,11 @@ const HomePage: React.FC<HomePageProps> = ({
                     {/* Fighter 1 */}
                     <div className="flex-1">
                       <div className="aspect-[3/4] bg-blue-100 rounded-2xl border-4 border-black shadow-hard-sm transform -rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden">
-                        <span className="text-6xl group-hover:scale-110 transition-transform">👤</span>
+                        <img
+                          src="/player_one_avatar_1767117084333.png"
+                          alt="Player 1"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                        />
                         <div className="absolute bottom-0 left-0 right-0 bg-blue-500 border-t-2 border-black py-1 text-center">
                           <span className="text-[10px] font-black uppercase text-white tracking-widest">Player 1</span>
                         </div>
@@ -492,7 +496,11 @@ const HomePage: React.FC<HomePageProps> = ({
                     {/* Fighter 2 */}
                     <div className="flex-1">
                       <div className="aspect-[3/4] bg-red-100 rounded-2xl border-4 border-black shadow-hard-sm transform rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden">
-                        <span className="text-6xl group-hover:scale-110 transition-transform">👤</span>
+                        <img
+                          src="/player_two_avatar_1767117104780.png"
+                          alt="Player 2"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                        />
                         <div className="absolute bottom-0 left-0 right-0 bg-red-500 border-t-2 border-black py-1 text-center">
                           <span className="text-[10px] font-black uppercase text-white tracking-widest">Player 2</span>
                         </div>
