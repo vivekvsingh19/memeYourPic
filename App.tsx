@@ -499,6 +499,7 @@ function App() {
           credits={credits}
           onBuyCredits={handleBuyCredits}
           currency={currency}
+          onBattleClick={() => setView('BATTLE')}
         />
 
       </main>

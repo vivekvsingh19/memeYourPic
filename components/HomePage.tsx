@@ -21,6 +21,7 @@ interface HomePageProps {
   credits: number;
   onBuyCredits: (amount: number, cost: string) => void;
   currency?: 'USD' | 'INR';
+  onBattleClick?: () => void;
 }
 
 const DEMO_IMG = "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?q=80&w=1000&auto=format&fit=crop";
@@ -51,7 +52,8 @@ const HomePage: React.FC<HomePageProps> = ({
   onSignupClick,
   credits,
   onBuyCredits,
-  currency = 'USD'
+  currency = 'USD',
+  onBattleClick
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [loadingText, setLoadingText] = useState("Generating...");
@@ -381,8 +383,91 @@ const HomePage: React.FC<HomePageProps> = ({
           </h2>
           <button className="text-sm font-bold text-gray-500 hover:text-black underline">View All</button>
         </div>
-
         <AutoScrollGallery />
+      </section>
+
+      {/* ================= MEME BATTLE SECTION ================= */}
+      <section className="w-full py-24 border-t-2 border-black bg-gradient-to-br from-red-50 via-white to-yellow-50 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
+
+        <div className="relative z-10 max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left: Battle Visual */}
+          <div className="relative">
+            {/* VS Badge */}
+            <div className="relative w-full max-w-md mx-auto">
+              <div className="absolute inset-0 bg-black rounded-3xl transform rotate-3 translate-x-2 translate-y-2" />
+              <div className="relative bg-gradient-to-br from-red-500 to-red-600 rounded-3xl border-4 border-black p-8 shadow-hard-lg">
+                {/* Two Fighter Silhouettes */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-24 h-32 bg-blue-400 rounded-xl border-4 border-black transform -rotate-6 shadow-hard-sm flex items-center justify-center">
+                    <span className="text-5xl">🥊</span>
+                  </div>
+
+                  <div className="w-20 h-20 bg-pop-yellow rounded-full border-4 border-black flex items-center justify-center shadow-hard z-10">
+                    <span className="font-black text-3xl italic text-black">VS</span>
+                  </div>
+
+                  <div className="w-24 h-32 bg-red-400 rounded-xl border-4 border-black transform rotate-6 shadow-hard-sm flex items-center justify-center">
+                    <span className="text-5xl">🥊</span>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <h3 className="text-4xl font-black text-white uppercase tracking-tighter drop-shadow-lg">
+                    Meme Battle
+                  </h3>
+                  <p className="text-white/90 font-bold mt-2">Two enter. One leaves with clout.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Content */}
+          <div className="space-y-6">
+            <div className="inline-block bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider border-2 border-black shadow-hard-sm">
+              <FireIcon className="w-3 h-3 inline mr-1" />
+              Battle Mode
+            </div>
+
+            <h2 className="text-5xl md:text-6xl font-black uppercase tracking-tighter leading-none">
+              SETTLE IT <br />
+              WITH <span className="text-red-600">AI.</span>
+            </h2>
+
+            <p className="text-xl font-medium text-gray-600 leading-relaxed">
+              Upload two pics and let our AI judge who's got the better vibe.
+              Get brutal roasts for both and a final verdict that'll end friendships. 💀
+            </p>
+
+            <ul className="space-y-3">
+              {[
+                { icon: '⚔️', text: 'AI-powered roast battles' },
+                { icon: '🏆', text: 'Instant winner declaration' },
+                { icon: '📱', text: 'Share results to flex' },
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-center gap-3">
+                  <span className="text-2xl">{item.icon}</span>
+                  <span className="font-bold text-gray-700">{item.text}</span>
+                </li>
+              ))}
+            </ul>
+
+            <button
+              onClick={onBattleClick}
+              className="group bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl border-4 border-black font-black uppercase tracking-wider text-lg shadow-hard hover:translate-y-[-4px] hover:shadow-hard-lg transition-all flex items-center gap-3">
+              <FireIcon className="w-6 h-6 group-hover:animate-pulse" />
+              Start Battle
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </button>
+
+            <p className="text-sm font-bold text-gray-400">
+              💰 Costs 10 credits per battle
+            </p>
+          </div>
+        </div>
       </section>
 
 
