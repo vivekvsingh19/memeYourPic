@@ -375,7 +375,8 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* ================= RECENTLY CREATED (Mock) ================= */}
+      {/*
+      // ================= RECENTLY CREATED (Mock) =================
       <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-12 border-t-2 border-dashed border-gray-300">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-black uppercase tracking-tight text-gray-800">
@@ -385,6 +386,7 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
         <AutoScrollGallery />
       </section>
+      */}
 
       {/* ================= MEME BATTLE SECTION ================= */}
       <section className="w-full py-24 border-t-2 border-black bg-gradient-to-br from-red-50 via-white to-yellow-50 relative overflow-hidden">
