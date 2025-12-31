@@ -11,5 +11,14 @@ export const getDodoPaymentLink = (packId: string, currency: 'USD' | 'INR' = 'US
       agency: import.meta.env.VITE_DODO_LINK_AGENCY_INR || '#',
     }
   };
-  return links[currency][packId];
+  const baseUrl = links[currency][packId];
+
+  // Dynamically append the redirect URL so it works on Vercel/Production
+  // We append payment_success=true because App.tsx listens for that specific param
+  const returnUrl = `${window.location.origin}/?payment_success=true`;
+
+  // Check if baseUrl already has params
+  const separator = baseUrl.includes('?') ? '&' : '?';
+
+  return `${baseUrl}${separator}redirect_url=${encodeURIComponent(returnUrl)}`;
 };
