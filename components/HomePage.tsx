@@ -469,53 +469,65 @@ const HomePage: React.FC<HomePageProps> = ({
                 <div className="relative z-10">
                   {/* Two Fighter Cards Layout */}
                   <div className="flex items-center justify-between gap-4 mb-8">
-                    {/* Fighter 1 */}
-                    <div className="flex-1">
-                      <div className="aspect-[3/4] bg-blue-100 rounded-2xl border-4 border-black shadow-hard-sm transform -rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden">
+                    {/* Fighter 1 (Mock Winner) */}
+                    <div className="flex-1 relative">
+                      {/* Winner Badge */}
+                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-yellow-400 text-black px-3 py-1 rounded-xl border-2 border-black font-black uppercase text-[10px] tracking-widest shadow-hard z-30 animate-slam">
+                        👑 Winner
+                      </div>
+
+                      <div className="aspect-[3/4] bg-blue-100 rounded-2xl border-4 border-black shadow-hard-sm transform -rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden ring-4 ring-yellow-400 ring-offset-2 ring-offset-white">
                         <img
-                          src="/player_one_avatar_1767117084333.png"
+                          src="/player_one_avatar.png"
                           alt="Player 1"
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                          className="w-full h-full object-cover"
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-blue-500 border-t-2 border-black py-1 text-center">
                           <span className="text-[10px] font-black uppercase text-white tracking-widest">Player 1</span>
                         </div>
                       </div>
+
+                      {/* Mock Roast Bubble P1 */}
+                      <div className="absolute -bottom-4 -left-2 right-0 bg-white border-2 border-black p-2 rounded-lg shadow-hard-sm z-20 scale-90 origin-top-left">
+                        <p className="text-[8px] font-black text-gray-400 uppercase leading-none mb-1">AI Verdict:</p>
+                        <p className="text-[9px] font-bold italic leading-tight">"Aura is off the charts. Main character energy in every pixel. 👑"</p>
+                      </div>
                     </div>
 
                     {/* Central VS Badge */}
                     <div className="relative z-20 flex-shrink-0">
-                      <div className="w-20 h-20 bg-pop-yellow rounded-full border-4 border-black flex items-center justify-center shadow-hard animate-bounce-slow">
-                        <span className="font-black text-3xl italic text-black">VS</span>
+                      <div className="w-16 h-16 bg-pop-yellow rounded-full border-4 border-black flex items-center justify-center shadow-hard">
+                        <span className="font-black text-2xl italic text-black">VS</span>
                       </div>
                       {/* Sparks decoration */}
                       <div className="absolute -top-4 -right-4 text-2xl animate-pulse">✨</div>
-                      <div className="absolute -bottom-4 -left-4 text-2xl animate-pulse delay-500">💢</div>
                     </div>
 
-                    {/* Fighter 2 */}
+                    {/* Fighter 2 (Mock Loser) */}
                     <div className="flex-1">
-                      <div className="aspect-[3/4] bg-red-100 rounded-2xl border-4 border-black shadow-hard-sm transform rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden">
+                      <div className="aspect-[3/4] bg-red-100 rounded-2xl border-4 border-black shadow-hard-sm transform rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden grayscale opacity-80">
                         <img
-                          src="/player_two_avatar_1767117104780.png"
+                          src="/player_two_avatar.png"
                           alt="Player 2"
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                          className="w-full h-full object-cover"
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-red-500 border-t-2 border-black py-1 text-center">
                           <span className="text-[10px] font-black uppercase text-white tracking-widest">Player 2</span>
                         </div>
                       </div>
+
+                      {/* Mock Roast Bubble P2 */}
+                      <div className="absolute -bottom-6 -right-2 left-0 bg-white border-2 border-black p-2 rounded-lg shadow-hard-sm z-20 scale-90 origin-top-right">
+                        <p className="text-[8px] font-black text-gray-400 uppercase leading-none mb-1">AI Verdict:</p>
+                        <p className="text-[9px] font-bold italic leading-tight">"The lighting is doing most of the work here. Vibe is on life support. 🚑"</p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="text-center">
-                    <div className="inline-block bg-black text-white px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-4">
-                      The Ultimate Vibe Check
-                    </div>
-                    <h3 className="text-4xl font-black text-black uppercase tracking-tighter leading-none mb-2">
-                      MEME <span className="text-red-500">BATTLE</span>
-                    </h3>
-                    <p className="text-gray-500 font-bold text-sm">AI Judges. No Mercy. 100% Clout.</p>
+                  {/* Mock Verdict Box */}
+                  <div className="mt-10 bg-black text-white p-4 rounded-xl border-2 border-pop-yellow text-center shadow-hard-sm">
+                    <h4 className="text-[10px] font-bold text-pop-yellow uppercase tracking-widest mb-1">Judge's Final Word</h4>
+                    <p className="text-xs font-black italic">"Player 1 wins by a landslide. Player 2 needs a personality software update. 💀"</p>
                   </div>
                 </div>
               </div>
@@ -538,12 +550,12 @@ const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             <h2 className="text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85] text-black">
-              SETTLE THE <br />
-              <span className="text-red-600 drop-shadow-[2px_2px_0_#000]">BEEF</span> WITH AI.
+              BATTLE FOR <br />
+              <span className="text-red-600 drop-shadow-[2px_2px_0_#000]">AURA</span> SUPREMACY.
             </h2>
 
             <p className="text-xl md:text-2xl font-medium text-gray-600 leading-relaxed max-w-lg">
-              Upload two photos and let our <span className="text-black font-black underline decoration-red-500 decoration-4">unfiltered AI</span> decide who's basic and who's legendary.
+              Our AI judge analyzes everything from your fit to your facial expressions. Find out who really <span className="text-black font-black underline decoration-red-500 decoration-4">runs the chat.</span> 💀
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
