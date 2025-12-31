@@ -446,14 +446,14 @@ const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ================= MEME BATTLE SECTION ================= */}
-      <section className="w-full py-24 border-t-2 border-black bg-gradient-to-br from-red-50 via-white to-orange-50 relative overflow-hidden">
+      <section className="w-full py-12 md:py-24 border-t-2 border-black bg-gradient-to-br from-red-50 via-white to-orange-50 relative overflow-hidden">
         {/* Background Decorative Elements */}
         <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
-        <div className="absolute top-20 left-10 text-6xl opacity-10 animate-float-fast grayscale selection:bg-transparent pointer-events-none">🥊</div>
-        <div className="absolute bottom-20 right-10 text-6xl opacity-10 animate-float-fast delay-700 grayscale selection:bg-transparent pointer-events-none">🔥</div>
-        <div className="absolute top-1/2 left-1/4 text-4xl opacity-5 animate-bounce delay-300 grayscale selection:bg-transparent pointer-events-none">💀</div>
+        <div className="absolute top-20 left-10 text-4xl md:text-6xl opacity-10 animate-float-fast grayscale selection:bg-transparent pointer-events-none">🥊</div>
+        <div className="absolute bottom-20 right-10 text-4xl md:text-6xl opacity-10 animate-float-fast delay-700 grayscale selection:bg-transparent pointer-events-none">🔥</div>
+        <div className="absolute top-1/2 left-1/4 text-2xl md:text-4xl opacity-5 animate-bounce delay-300 grayscale selection:bg-transparent pointer-events-none">💀</div>
 
-        <div className="relative z-10 max-w-screen-2xl mx-auto px-8 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 max-w-screen-2xl mx-auto px-4 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
           {/* Left: Battle Visual */}
           <div className="relative flex justify-center lg:justify-start">
             {/* Main Battle Card Container */}
@@ -462,13 +462,13 @@ const HomePage: React.FC<HomePageProps> = ({
               <div className="absolute inset-0 bg-black rounded-[2rem] transform rotate-3 translate-x-3 translate-y-3 transition-transform group-hover:rotate-1 group-hover:translate-x-1 group-hover:translate-y-1" />
 
               {/* Main Card */}
-              <div className="relative bg-white border-4 border-black rounded-[2rem] p-8 overflow-hidden">
+              <div className="relative bg-white border-4 border-black rounded-[2rem] p-4 md:p-8 overflow-hidden">
                 {/* Internal gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-red-50 to-transparent opacity-50" />
 
                 <div className="relative z-10">
                   {/* Two Fighter Cards Layout */}
-                  <div className="flex items-center justify-between gap-4 mb-8">
+                  <div className="flex items-center justify-between gap-2 md:gap-4 mb-4 md:mb-8">
                     {/* Fighter 1 (Mock Winner) */}
                     <div className="flex-1 relative">
                       {/* Winner Badge */}
@@ -496,11 +496,11 @@ const HomePage: React.FC<HomePageProps> = ({
 
                     {/* Central VS Badge */}
                     <div className="relative z-20 flex-shrink-0">
-                      <div className="w-16 h-16 bg-pop-yellow rounded-full border-4 border-black flex items-center justify-center shadow-hard">
-                        <span className="font-black text-2xl italic text-black">VS</span>
+                      <div className="w-12 h-12 md:w-16 md:h-16 bg-pop-yellow rounded-full border-4 border-black flex items-center justify-center shadow-hard">
+                        <span className="font-black text-xl md:text-2xl italic text-black">VS</span>
                       </div>
                       {/* Sparks decoration */}
-                      <div className="absolute -top-4 -right-4 text-2xl animate-pulse">✨</div>
+                      <div className="absolute -top-4 -right-4 text-xl md:text-2xl animate-pulse">✨</div>
                     </div>
 
                     {/* Fighter 2 (Mock Loser) */}
@@ -525,9 +525,9 @@ const HomePage: React.FC<HomePageProps> = ({
                   </div>
 
                   {/* Mock Verdict Box */}
-                  <div className="mt-10 bg-black text-white p-4 rounded-xl border-2 border-pop-yellow text-center shadow-hard-sm">
+                  <div className="mt-6 md:mt-10 bg-black text-white p-3 md:p-4 rounded-xl border-2 border-pop-yellow text-center shadow-hard-sm">
                     <h4 className="text-[10px] font-bold text-pop-yellow uppercase tracking-widest mb-1">Judge's Final Word</h4>
-                    <p className="text-xs font-black italic">"Player 1 wins by a landslide. Player 2 needs a personality software update. 💀"</p>
+                    <p className="text-[10px] md:text-xs font-black italic">"Player 1 wins by a landslide. Player 2 needs a personality update. 💀"</p>
                   </div>
                 </div>
               </div>
@@ -549,16 +549,16 @@ const HomePage: React.FC<HomePageProps> = ({
               Arena Mode Active
             </div>
 
-            <h2 className="text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85] text-black">
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85] text-black">
               BATTLE FOR <br />
               <span className="text-red-600 drop-shadow-[2px_2px_0_#000]">AURA</span> SUPREMACY.
             </h2>
 
-            <p className="text-xl md:text-2xl font-medium text-gray-600 leading-relaxed max-w-lg">
+            <p className="hidden md:block text-xl md:text-2xl font-medium text-gray-600 leading-relaxed max-w-lg">
               Our AI judge analyzes everything from your fit to your facial expressions. Find out who really <span className="text-black font-black underline decoration-red-500 decoration-4">runs the chat.</span> 💀
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { icon: '⚔️', title: 'Brutal Verdicts', desc: 'AI roasts both and picks a winner.' },
                 { icon: '📱', title: 'Viral Share', desc: 'Download result cards for IG/X.' },
@@ -574,10 +574,10 @@ const HomePage: React.FC<HomePageProps> = ({
             <div className="pt-4 flex flex-col gap-4">
               <button
                 onClick={onBattleClick}
-                className="group w-full md:w-fit bg-red-600 hover:bg-red-700 text-white px-10 py-5 rounded-2xl border-4 border-black font-black uppercase tracking-wider text-2xl shadow-hard hover:translate-y-[-4px] hover:shadow-hard-lg transition-all flex items-center justify-center gap-4">
-                <FireIcon className="w-8 h-8 group-hover:animate-pulse" />
+                className="group w-full md:w-fit bg-red-600 hover:bg-red-700 text-white px-6 py-4 md:px-10 md:py-5 rounded-2xl border-4 border-black font-black uppercase tracking-wider text-xl md:text-2xl shadow-hard hover:translate-y-[-4px] hover:shadow-hard-lg transition-all flex items-center justify-center gap-3 md:gap-4">
+                <FireIcon className="w-6 h-6 md:w-8 md:h-8 group-hover:animate-pulse" />
                 ENTER THE ARENA
-                <svg className="w-6 h-6 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </button>
