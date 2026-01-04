@@ -116,55 +116,86 @@ function App() {
   const paymentProcessed = React.useRef(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  // Process payment return - runs once on mount
   useEffect(() => {
     const processPayment = async () => {
-      // Prevent double processing in Strict Mode
+      // Prevent double processing
       if (paymentProcessed.current) return;
 
       const params = new URLSearchParams(window.location.search);
       const isSuccess = params.get('payment_success') === 'true';
 
-      // Check for pending payment
+      console.log('[Payment] Checking URL params:', { isSuccess, search: window.location.search });
+
+      if (!isSuccess) return;
+
+      // Check for pending payment from localStorage
       const pendingPayment = localStorage.getItem('pending_payment');
+      let pack = params.get('pack') || pendingPayment;
 
-      if (isSuccess) {
-        paymentProcessed.current = true;
+      console.log('[Payment] Pack detected:', pack, '| From localStorage:', pendingPayment);
 
-        let pack = params.get('pack');
-        if (!pack && pendingPayment) {
-          pack = pendingPayment;
-        }
+      if (!pack) {
+        console.warn('[Payment] No pack found in URL or localStorage');
+        // Clean up URL anyway
+        window.history.replaceState({}, '', window.location.pathname);
+        return;
+      }
 
-        let addedCredits = 0;
-        if (pack === 'starter') addedCredits = 100;
-        if (pack === 'pro') addedCredits = 500;
-        if (pack === 'agency') addedCredits = 1500;
+      // Mark as processed immediately
+      paymentProcessed.current = true;
 
-        if (addedCredits > 0) {
-          if (user) {
-            // Update Firestore
-            try {
-              const newBalance = await UserService.addCredits(user.uid, addedCredits);
-              setCredits(newBalance);
-            } catch (error) {
-              console.error("Failed to add credits to DB:", error);
-              // Fallback to local state so user isn't mad immediately,
-              // but we should probably log this error remotely
-              setCredits(prev => prev + addedCredits);
-            }
-          } else {
-            // Update Local (Guest)
-            setCredits(prev => prev + addedCredits);
-          }
+      let addedCredits = 0;
+      if (pack === 'starter') addedCredits = 100;
+      if (pack === 'pro') addedCredits = 500;
+      if (pack === 'agency') addedCredits = 1500;
 
-          setSuccessMessage(`Payment Successful! ${addedCredits} credits added to your account. 🚀`);
-          localStorage.removeItem('pending_payment');
-          window.history.replaceState({}, '', window.location.pathname);
+      console.log('[Payment] Credits to add:', addedCredits);
+
+      if (addedCredits > 0) {
+        // Always update local state first for immediate feedback
+        setCredits(prev => prev + addedCredits);
+        setSuccessMessage(`Payment Successful! ${addedCredits} credits added to your account. 🚀`);
+        localStorage.removeItem('pending_payment');
+        window.history.replaceState({}, '', window.location.pathname);
+
+        // Also update guest storage if not logged in
+        if (!user) {
+          const storageKey = 'meme_credits_guest_v4';
+          const currentCredits = parseInt(localStorage.getItem(storageKey) || '0', 10);
+          localStorage.setItem(storageKey, (currentCredits + addedCredits).toString());
         }
       }
     };
 
     processPayment();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only once on mount
+
+  // Sync payment credits with Firestore when user logs in after payment
+  useEffect(() => {
+    const syncPaymentWithFirestore = async () => {
+      if (!user) return;
+
+      // Check if we just processed a payment (successMessage is set)
+      // and need to sync with Firestore
+      const pendingCreditsSync = localStorage.getItem('pending_credits_sync');
+      if (pendingCreditsSync) {
+        const creditsToAdd = parseInt(pendingCreditsSync, 10);
+        if (creditsToAdd > 0) {
+          try {
+            const newBalance = await UserService.addCredits(user.uid, creditsToAdd);
+            setCredits(newBalance);
+            localStorage.removeItem('pending_credits_sync');
+            console.log('[Payment] Synced credits to Firestore:', creditsToAdd);
+          } catch (error) {
+            console.error('[Payment] Failed to sync credits to Firestore:', error);
+          }
+        }
+      }
+    };
+
+    syncPaymentWithFirestore();
   }, [user]);
 
   // Event Handlers
