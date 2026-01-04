@@ -11,14 +11,9 @@ export const getDodoPaymentLink = (packId: string, currency: 'USD' | 'INR' = 'US
       agency: import.meta.env.VITE_DODO_LINK_AGENCY_INR || '#',
     }
   };
-  const baseUrl = links[currency][packId];
 
-  // Dynamically append the redirect URL so it works on Vercel/Production
-  // We append payment_success=true because App.tsx listens for that specific param
-  const returnUrl = `${window.location.origin}/?payment_success=true`;
-
-  // Check if baseUrl already has params
-  const separator = baseUrl.includes('?') ? '&' : '?';
-
-  return `${baseUrl}${separator}return_url=${encodeURIComponent(returnUrl)}`;
+  // Return URL should be configured in Dodo Payments dashboard for each product
+  // Set it to: https://www.memeyourpic.site/?payment_success=true
+  return links[currency][packId];
 };
+
