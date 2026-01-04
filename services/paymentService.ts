@@ -11,9 +11,12 @@ export const getDodoPaymentLink = (packId: string, currency: 'USD' | 'INR' = 'US
       agency: import.meta.env.VITE_DODO_LINK_AGENCY_INR || '#',
     }
   };
+  const baseUrl = links[currency][packId];
 
-  // Return URL should be configured in Dodo Payments dashboard for each product
-  // Set it to: https://www.memeyourpic.site/?payment_success=true
-  return links[currency][packId];
+  // Append return_url - Dodo will redirect back with this in the hash
+  // Our App.tsx payment handler now checks both query params AND hash for payment_success
+  const returnUrl = `${window.location.origin}/?payment_success=true`;
+  const separator = baseUrl.includes('?') ? '&' : '?';
+
+  return `${baseUrl}${separator}return_url=${encodeURIComponent(returnUrl)}`;
 };
-

@@ -122,10 +122,30 @@ function App() {
       // Prevent double processing
       if (paymentProcessed.current) return;
 
+      // Check query params first
       const params = new URLSearchParams(window.location.search);
-      const isSuccess = params.get('payment_success') === 'true';
+      let isSuccess = params.get('payment_success') === 'true';
 
-      console.log('[Payment] Checking URL params:', { isSuccess, search: window.location.search });
+      console.log('[Payment] Checking URL params:', { isSuccess, search: window.location.search, hash: window.location.hash });
+
+      // If not in query params, check hash for Dodo's #return_url=... format
+      if (!isSuccess && window.location.hash) {
+        const hash = window.location.hash;
+        console.log('[Payment] Checking hash:', hash);
+
+        // Dodo appends #return_url=<encoded_url> - check if our return_url contains payment_success
+        if (hash.includes('payment_success') || hash.includes('return_url')) {
+          // Try to extract payment_success from the hash
+          // Format: #return_url=https%3A%2F%2Fwww.memeyourpic.site%2F%3Fpayment_success%3Dtrue
+          const decodedHash = decodeURIComponent(hash);
+          console.log('[Payment] Decoded hash:', decodedHash);
+
+          if (decodedHash.includes('payment_success=true')) {
+            isSuccess = true;
+            console.log('[Payment] Found payment_success in hash!');
+          }
+        }
+      }
 
       if (!isSuccess) return;
 
