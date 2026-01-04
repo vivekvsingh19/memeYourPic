@@ -20,5 +20,5 @@ export const getDodoPaymentLink = (packId: string, currency: 'USD' | 'INR' = 'US
   // Check if baseUrl already has params
   const separator = baseUrl.includes('?') ? '&' : '?';
 
-  return `${baseUrl}${separator}redirect_url=${encodeURIComponent(returnUrl)}`;
+  return `${baseUrl}${separator}return_url=${encodeURIComponent(returnUrl)}`;
 };
