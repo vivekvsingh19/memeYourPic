@@ -1,6 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer utilities {
+  .text-shadow-sm {
+    text-shadow: 1px 1px 0 #000;
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 0 #000;
+  }
+
+  .text-shadow-lg {
+    text-shadow: 3px 3px 0 #000;
+  }
+}
+
+::selection {
+  background-color: #10b981;
+  /* Brand 500 */
+  color: white;
+}
 
 /* Custom scrollbar */
 .hide-scrollbar::-webkit-scrollbar {
@@ -13,20 +29,23 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background: #f1f1f1;
+  border-left: 2px solid #000;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 10px;
+  background: #000;
+  border: 2px solid #000;
+  /* Creates a gap look if needed, or solid black */
+  background-clip: content-box;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: #333;
 }
 
 .meme-text-shadow {
@@ -35,14 +54,29 @@
 
 /* Background Pattern */
 .bg-grid-pattern {
-  background-color: #f8fafc;
-  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+.bg-checkered {
   background-size: 20px 20px;
+  background-image:
+    linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
+    linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
+    linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.btn-press {
+  transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .btn-press:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 0 #000;
+  box-shadow: 1px 1px 0 0 #000 !important;
 }
 
 /* Battle Animations */
@@ -72,6 +106,11 @@
     opacity: 0;
   }
 
+  70% {
+    transform: scale(0.9) rotate(2deg);
+    opacity: 1;
+  }
+
   100% {
     transform: scale(1) rotate(0);
     opacity: 1;
@@ -79,7 +118,7 @@
 }
 
 .animate-slam {
-  animation: slam 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation: slam 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
 @keyframes float-fast {
@@ -90,10 +129,26 @@
   }
 
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
 .animate-float-fast {
-  animation: float-fast 1s ease-in-out infinite;
+  animation: float-fast 2s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
 }
