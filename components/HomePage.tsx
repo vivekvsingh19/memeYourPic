@@ -187,40 +187,30 @@ const HomePage: React.FC<HomePageProps> = ({
     <div className="w-full flex flex-col items-center pt-32 pb-12">
 
       {/* ================= HERO SECTION ================= */}
-      <section className="w-full max-w-screen-2xl px-4 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[calc(100vh-6rem)] mb-12 relative">
-
-        {/* Abstract Background Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-pop-yellow rounded-full blur-3xl opacity-20 -z-10 animate-pulse-slow"></div>
-        <div className="absolute bottom-20 right-10 w-48 h-48 bg-brand-400 rounded-full blur-3xl opacity-20 -z-10 animate-pulse-slow delay-700"></div>
+      <section className="w-full max-w-screen-2xl px-4 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[calc(100vh-8rem)] mb-12">
 
         {/* Left: Text Content */}
-        <div className="col-span-1 lg:col-span-7 flex flex-col gap-8 text-center lg:text-left z-10">
-          <div className="inline-flex mx-auto lg:mx-0 bg-white border-2 border-black px-6 py-2 rounded-full shadow-hard items-center gap-3 transform hover:-rotate-1 transition-transform cursor-default">
-            <span className="flex h-3 w-3 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-            </span>
-            <span className="text-xs font-black uppercase tracking-widest">
+        <div className="col-span-1 lg:col-span-7 flex flex-col gap-6 text-center lg:text-left z-10">
+          <div className="inline-block mx-auto lg:mx-0 bg-pop-yellow border-2 border-black px-4 py-1.5 rounded-full shadow-hard-sm transform -rotate-2 hover:rotate-0 transition-transform cursor-default">
+            <span className="text-xs font-black uppercase tracking-wider flex items-center gap-2">
+              <CrownIcon className="w-3 h-3" />
               The #1 AI Meme Generator
             </span>
           </div>
 
-          <h1 className="text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-black leading-[0.85] mb-4 drop-shadow-sm">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-black leading-[0.9] mb-2">
             COOK YOUR <br />
-            PICS WITH <span className="text-brand-500 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-md origin-left">AI.</span>
+            PICS WITH <span className="text-brand-600 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-sm origin-left">AI.</span>
           </h1>
 
-          <p className="text-xl md:text-2xl font-bold text-gray-500 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-            Turn mid photos into <span className="bg-pop-yellow px-2 py-0.5 border-2 border-black rounded-md text-black font-black transform -skew-x-6 inline-block shadow-[2px_2px_0_0_rgba(0,0,0,1)]">legendary roasts</span> or battle for aura.
-            <br /><span className="text-gray-400 text-lg mt-3 inline-block font-medium">Zero talent required. Maximum clout.</span>
+          <p className="text-xl md:text-2xl font-medium text-gray-600 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+            Turn mid photos into <span className="bg-pop-yellow px-2 py-0.5 border-2 border-black rounded-md text-black font-bold transform -skew-x-3 inline-block shadow-[2px_2px_0_0_rgba(0,0,0,1)]">legendary roasts</span> or battle for clout.
+            <br /><span className="text-gray-400 text-lg mt-2 inline-block">Don't be basic. Meme better.</span>
           </p>
 
-          <div className="flex flex-wrap gap-4 justify-center lg:justify-start mt-4">
-            {['💀 Brutal Roasts', '🏆 Meme Battles', '✨ Viral Templates'].map((tag, i) => (
-              <span key={tag} className={`
-                px-5 py-2 bg-white border-2 border-black rounded-xl text-sm font-black uppercase tracking-wide shadow-hard hover:-translate-y-1 transition-transform cursor-default
-                ${i === 0 ? 'hover:bg-red-50' : i === 1 ? 'hover:bg-brand-50' : 'hover:bg-yellow-50'}
-              `}>
+          <div className="flex flex-wrap gap-3 justify-center lg:justify-start mt-4">
+            {['💀 Brutal Roasts', '🏆 Meme Battles', '✨ Viral Templates'].map((tag) => (
+              <span key={tag} className="px-3 py-1 bg-white border-2 border-black rounded-lg text-sm font-bold shadow-hard-sm hover:-translate-y-1 transition-transform cursor-default">
                 {tag}
               </span>
             ))}
@@ -228,29 +218,23 @@ const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         {/* Right: Upload Box */}
-        <div className="col-span-1 lg:col-span-5 w-full relative z-10 px-4 lg:px-0">
+        <div className="col-span-1 lg:col-span-5 w-full relative z-10">
           {/* Decorative elements behind */}
-          <div className="absolute top-0 right-0 w-full h-full bg-black rounded-3xl transform translate-x-4 translate-y-4 z-0"></div>
-          <div className="absolute top-0 right-0 w-full h-full bg-brand-400 rounded-3xl border-2 border-black transform translate-x-2 translate-y-2 z-0"></div>
+          <div className="absolute top-0 right-0 w-full h-full bg-brand-400 rounded-3xl border-2 border-black transform translate-x-3 translate-y-3 z-0"></div>
 
-          <div className="bg-white rounded-3xl border-2 border-black p-6 md:p-8 relative z-10 shadow-hard-lg flex flex-col gap-6">
+          <div className="bg-white rounded-3xl border-2 border-black p-6 relative z-10 shadow-hard-lg">
 
-            <div className="flex justify-between items-center">
-              <h3 className="font-black text-2xl uppercase tracking-tighter flex items-center gap-2">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="font-black text-xl uppercase tracking-tighter flex items-center gap-2">
                 Meme Studio
-                <span className="text-brand-500 text-2xl animate-spin-slow">✨</span>
+                <span className="text-brand-500 text-2xl">✨</span>
               </h3>
-              <div className="flex gap-1">
-                <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500 border border-black"></div>
-              </div>
             </div>
 
             {/* Drop Zone */}
             <div
               className={`
-                    w-full min-h-[280px] md:aspect-[4/3] rounded-2xl border-4 border-dashed flex flex-col items-center justify-center relative overflow-hidden transition-all group p-4
+                    w-full min-h-[300px] md:aspect-[4/3] md:min-h-0 rounded-2xl border-4 border-dashed flex flex-col items-center justify-center relative overflow-hidden transition-all group p-4
                     ${imagePreview
                   ? 'border-brand-500 bg-gray-50'
                   : 'border-gray-300 bg-gray-50 hover:border-black hover:bg-brand-50 cursor-pointer'
@@ -262,33 +246,31 @@ const HomePage: React.FC<HomePageProps> = ({
             >
               {imagePreview ? (
                 <>
-                  <div className="absolute inset-0 bg-checkered opacity-10 pointer-events-none" />
-                  <img src={imagePreview} alt="Preview" className="w-full h-full object-contain p-2 relative z-10" />
+                  <img src={imagePreview} alt="Preview" className="w-full h-full object-contain p-4" />
                   <button
                     onClick={(e) => { e.stopPropagation(); onClearImage(); }}
-                    className="absolute top-3 right-3 bg-red-500 text-white w-10 h-10 rounded-xl border-2 border-black shadow-hard-sm flex items-center justify-center hover:bg-red-600 hover:scale-110 transition-all z-20"
+                    className="absolute top-2 right-2 bg-red-500 text-white w-8 h-8 rounded-lg border-2 border-black shadow-hard-sm flex items-center justify-center hover:bg-red-600 transition-colors z-20"
                   >
-                    <span className="font-black text-lg">✕</span>
+                    ✕
                   </button>
                 </>
               ) : (
                 <>
-                  <div className="flex gap-6 mb-6">
-                    <div className="w-20 h-20 bg-white rounded-2xl border-2 border-black shadow-hard flex items-center justify-center group-hover:scale-110 transition-transform text-brand-500 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-brand-50 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <UploadIcon className="w-10 h-10 text-black relative z-10" />
+                  <div className="flex gap-4 mb-4">
+                    <div className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-2xl border-4 border-black shadow-hard-sm flex items-center justify-center group-hover:scale-105 transition-transform text-brand-500">
+                      <UploadIcon className="w-8 h-8 md:w-10 md:h-10 text-black" />
                     </div>
                     <button
                       onClick={(e) => { e.stopPropagation(); startCamera(); }}
-                      className="w-20 h-20 bg-white rounded-2xl border-2 border-black shadow-hard flex flex-col items-center justify-center group-hover:scale-110 transition-transform text-brand-500 hover:bg-brand-50 z-20 relative overflow-hidden"
+                      className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-2xl border-4 border-black shadow-hard-sm flex flex-col items-center justify-center group-hover:scale-105 transition-transform text-brand-500 hover:bg-brand-50 z-20"
                       title="Take Photo"
                     >
-                      <CameraIcon className="w-8 h-8 text-black mb-1 relative z-10" />
-                      <span className="text-[10px] font-black uppercase text-black relative z-10 tracking-wider">Camera</span>
+                      <CameraIcon className="w-6 h-6 md:w-8 md:h-8 text-black mb-1" />
+                      <span className="text-[8px] md:text-[10px] font-black uppercase text-black">Camera</span>
                     </button>
                   </div>
-                  <p className="font-black text-xl md:text-2xl text-black uppercase tracking-tight text-center">Drop or Click to Upload</p>
-                  <p className="text-xs font-bold text-gray-400 mt-2 uppercase tracking-widest bg-white px-3 py-1 rounded-lg border border-gray-200 text-center shadow-sm">JPG, PNG, WEBP Supported</p>
+                  <p className="font-black text-lg md:text-xl text-black uppercase tracking-tight text-center">Drop or Click to Upload</p>
+                  <p className="text-[10px] md:text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest bg-white px-2 py-1 rounded border border-gray-200 text-center">Supports JPG, PNG, WEBP</p>
                 </>
               )}
               <input
@@ -407,26 +389,26 @@ const HomePage: React.FC<HomePageProps> = ({
       */}
 
       {/* ================= STEPS SECTION ================= */}
-      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-24 relative">
+      <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black uppercase mb-4 tracking-tighter">How to go viral</h2>
+          <h2 className="text-4xl font-black uppercase mb-4">How to go viral</h2>
           <div className="h-2 w-24 bg-brand-500 mx-auto rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             { icon: UploadIcon, title: "1. Upload", desc: "Drag, drop, or shoot. We accept everything.", color: "bg-acid-green" },
             { icon: MagicIcon, title: "2. AI Magic", desc: "Our AI roasts you & writes the captions.", color: "bg-brand-400" },
             { icon: DownloadIcon, title: "3. Go Viral", desc: "Export in HD. Post it. Watch the likes roll in.", color: "bg-hot-pink" }
           ].map((step, idx) => (
             <div key={idx} className="group relative">
-              <div className={`absolute inset-0 ${step.color} rounded-2xl border-2 border-black transform translate-x-3 translate-y-3 z-0 transition-transform group-hover:translate-x-4 group-hover:translate-y-4`}></div>
-              <div className="relative bg-white p-8 rounded-2xl border-2 border-black hover:-translate-y-1 hover:-translate-x-1 transition-transform duration-300 flex flex-col items-center text-center h-full z-10">
-                <div className={`w-20 h-20 rounded-2xl border-2 border-black mb-6 flex items-center justify-center ${step.color} shadow-hard flex-shrink-0 group-hover:scale-110 transition-transform`}>
-                  <step.icon className="w-10 h-10 text-black" />
+              <div className={`absolute inset-0 ${step.color} rounded-2xl border-2 border-black transform translate-x-2 translate-y-2`}></div>
+              <div className="relative bg-white p-8 rounded-2xl border-2 border-black hover:-translate-y-2 hover:-translate-x-2 transition-transform duration-300 flex flex-col items-center text-center h-full">
+                <div className={`w-16 h-16 rounded-xl border-2 border-black mb-6 flex items-center justify-center ${step.color} shadow-hard-sm`}>
+                  <step.icon className="w-8 h-8 text-black" />
                 </div>
-                <h3 className="text-2xl font-black uppercase mb-3 tracking-tight">{step.title}</h3>
-                <p className="font-bold text-gray-500 leading-snug">{step.desc}</p>
+                <h3 className="text-2xl font-black uppercase mb-3">{step.title}</h3>
+                <p className="font-medium text-gray-600">{step.desc}</p>
               </div>
             </div>
           ))}

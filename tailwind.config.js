@@ -24,29 +24,26 @@ export default {
       },
       colors: {
         brand: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981', // Emerald Green (More premium than generic blue)
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6', // Electric Blue
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
         },
-        'acid-green': '#d9f99d',
-        'hot-pink': '#fb7185',
-        'pop-yellow': '#fde047',
-        'deep-black': '#020617', // Richer black
-        'off-white': '#fdfbf7', // Warm paper-like white
+        'acid-green': '#bef264',
+        'hot-pink': '#f472b6',
+        'pop-yellow': '#facc15',
+        'deep-black': '#0f172a',
       },
       boxShadow: {
-        'hard': '3px 3px 0 0 #000',
-        'hard-sm': '1px 1px 0 0 #000',
-        'hard-lg': '5px 5px 0 0 #000',
-        'hard-xl': '8px 8px 0 0 #000',
-        'glow': '0 0 15px rgba(16, 185, 129, 0.5)',
+        'hard': '4px 4px 0 0 #000',
+        'hard-sm': '2px 2px 0 0 #000',
+        'hard-lg': '6px 6px 0 0 #000',
       }
     },
   },
