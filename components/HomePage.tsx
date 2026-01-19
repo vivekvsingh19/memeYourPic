@@ -199,17 +199,17 @@ const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-black leading-[0.9] mb-2">
-            COOK YOUR <br />
-            PICS WITH <span className="text-brand-600 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-sm origin-left">AI.</span>
+            AI MEME <br />
+            CAPTIONS IN <span className="text-brand-600 font-meme transform -rotate-2 inline-block hover:scale-110 transition-transform cursor-default drop-shadow-sm origin-left">SECONDS.</span>
           </h1>
 
           <p className="text-xl md:text-2xl font-medium text-gray-600 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-            Turn mid photos into <span className="bg-pop-yellow px-2 py-0.5 border-2 border-black rounded-md text-black font-bold transform -skew-x-3 inline-block shadow-[2px_2px_0_0_rgba(0,0,0,1)]">legendary roasts</span> or battle for clout.
-            <br /><span className="text-gray-400 text-lg mt-2 inline-block">Don't be basic. Meme better.</span>
+            Upload any photo. Our AI writes <span className="bg-pop-yellow px-2 py-0.5 border-2 border-black rounded-md text-black font-bold transform -skew-x-3 inline-block shadow-[2px_2px_0_0_rgba(0,0,0,1)]">hilarious captions</span> that actually land.
+            <br /><span className="text-gray-400 text-lg mt-2 inline-block">✨ Free credits to start. No credit card needed.</span>
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center lg:justify-start mt-4">
-            {['💀 Brutal Roasts', '🏆 Meme Battles', '✨ Viral Templates'].map((tag) => (
+            {['📸 Any Photo', '🎯 Context-Aware', '🌍 15+ Languages'].map((tag) => (
               <span key={tag} className="px-3 py-1 bg-white border-2 border-black rounded-lg text-sm font-bold shadow-hard-sm hover:-translate-y-1 transition-transform cursor-default">
                 {tag}
               </span>
@@ -391,15 +391,15 @@ const HomePage: React.FC<HomePageProps> = ({
       {/* ================= STEPS SECTION ================= */}
       <section className="w-full max-w-screen-2xl px-8 md:px-16 lg:px-32 xl:px-48 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-black uppercase mb-4">How to go viral</h2>
+          <h2 className="text-4xl font-black uppercase mb-4">Create memes in 3 steps</h2>
           <div className="h-2 w-24 bg-brand-500 mx-auto rounded-full"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
-            { icon: UploadIcon, title: "1. Upload", desc: "Drag, drop, or shoot. We accept everything.", color: "bg-acid-green" },
-            { icon: MagicIcon, title: "2. AI Magic", desc: "Our AI roasts you & writes the captions.", color: "bg-brand-400" },
-            { icon: DownloadIcon, title: "3. Go Viral", desc: "Export in HD. Post it. Watch the likes roll in.", color: "bg-hot-pink" }
+            { icon: UploadIcon, title: "1. Upload", desc: "Drop any pic. Selfie, meme template, anything.", color: "bg-acid-green" },
+            { icon: MagicIcon, title: "2. AI Magic", desc: "AI writes killer captions in your style.", color: "bg-brand-400" },
+            { icon: DownloadIcon, title: "3. Download", desc: "Share HD meme on Instagram, Twitter, TikTok.", color: "bg-hot-pink" }
           ].map((step, idx) => (
             <div key={idx} className="group relative">
               <div className={`absolute inset-0 ${step.color} rounded-2xl border-2 border-black transform translate-x-2 translate-y-2`}></div>
@@ -421,12 +421,27 @@ const HomePage: React.FC<HomePageProps> = ({
 
           <div className="flex-1 space-y-6">
             <h2 className="text-5xl font-black text-black leading-none">
-              FROM <span className="text-gray-300 line-through decoration-4 decoration-red-500">CRINGE</span> <br />
-              TO <span className="bg-pop-yellow px-2 border-2 border-black rounded transform -rotate-1 inline-block shadow-hard-sm">BASED</span>.
+              SAME <span className="text-gray-300 line-through decoration-4 decoration-red-500">BORING</span> <br />
+              PHOTO,<br />
+              <span className="bg-pop-yellow px-2 border-2 border-black rounded transform -rotate-1 inline-block shadow-hard-sm">HILARIOUS CAPTION</span>.
             </h2>
             <p className="text-xl font-medium text-gray-600">
-              Our AI understands context better than your friends. It analyzes the vibe, the awkwardness, and the chaos to generate captions that actually hit.
+              AI understands context, humor, and your vibe. It analyzes your photo and writes captions that match your style - whether you want sarcasm, wholesomeness, or roasts.
             </p>
+            <div className="space-y-3 pt-4">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">✨</span>
+                <span className="font-bold text-gray-700">Context-aware humor</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">🎭</span>
+                <span className="font-bold text-gray-700">Multiple caption styles</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">🌍</span>
+                <span className="font-bold text-gray-700">15+ languages supported</span>
+              </div>
+            </div>
           </div>
 
           <div className="flex-1 w-full max-w-lg">
@@ -446,156 +461,8 @@ const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ================= MEME BATTLE SECTION ================= */}
-      <section className="w-full py-12 md:py-24 border-t-2 border-black bg-gradient-to-br from-red-50 via-white to-orange-50 relative overflow-hidden">
-        {/* Background Decorative Elements */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none" />
-        <div className="absolute top-20 left-10 text-4xl md:text-6xl opacity-10 animate-float-fast grayscale selection:bg-transparent pointer-events-none">🥊</div>
-        <div className="absolute bottom-20 right-10 text-4xl md:text-6xl opacity-10 animate-float-fast delay-700 grayscale selection:bg-transparent pointer-events-none">🔥</div>
-        <div className="absolute top-1/2 left-1/4 text-2xl md:text-4xl opacity-5 animate-bounce delay-300 grayscale selection:bg-transparent pointer-events-none">💀</div>
-
-        <div className="relative z-10 max-w-screen-2xl mx-auto px-4 md:px-16 lg:px-32 xl:px-48 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
-          {/* Left: Battle Visual */}
-          <div className="relative flex justify-center lg:justify-start">
-            {/* Main Battle Card Container */}
-            <div className="relative w-full max-w-lg group">
-              {/* Background shadow layer */}
-              <div className="absolute inset-0 bg-black rounded-[2rem] transform rotate-3 translate-x-3 translate-y-3 transition-transform group-hover:rotate-1 group-hover:translate-x-1 group-hover:translate-y-1" />
-
-              {/* Main Card */}
-              <div className="relative bg-white border-4 border-black rounded-[2rem] p-4 md:p-8 overflow-hidden">
-                {/* Internal gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-red-50 to-transparent opacity-50" />
-
-                <div className="relative z-10">
-                  {/* Two Fighter Cards Layout */}
-                  <div className="flex items-center justify-between gap-2 md:gap-4 mb-4 md:mb-8">
-                    {/* Fighter 1 (Mock Winner) */}
-                    <div className="flex-1 relative">
-                      {/* Winner Badge */}
-                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-yellow-400 text-black px-3 py-1 rounded-xl border-2 border-black font-black uppercase text-[10px] tracking-widest shadow-hard z-30 animate-slam">
-                        👑 Winner
-                      </div>
-
-                      <div className="aspect-[3/4] bg-blue-100 rounded-2xl border-4 border-black shadow-hard-sm transform -rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden ring-4 ring-yellow-400 ring-offset-2 ring-offset-white">
-                        <img
-                          src="/player_one_avatar.png"
-                          alt="Player 1"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 bg-blue-500 border-t-2 border-black py-1 text-center">
-                          <span className="text-[10px] font-black uppercase text-white tracking-widest">Player 1</span>
-                        </div>
-                      </div>
-
-                      {/* Mock Roast Bubble P1 */}
-                      <div className="absolute -bottom-4 -left-2 right-0 bg-white border-2 border-black p-2 rounded-lg shadow-hard-sm z-20 scale-90 origin-top-left">
-                        <p className="text-[8px] font-black text-gray-400 uppercase leading-none mb-1">AI Verdict:</p>
-                        <p className="text-[9px] font-bold italic leading-tight">"Aura is off the charts. Main character energy in every pixel. 👑"</p>
-                      </div>
-                    </div>
-
-                    {/* Central VS Badge */}
-                    <div className="relative z-20 flex-shrink-0">
-                      <div className="w-12 h-12 md:w-16 md:h-16 bg-pop-yellow rounded-full border-4 border-black flex items-center justify-center shadow-hard">
-                        <span className="font-black text-xl md:text-2xl italic text-black">VS</span>
-                      </div>
-                      {/* Sparks decoration */}
-                      <div className="absolute -top-4 -right-4 text-xl md:text-2xl animate-pulse">✨</div>
-                    </div>
-
-                    {/* Fighter 2 (Mock Loser) */}
-                    <div className="flex-1">
-                      <div className="aspect-[3/4] bg-red-100 rounded-2xl border-4 border-black shadow-hard-sm transform rotate-3 hover:rotate-0 transition-transform flex flex-col items-center justify-center relative overflow-hidden grayscale opacity-80">
-                        <img
-                          src="/player_two_avatar.png"
-                          alt="Player 2"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute bottom-0 left-0 right-0 bg-red-500 border-t-2 border-black py-1 text-center">
-                          <span className="text-[10px] font-black uppercase text-white tracking-widest">Player 2</span>
-                        </div>
-                      </div>
-
-                      {/* Mock Roast Bubble P2 */}
-                      <div className="absolute -bottom-6 -right-2 left-0 bg-white border-2 border-black p-2 rounded-lg shadow-hard-sm z-20 scale-90 origin-top-right">
-                        <p className="text-[8px] font-black text-gray-400 uppercase leading-none mb-1">AI Verdict:</p>
-                        <p className="text-[9px] font-bold italic leading-tight">"The lighting is doing most of the work here. Vibe is on life support. 🚑"</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Mock Verdict Box */}
-                  <div className="mt-6 md:mt-10 bg-black text-white p-3 md:p-4 rounded-xl border-2 border-pop-yellow text-center shadow-hard-sm">
-                    <h4 className="text-[10px] font-bold text-pop-yellow uppercase tracking-widest mb-1">Judge's Final Word</h4>
-                    <p className="text-[10px] md:text-xs font-black italic">"Player 1 wins by a landslide. Player 2 needs a personality update. 💀"</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Stat Cards (Visual Flair) */}
-              <div className="absolute -top-6 -right-6 bg-acid-green border-2 border-black p-3 rounded-xl shadow-hard-sm rotate-12 animate-float-fast hidden md:block">
-                <span className="font-black text-xs uppercase">Brutal Roast 🔥</span>
-              </div>
-              <div className="absolute -bottom-6 -left-6 bg-hot-pink text-white border-2 border-black p-3 rounded-xl shadow-hard-sm -rotate-12 animate-float-fast delay-300 hidden md:block">
-                <span className="font-black text-xs uppercase">Winner Gets Clout 👑</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Content */}
-          <div className="space-y-8">
-            <div className="inline-block bg-gradient-to-r from-red-600 to-red-400 text-white px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest border-2 border-black shadow-hard-sm">
-              <FireIcon className="w-4 h-4 inline mr-2" />
-              Arena Mode Active
-            </div>
-
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85] text-black">
-              BATTLE FOR <br />
-              <span className="text-red-600 drop-shadow-[2px_2px_0_#000]">AURA</span> SUPREMACY.
-            </h2>
-
-            <p className="hidden md:block text-xl md:text-2xl font-medium text-gray-600 leading-relaxed max-w-lg">
-              Our AI judge analyzes everything from your fit to your facial expressions. Find out who really <span className="text-black font-black underline decoration-red-500 decoration-4">runs the chat.</span> 💀
-            </p>
-
-            <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { icon: '⚔️', title: 'Brutal Verdicts', desc: 'AI roasts both and picks a winner.' },
-                { icon: '📱', title: 'Viral Share', desc: 'Download result cards for IG/X.' },
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white border-2 border-black p-4 rounded-2xl shadow-hard-sm hover:-translate-y-1 transition-transform">
-                  <div className="text-2xl mb-2">{item.icon}</div>
-                  <h4 className="font-black uppercase text-sm mb-1">{item.title}</h4>
-                  <p className="text-xs font-bold text-gray-400">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="pt-4 flex flex-col gap-4">
-              <button
-                onClick={onBattleClick}
-                className="group w-full md:w-fit bg-red-600 hover:bg-red-700 text-white px-6 py-4 md:px-10 md:py-5 rounded-2xl border-4 border-black font-black uppercase tracking-wider text-xl md:text-2xl shadow-hard hover:translate-y-[-4px] hover:shadow-hard-lg transition-all flex items-center justify-center gap-3 md:gap-4">
-                <FireIcon className="w-6 h-6 md:w-8 md:h-8 group-hover:animate-pulse" />
-                ENTER THE ARENA
-                <svg className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </button>
-
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  {[1, 2, 3].map(i => (
-                    <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-gray-200 flex items-center justify-center font-black text-[10px]">👤</div>
-                  ))}
-                </div>
-                <p className="text-sm font-bold text-gray-400 bg-white px-3 py-1 rounded-full border border-gray-200">
-                  <span className="text-black">1.2k+</span> battles today
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ================= MEME BATTLE SECTION ================= */}
+      {/* HIDDEN - Focus on core meme generation feature. Can be re-enabled later by uncommenting. */}
 
 
 
@@ -741,132 +608,120 @@ const HomePage: React.FC<HomePageProps> = ({
       {/* ================= PRICING SECTION ================= */}
       <section id="pricing" className="w-full max-w-screen-xl px-4 md:px-8 lg:px-16 py-24 border-t-2 border-black bg-gradient-to-b from-pop-blue/5 to-white">
         <div className="text-center mb-16">
-          <div className="inline-block bg-black text-white px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-4 animate-bounce">
-            💎 Invest in Your Clout
+          <div className="inline-block bg-black text-white px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-4">
+            ⚡ Simple Pricing
           </div>
           <h2 className="text-4xl md:text-5xl font-black uppercase mb-6 text-black tracking-tight">
-            Go Viral <span className="text-brand-600 underline decoration-4 decoration-black underline-offset-4">Today</span>
+            Start Free. <span className="text-brand-600">Scale when you're ready.</span>
           </h2>
           <p className="text-xl font-medium text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Stop posting weak memes. Get the tools you need to dominate the feed.
+            Get started with free credits. No credit card needed.
             <br className="hidden md:block" />
-            <span className="text-sm font-bold text-gray-400 mt-2 block">One-time payment. Yours forever.</span>
+            <span className="text-sm font-bold text-gray-400 mt-2 block">When you love it, upgrade for unlimited memes.</span>
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-end">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
 
-          {/* STARTER PACK */}
-          <div className="relative group bg-white rounded-3xl border-2 border-gray-200 p-8 flex flex-col hover:border-black transition-all duration-300 hover:shadow-hard-sm">
-            <h3 className="text-xl font-black uppercase tracking-tight mb-2 text-gray-500">Roast Rookie</h3>
+          {/* FREE TIER */}
+          <div className="relative group bg-white rounded-3xl border-2 border-gray-300 p-8 flex flex-col hover:border-black transition-all duration-300 hover:shadow-hard-sm">
+            <h3 className="text-2xl font-black uppercase tracking-tight mb-3 text-black">Start Free</h3>
             <div className="flex items-baseline gap-1 mb-6">
-              <span className="text-4xl font-black">{currency === 'INR' ? '₹149' : '$4.99'}</span>
-              <span className="text-gray-400 font-bold">/ pack</span>
+              <span className="text-5xl font-black">$0</span>
+              <span className="text-gray-400 font-bold">forever</span>
             </div>
 
-            <div className="text-6xl mb-6 text-center grayscale group-hover:grayscale-0 transition-all">⚡️</div>
+            <div className="text-6xl mb-6 text-center">🎁</div>
             <div className="text-center mb-8">
-              <span className="text-4xl font-black">100</span>
-              <span className="text-sm uppercase font-bold text-gray-400 ml-2">Credits</span>
+              <span className="text-3xl font-black">40</span>
+              <span className="text-sm uppercase font-bold text-gray-400 ml-2">Free Credits</span>
             </div>
 
             <ul className="space-y-3 mb-8 flex-1">
-              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
-                <span className="text-green-500 text-lg">✓</span> 10 AI Generations
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-700">
+                <span className="text-green-500 text-lg">✓</span> 4 meme captions generated
               </li>
-              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
-                <span className="text-green-500 text-lg">✓</span> Standard Speed
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-700">
+                <span className="text-green-500 text-lg">✓</span> All 15+ languages
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-gray-700">
+                <span className="text-green-500 text-lg">✓</span> HD downloads
               </li>
               <li className="flex items-center gap-3 text-sm font-bold text-gray-400 line-through decoration-2">
-                <span className="text-gray-300 text-lg">×</span> Remove Watermark
+                <span className="text-gray-300 text-lg">×</span> No watermark
               </li>
             </ul>
 
             <button
-              onClick={() => onBuyCredits(100, currency === 'INR' ? '₹149' : '$4.99')}
               className="w-full py-4 bg-gray-100 hover:bg-black hover:text-white border-2 border-black rounded-xl font-black uppercase tracking-wider transition-all"
             >
               Get Started
             </button>
+            <p className="text-center text-xs font-bold text-gray-400 mt-4">Try it now • No signup required</p>
           </div>
 
-          {/* PRO PACK (Highlighted) */}
-          <div className="relative group bg-brand-500 rounded-3xl border-4 border-black p-8 flex flex-col transform md:-translate-y-4 shadow-hard">
+          {/* PRO TIER (Highlighted) */}
+          <div className="relative group bg-brand-500 rounded-3xl border-4 border-black p-8 flex flex-col shadow-hard">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-white px-6 py-2 rounded-full font-black uppercase text-xs tracking-widest border-2 border-white shadow-lg">
-              🔥 Best Value
+              🚀 Best Value
             </div>
 
-            <h3 className="text-2xl font-black uppercase tracking-tight mb-2 text-white drop-shadow-md">Meme God</h3>
+            <h3 className="text-2xl font-black uppercase tracking-tight mb-3 text-white drop-shadow-md">Pro Unlimited</h3>
             <div className="flex items-baseline gap-1 mb-6">
-              <span className="text-5xl font-black text-white drop-shadow-md">{currency === 'INR' ? '₹499' : '$14.99'}</span>
-              <span className="text-black/60 font-bold">/ pack</span>
+              <span className="text-5xl font-black text-white drop-shadow-md">$9.99</span>
+              <span className="text-black/60 font-bold">one-time</span>
             </div>
 
-            <div className="text-7xl mb-6 text-center drop-shadow-lg animate-pulse-slow">👑</div>
+            <div className="text-7xl mb-6 text-center drop-shadow-lg">🔥</div>
             <div className="text-center mb-8">
-              <span className="text-5xl font-black text-white drop-shadow-md">500</span>
-              <span className="text-sm uppercase font-bold text-black/60 ml-2">Credits</span>
+              <span className="text-4xl font-black text-white drop-shadow-md">∞</span>
+              <span className="text-sm uppercase font-bold text-black/60 ml-2">Unlimited Memes</span>
             </div>
 
             <ul className="space-y-3 mb-8 flex-1">
               <li className="flex items-center gap-3 text-sm font-bold text-black">
-                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> 50 AI Generations
+                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> Unlimited AI captions forever
               </li>
               <li className="flex items-center gap-3 text-sm font-bold text-black">
-                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> <span className="underline decoration-black decoration-2">No Watermarks</span>
+                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> <span className="underline decoration-black decoration-2">No watermarks</span>
               </li>
               <li className="flex items-center gap-3 text-sm font-bold text-black">
-                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> Priority Server Access
+                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> Commercial use license
               </li>
               <li className="flex items-center gap-3 text-sm font-bold text-black">
-                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> HD Downloads
+                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> 4K HD exports
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-black">
+                <div className="bg-white rounded-full p-0.5"><span className="text-brand-600 font-black">✓</span></div> Priority support
               </li>
             </ul>
 
             <button
-              onClick={() => onBuyCredits(500, currency === 'INR' ? '₹499' : '$14.99')}
+              onClick={() => onBuyCredits(0, '$9.99')}
               className="w-full py-4 bg-black text-white hover:bg-white hover:text-black border-2 border-transparent hover:border-black rounded-xl font-black uppercase tracking-wider transition-all shadow-lg hover:shadow-none translate-y-0 hover:translate-y-1"
             >
-              Go Pro Now
+              Unlock Unlimited
             </button>
-            <p className="text-center text-xs font-bold text-black/50 mt-4">Safe & Secure Payment</p>
+            <p className="text-center text-xs font-bold text-black/50 mt-4">✨ One payment • Forever access • 30-day guarantee</p>
           </div>
+        </div>
 
-          {/* WHALE PACK */}
-          <div className="relative group bg-white rounded-3xl border-2 border-gray-200 p-8 flex flex-col hover:border-black transition-all duration-300 hover:shadow-hard-sm">
-            <h3 className="text-xl font-black uppercase tracking-tight mb-2 text-gray-500">Agency</h3>
-            <div className="flex items-baseline gap-1 mb-6">
-              <span className="text-4xl font-black">{currency === 'INR' ? '₹999' : '$29.99'}</span>
-              <span className="text-gray-400 font-bold">/ pack</span>
+        {/* FAQ */}
+        <div className="mt-20 max-w-2xl mx-auto">
+          <h3 className="text-2xl font-black uppercase mb-8 text-center text-black">Questions?</h3>
+          <div className="space-y-4">
+            <div className="bg-white border-2 border-black rounded-xl p-4">
+              <p className="font-black uppercase text-sm mb-2">What's included in the free tier?</p>
+              <p className="text-sm text-gray-600">40 free credits = 4 meme captions with full access to all styles and languages. Perfect to test the quality.</p>
             </div>
-
-            <div className="text-6xl mb-6 text-center grayscale group-hover:grayscale-0 transition-all">🚀</div>
-            <div className="text-center mb-8">
-              <span className="text-4xl font-black">1500</span>
-              <span className="text-sm uppercase font-bold text-gray-400 ml-2">Credits</span>
+            <div className="bg-white border-2 border-black rounded-xl p-4">
+              <p className="font-black uppercase text-sm mb-2">Can I use Pro memes for my business?</p>
+              <p className="text-sm text-gray-600">Yes! Pro includes a commercial license. Use memes for content, brands, agencies - whatever you want.</p>
             </div>
-
-            <ul className="space-y-3 mb-8 flex-1">
-              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
-                <span className="text-green-500 text-lg">✓</span> 150 AI Generations
-              </li>
-              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
-                <span className="text-green-500 text-lg">✓</span> No Watermarks
-              </li>
-              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
-                <span className="text-green-500 text-lg">✓</span> Commercial License
-              </li>
-              <li className="flex items-center gap-3 text-sm font-bold text-gray-600">
-                <span className="text-green-500 text-lg">✓</span> 24/7 Priority Support
-              </li>
-            </ul>
-
-            <button
-              onClick={() => onBuyCredits(1500, currency === 'INR' ? '₹999' : '$29.99')}
-              className="w-full py-4 bg-gray-100 hover:bg-black hover:text-white border-2 border-black rounded-xl font-black uppercase tracking-wider transition-all"
-            >
-              Get Agency
-            </button>
+            <div className="bg-white border-2 border-black rounded-xl p-4">
+              <p className="font-black uppercase text-sm mb-2">Is there a money-back guarantee?</p>
+              <p className="text-sm text-gray-600">Yes. Try it risk-free for 30 days. If you don't love it, full refund. No questions asked.</p>
+            </div>
           </div>
         </div>
       </section>

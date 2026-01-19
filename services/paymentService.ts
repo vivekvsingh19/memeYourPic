@@ -1,17 +1,6 @@
 export const getDodoPaymentLink = (packId: string, currency: 'USD' | 'INR' = 'USD') => {
-  const links: Record<string, Record<string, string>> = {
-    USD: {
-      starter: import.meta.env.VITE_DODO_LINK_STARTER || '#',
-      pro: import.meta.env.VITE_DODO_LINK_PRO || '#',
-      agency: import.meta.env.VITE_DODO_LINK_AGENCY || '#',
-    },
-    INR: {
-      starter: import.meta.env.VITE_DODO_LINK_STARTER_INR || '#',
-      pro: import.meta.env.VITE_DODO_LINK_PRO_INR || '#',
-      agency: import.meta.env.VITE_DODO_LINK_AGENCY_INR || '#',
-    }
-  };
-  const baseUrl = links[currency][packId];
+  // Unified pricing: $9.99 for all locations (Pro Unlimited tier only)
+  const baseUrl = import.meta.env.VITE_DODO_LINK_PRO || '#';
 
   // Append return_url - Dodo will redirect back with this in the hash
   // Our App.tsx payment handler now checks both query params AND hash for payment_success
